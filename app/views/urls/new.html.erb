@@ -1,0 +1,11 @@
+<% content_for :title, "New url" %>
+
+<h1>New url</h1>
+
+<%= render "form", url: @url %>
+
+<br>
+
+<div>
+  <%= link_to "Back to urls", urls_path %>
+</div>

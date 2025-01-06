@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Urls" %>
+
+<h1>Urls</h1>
+
+<div id="urls">
+  <% @urls.each do |url| %>
+    <%= render url %>
+    <p>
+      <%= link_to "Show this url", url %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New url", new_url_path %>

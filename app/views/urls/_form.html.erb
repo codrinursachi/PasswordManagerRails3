@@ -1,0 +1,27 @@
+<%= form_with(model: url) do |form| %>
+  <% if url.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(url.errors.count, "error") %> prohibited this url from being saved:</h2>
+
+      <ul>
+        <% url.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :uri, style: "display: block" %>
+    <%= form.text_field :uri %>
+  </div>
+
+  <div>
+    <%= form.label :login_id, style: "display: block" %>
+    <%= form.text_field :login_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
