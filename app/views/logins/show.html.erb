@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @login %>
+
+<div>
+  <%= link_to "Edit this login", edit_login_path(@login) %> |
+  <%= link_to "Back to logins", logins_path %>
+
+  <%= button_to "Destroy this login", @login, method: :delete %>
+</div>

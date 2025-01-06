@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :logins
   resources :folders
   resource :session
   resources :passwords, param: :token
