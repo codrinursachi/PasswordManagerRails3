@@ -61,6 +61,6 @@ class LoginsController < ApplicationController
   private
     # Only allow a list of trusted parameters through.
     def login_params
-      params.expect(login: [ :name, :login_name, :login_password, :notes, :is_favorite, :folder_id , urls_attributes: [[:id, :uri]]])
+      params.expect(login: [ :name, :login_name, :login_password, :notes, :is_favorite, :folder_id , :file, urls_attributes: [[:id, :uri]]])
     end
 end

@@ -36,4 +36,9 @@
     <%= login.folder.name %>
   </p>
 
+  <p>
+    <strong>File:</strong>
+    <%=  login.file.attached? ? (link_to 'Download file', rails_blob_path(login.file, disposition: "attachment")) : "No attachment" %>
+  </p>
+
 </div>
