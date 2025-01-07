@@ -22,6 +22,12 @@
   </p>
 
   <p>
+    <strong>Custom fields:</strong>
+    <% login.custom_fields.each do |custom_field| %>
+      <%= custom_field.name %> : <%= custom_field.value %> <br />
+    <% end %>
+
+  <p>
     <strong>Notes:</strong>
     <%= login.notes %>
   </p>

@@ -39,6 +39,16 @@
   </div>
 
   <div>
+    Custom fields:
+    <%= form.fields_for :custom_fields do |custom_field_form| %>
+      <%= custom_field_form.label :name, style: "display: block" %>
+      <%= custom_field_form.text_field :name %>
+      <%= custom_field_form.label :value, style: "display: block" %>
+      <%= custom_field_form.text_field :value %>
+    <% end %>
+  </div>
+
+  <div>
     <%= form.label :is_favorite, style: "display: block" %>
     <%= form.checkbox :is_favorite %>
   </div>

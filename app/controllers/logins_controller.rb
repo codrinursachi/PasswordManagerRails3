@@ -15,11 +15,13 @@ class LoginsController < ApplicationController
   # GET /logins/new
   def new
     4.times { @login.urls.build }
+    2.times { @login.custom_fields.build }
   end
 
   # GET /logins/1/edit
   def edit
     (4 - @login.urls.size).times { @login.urls.build }
+    (2 - @login.custom_fields.size).times { @login.custom_fields.build }
   end
 
   # POST /logins or /logins.json
@@ -61,6 +63,6 @@ class LoginsController < ApplicationController
   private
     # Only allow a list of trusted parameters through.
     def login_params
-      params.expect(login: [ :name, :login_name, :login_password, :notes, :is_favorite, :folder_id , :file, urls_attributes: [[:id, :uri]]])
+      params.expect(login: [ :name, :login_name, :login_password, :notes, :is_favorite, :folder_id , :file, urls_attributes: [[:id, :uri]], custom_fields_attributes: [[:id, :name, :value]]])
     end
 end
