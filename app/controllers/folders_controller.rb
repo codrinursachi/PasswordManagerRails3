@@ -1,9 +1,8 @@
 class FoldersController < ApplicationController
-  before_action :set_folder, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /folders or /folders.json
   def index
-    @folders = Folder.all
   end
 
   # GET /folders/1 or /folders/1.json
@@ -12,7 +11,6 @@ class FoldersController < ApplicationController
 
   # GET /folders/new
   def new
-    @folder = Folder.new
   end
 
   # GET /folders/1/edit
@@ -21,8 +19,6 @@ class FoldersController < ApplicationController
 
   # POST /folders or /folders.json
   def create
-    @folder = Folder.new(folder_params)
-
     respond_to do |format|
       if @folder.save
         format.html { redirect_to @folder, notice: "Folder was successfully created." }
@@ -65,6 +61,6 @@ class FoldersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def folder_params
-      params.expect(folder: [ :name, :user_id ])
+      params.expect(folder: [ :name ])
     end
 end

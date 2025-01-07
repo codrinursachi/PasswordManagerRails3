@@ -1,9 +1,7 @@
 class LoginsController < ApplicationController
-  before_action :set_login, only: %i[ show edit update destroy ]
-
+  load_and_authorize_resource
   # GET /logins or /logins.json
   def index
-    @logins = Login.all
   end
 
   # GET /logins/1 or /logins/1.json
@@ -12,7 +10,6 @@ class LoginsController < ApplicationController
 
   # GET /logins/new
   def new
-    @login = Login.new
   end
 
   # GET /logins/1/edit
@@ -21,8 +18,6 @@ class LoginsController < ApplicationController
 
   # POST /logins or /logins.json
   def create
-    @login = Login.new(login_params)
-
     respond_to do |format|
       if @login.save
         format.html { redirect_to @login, notice: "Login was successfully created." }
@@ -58,11 +53,6 @@ class LoginsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_login
-      @login = Login.find(params.expect(:id))
-    end
-
     # Only allow a list of trusted parameters through.
     def login_params
       params.expect(login: [ :name, :login_name, :login_password, :notes, :is_favorite, :folder_id ])

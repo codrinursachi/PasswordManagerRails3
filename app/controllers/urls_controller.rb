@@ -1,9 +1,7 @@
 class UrlsController < ApplicationController
-  before_action :set_url, only: %i[ show edit update destroy ]
-
+  load_and_authorize_resource
   # GET /urls or /urls.json
   def index
-    @urls = Url.all
   end
 
   # GET /urls/1 or /urls/1.json
@@ -12,7 +10,6 @@ class UrlsController < ApplicationController
 
   # GET /urls/new
   def new
-    @url = Url.new
   end
 
   # GET /urls/1/edit
@@ -21,8 +18,6 @@ class UrlsController < ApplicationController
 
   # POST /urls or /urls.json
   def create
-    @url = Url.new(url_params)
-
     respond_to do |format|
       if @url.save
         format.html { redirect_to @url, notice: "Url was successfully created." }
@@ -58,13 +53,8 @@ class UrlsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_url
-      @url = Url.find(params.expect(:id))
-    end
-
     # Only allow a list of trusted parameters through.
     def url_params
-      params.expect(url: [ :uri, :login_id ])
+      params.expect(url: [ :uri])
     end
 end
