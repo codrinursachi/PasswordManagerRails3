@@ -6,6 +6,7 @@
 
 <div id="folders">
   <% @folders.each do |folder| %>
+    <% next if folder.name=="No folder" %>
     <%= render folder %>
     <p>
       <%= link_to "Show this folder", folder %>
