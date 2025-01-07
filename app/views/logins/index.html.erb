@@ -3,6 +3,7 @@
 <% content_for :title, "Logins" %>
 
 <h1>Logins</h1>
+<%= render "search_form" %>
 <div id="logins">
   <% @logins.each do |login| %>
     <%= render login %>
@@ -14,6 +15,7 @@
 <%= link_to "New login", new_login_path %>
 <aside>
   <h1>Folders</h1>
+  <%= link_to "Show all passwords", logins_path %> <br />
   <%= link_to "Manage folders", folders_path %> <br />
     <% Folder.accessible_by(current_ability).each do |folder| %>
       <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br />

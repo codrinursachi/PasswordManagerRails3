@@ -1,0 +1,7 @@
+<%= form_with url: logins_path, method: :get do |form| %>
+  <%= form.label :search, "Search for:" %>
+  <%= form.search_field :search %>
+  <%= form.label :favorite, "Favorite"%>
+  <%= form.check_box :favorite, include_hidden: false %>
+  <%= form.submit "Search" %>
+<% end %>

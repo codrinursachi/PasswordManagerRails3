@@ -4,6 +4,8 @@ class LoginsController < ApplicationController
   def index
     @logins = @logins.includes(:folder)
     @logins = @logins.by_folder(params[:folder_id]) if params[:folder_id].present?
+    @logins = @logins.by_favorite if params[:favorite].present?
+    @logins = @logins.search(params[:search]) if params[:search].present?
   end
 
   # GET /logins/1 or /logins/1.json
