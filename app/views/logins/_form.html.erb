@@ -27,6 +27,13 @@
   </div>
 
   <div>
+    <%= form.fields_for :urls do |urls_form| %>
+      <%= urls_form.label :uri, style: "display: block" %>
+      <%= urls_form.text_field :uri %>
+    <% end %>
+  </div>
+
+  <div>
     <%= form.label :notes, style: "display: block" %>
     <%= form.textarea :notes %>
   </div>
@@ -38,7 +45,7 @@
 
   <div>
     <%= form.label :folder_id, style: "display: block" %>
-    <%= form.text_field :folder_id %>
+    <%= form.collection_select :folder_id, Folder.accessible_by(current_ability),:id,:name %>
   </div>
 
   <div>
