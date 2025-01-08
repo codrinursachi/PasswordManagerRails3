@@ -9,4 +9,6 @@ class Login < ApplicationRecord
   scope :by_folder, ->(folder_id) { where(folder_id: folder_id) }
   scope :by_favorite, -> { where(is_favorite: true) }
   scope :search, ->(term) { joins(:urls).where("name LIKE :term OR login_name LIKE :term OR notes LIKE :term OR urls.uri LIKE :term", term: "%#{term}%") }
+  scope :by_not_in_trash, -> { where(time_added_in_trash: nil) }
+  scope :by_in_trash, -> { where.not(time_added_in_trash: nil) }
 end

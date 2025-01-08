@@ -2,6 +2,7 @@ class LoginsController < ApplicationController
   load_and_authorize_resource
   # GET /logins or /logins.json
   def index
+    @logins = @logins.by_not_in_trash
     @logins = @logins.includes(:folder)
     @logins = @logins.by_folder(params[:folder_id]) if params[:folder_id].present?
     @logins = @logins.by_favorite if params[:favorite].present?
@@ -52,10 +53,9 @@ class LoginsController < ApplicationController
 
   # DELETE /logins/1 or /logins/1.json
   def destroy
-    @login.destroy!
-
+    @login.update(time_added_in_trash: Time.now)
     respond_to do |format|
-      format.html { redirect_to logins_path, status: :see_other, notice: "Login was successfully destroyed." }
+      format.html { redirect_to logins_path, status: :see_other, notice: "Login was successfully sent to trash." }
       format.json { head :no_content }
     end
   end
