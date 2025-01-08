@@ -23,6 +23,7 @@
   </head>
 
   <body>
+    <%= button_to "Log out", session_path, method: :delete unless request.fullpath == new_session_path || request.fullpath == new_user_path %>
     <%= yield %>
   </body>
 </html>
