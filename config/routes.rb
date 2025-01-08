@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :trash, only: [:index, :destroy]
+  get "trash/restore"
   resources :users, only: [:new, :create]
   resources :urls
   resources :logins
