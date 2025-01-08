@@ -1,5 +1,6 @@
 class LoginsController < ApplicationController
   load_and_authorize_resource
+  skip_authorize_resource only: :new
   # GET /logins or /logins.json
   def index
     @logins = @logins.by_not_in_trash
@@ -53,7 +54,7 @@ class LoginsController < ApplicationController
 
   # DELETE /logins/1 or /logins/1.json
   def destroy
-    @login.update(time_added_in_trash: Time.now)
+    @login.update(date_added_in_trash: Time.now)
     respond_to do |format|
       format.html { redirect_to logins_path, status: :see_other, notice: "Login was successfully sent to trash." }
       format.json { head :no_content }

@@ -26,6 +26,7 @@
     <% login.custom_fields.each do |custom_field| %>
       <%= custom_field.name %> : <%= custom_field.value %> <br />
     <% end %>
+  </p>
 
   <p>
     <strong>Notes:</strong>
@@ -46,5 +47,12 @@
     <strong>File:</strong>
     <%=  login.file.attached? ? (link_to 'Download file', rails_blob_path(login.file, disposition: "attachment")) : "No attachment" %>
   </p>
+
+  <% if login.date_added_in_trash %>
+    <p>
+      <strong>Date added in trash:</strong>
+      <%= login.date_added_in_trash %>
+    </p>
+  <% end %>
 
 </div>

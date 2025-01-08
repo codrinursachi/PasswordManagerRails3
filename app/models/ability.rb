@@ -7,9 +7,6 @@ class Ability
     return unless user.present?
     can :manage, Folder, user:user
     can :manage, Login, folder:{user:user}
-    can :create, Login
-    can :manage, Url, login:{folder:{user:user}}
-    can :create, Url
     # Define abilities for the user here. For example:
     #
     #   return unless user.present?

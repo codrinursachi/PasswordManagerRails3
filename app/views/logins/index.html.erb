@@ -15,9 +15,11 @@
 <%= link_to "New login", new_login_path %>
 <aside>
   <h1>Folders</h1>
-  <%= link_to "Show all passwords", logins_path %> <br />
+  <%= link_to "Show all logins", logins_path %> <br />
   <%= link_to "Manage folders", folders_path %> <br />
     <% Folder.accessible_by(current_ability).each do |folder| %>
       <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br />
     <% end %>
+  <h1>Trash</h1>
+  <%= link_to "Show trash", trash_index_path %>
 </aside>
