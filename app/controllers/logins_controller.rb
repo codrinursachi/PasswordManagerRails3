@@ -22,14 +22,14 @@ class LoginsController < ApplicationController
 
   # GET /logins/new
   def new
-    4.times { @login.urls.build }
-    2.times { @login.custom_fields.build }
+    @login.urls.build
+    @login.custom_fields.build
   end
 
   # GET /logins/1/edit
   def edit
-    (4 - @login.urls.size).times { @login.urls.build }
-    (2 - @login.custom_fields.size).times { @login.custom_fields.build }
+    (1 - @login.urls.size).times { @login.urls.build }
+    (1 - @login.custom_fields.size).times { @login.custom_fields.build }
   end
 
   # POST /logins or /logins.json
@@ -39,6 +39,8 @@ class LoginsController < ApplicationController
         format.html { redirect_to @login, notice: "Login was successfully created." }
         format.json { render :show, status: :created, location: @login }
       else
+        (1 - @login.urls.size).times { @login.urls.build }
+        (1 - @login.custom_fields.size).times { @login.custom_fields.build }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @login.errors, status: :unprocessable_entity }
       end
@@ -52,6 +54,8 @@ class LoginsController < ApplicationController
         format.html { redirect_to @login, notice: "Login was successfully updated." }
         format.json { render :show, status: :ok, location: @login }
       else
+        (1 - @login.urls.size).times { @login.urls.build }
+        (1 - @login.custom_fields.size).times { @login.custom_fields.build }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @login.errors, status: :unprocessable_entity }
       end
