@@ -3,11 +3,17 @@ class LoginsController < ApplicationController
   skip_authorize_resource only: :new
   # GET /logins or /logins.json
   def index
-    @logins = @logins.by_is_in_trash(false)
-    @logins = @logins.includes(:folder)
-    @logins = @logins.by_folder(params[:folder_id]) if params[:folder_id].present?
-    @logins = @logins.by_favorite if params[:favorite].present?
-    @logins = @logins.search(params[:search]) if params[:search].present?
+    filter_scopes = {
+      not_in_trash: -> { @logins = @logins.by_is_in_trash(false) },
+      favorite: -> { @logins = @logins.by_favorite },
+      search: -> { @logins = @logins.search(params[:q]) },
+      folder: -> { @logins.includes(:folder) && @logins = @logins.by_folder(params[:folder_id]) }
+    }
+
+    filter_scopes[:not_in_trash].call
+    filter_scopes[:favorite].call if params[:favorite].present?
+    filter_scopes[:search].call if params[:q].present?
+    filter_scopes[:folder].call if params[:folder_id].present?
   end
 
   # GET /logins/1 or /logins/1.json
