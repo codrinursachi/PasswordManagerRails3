@@ -7,12 +7,13 @@ class LoginsController < ApplicationController
       not_in_trash: -> { @logins = @logins.by_is_in_trash(false) },
       favorite: -> { @logins = @logins.by_favorite },
       search: -> { @logins = @logins.search(params[:q]) },
-      folder: -> { @logins.includes(:folder) && @logins = @logins.by_folder(params[:folder_id]) }
+      folder: -> { @logins = @logins.by_folder(params[:folder_id]) }
     }
 
     filter_scopes[:not_in_trash].call
     filter_scopes[:favorite].call if params[:favorite].present?
     filter_scopes[:search].call if params[:q].present?
+    @logins.includes(:folder)
     filter_scopes[:folder].call if params[:folder_id].present?
   end
 
