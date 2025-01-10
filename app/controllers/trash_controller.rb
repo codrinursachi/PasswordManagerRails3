@@ -1,7 +1,7 @@
 class TrashController < ApplicationController
   load_and_authorize_resource :login, parent: false
   def index
-    @logins = @logins.by_in_trash
+    @logins = @logins.by_is_in_trash(true)
   end
 
   def destroy
