@@ -16,7 +16,6 @@ RSpec.describe "folders/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", folder_path(folder), "post" do
-
       assert_select "input[name=?]", "folder[name]"
 
       assert_select "input[name=?]", "folder[user_id]"

@@ -5,8 +5,8 @@ class Ability
 
   def initialize(user)
     return unless user.present?
-    can :manage, Folder, user:user
-    can :manage, Login, folder:{user:user}
+    can :manage, Folder, user: user
+    can :manage, Login, folder: { user: user }
     # Define abilities for the user here. For example:
     #
     #   return unless user.present?

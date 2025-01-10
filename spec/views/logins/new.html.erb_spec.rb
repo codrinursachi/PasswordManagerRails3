@@ -16,7 +16,6 @@ RSpec.describe "logins/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", logins_path, "post" do
-
       assert_select "input[name=?]", "login[name]"
 
       assert_select "input[name=?]", "login[login_name]"

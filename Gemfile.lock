@@ -401,6 +401,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 8.0.1)
   rspec-rails
+  rubocop
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable

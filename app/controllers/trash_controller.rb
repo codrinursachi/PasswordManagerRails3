@@ -5,7 +5,7 @@ class TrashController < ApplicationController
   end
 
   def destroy
-    @login=Login.accessible_by(current_ability).find(params[:id]).destroy
+    @login = Login.accessible_by(current_ability).find(params[:id]).destroy
   end
 
   def restore

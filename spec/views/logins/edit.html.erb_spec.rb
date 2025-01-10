@@ -20,7 +20,6 @@ RSpec.describe "logins/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", login_path(login), "post" do
-
       assert_select "input[name=?]", "login[name]"
 
       assert_select "input[name=?]", "login[login_name]"

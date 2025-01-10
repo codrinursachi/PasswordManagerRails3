@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :trash, only: [:index, :destroy]
+  resources :trash, only: [ :index, :destroy ]
   get "trash/restore/:id" => "trash#restore"
-  resources :users, only: [:new, :create]
+  resources :users, only: [ :new, :create ]
   resources :urls
   resources :logins
   resources :folders
