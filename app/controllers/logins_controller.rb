@@ -54,7 +54,7 @@ class LoginsController < ApplicationController
 
   # DELETE /logins/1 or /logins/1.json
   def destroy
-    @login.update(date_added_in_trash: Time.now)
+    @login.update(trash_date: Time.now)
     respond_to do |format|
       format.html { redirect_to logins_path, status: :see_other, notice: "Login was successfully sent to trash." }
       format.json { head :no_content }

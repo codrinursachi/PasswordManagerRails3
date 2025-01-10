@@ -48,10 +48,10 @@
     <%=  login.file.attached? ? (link_to 'Download file', rails_blob_path(login.file, disposition: "attachment")) : "No attachment" %>
   </p>
 
-  <% if login.date_added_in_trash %>
+  <% if login.trash_date %>
     <p>
       <strong>Date added in trash:</strong>
-      <%= login.date_added_in_trash %>
+      <%= login.trash_date %>
     </p>
   <% end %>
 

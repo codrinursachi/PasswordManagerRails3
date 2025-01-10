@@ -10,7 +10,7 @@ class TrashController < ApplicationController
 
   def restore
     @login = Login.accessible_by(current_ability).find(params[:id])
-    @login.update(date_added_in_trash: nil)
+    @login.update(trash_date: nil)
     redirect_to trash_index_path
   end
 end
