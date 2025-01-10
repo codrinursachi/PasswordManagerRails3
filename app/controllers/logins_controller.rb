@@ -1,6 +1,5 @@
 class LoginsController < ApplicationController
   load_and_authorize_resource
-  skip_authorize_resource only: :new
   # GET /logins or /logins.json
   def index
     filter_scopes = {
