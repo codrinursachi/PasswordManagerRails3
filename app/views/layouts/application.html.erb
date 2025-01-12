@@ -23,6 +23,11 @@
   </head>
 
   <body>
+    <% I18n.available_locales.each do |locale| %>
+        <% if I18n.locale != locale %>
+          <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
+        <% end %>
+      <% end %>
     <%= button_to "Log out", session_path, method: :delete if Current.user %>
     <%= yield %>
   </body>
