@@ -16,10 +16,12 @@
 </div>
 <aside>
   <h1><%= t(".folders") %></h1>
+  <%= ">" unless params[:folder_id] %>
   <%= link_to t(".all_logins"), logins_path %> <br />
   <%= link_to t(".mange_folders"), folders_path %> <br />
     <% Folder.accessible_by(current_ability).each do |folder| %>
-      <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br />
+        <%= ">" if params[:folder_id].to_i == folder.id %>
+        <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br />
     <% end %>
   <h1><%= link_to t(".trash"), trash_index_path %></h1>
 </aside>
