@@ -28,4 +28,85 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      login: "Login"
+      folder: "Folder"
+      custom_field: "Custom field"
+      user: "User"
+    attributes:
+      login:
+        name: "Name"
+        urls: "URLs"
+        login_name: "Login name"
+        login_password: "Login password"
+        custom_fields: "Custom fields"
+        notes: "Notes"
+        is_favorite: "Is favorite"
+        folder: "Folder"
+        file: "File"
+        date_added_in_trash: "Date added in trash"
+      folder:
+        name: "Name"
+      custom_field:
+        name: "Name"
+        value: "Value"
+      user:
+        email_address: "Email address"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        first_name: "First name"
+        last_name: "Last name"
+  layouts:
+    application:
+      log_out: "Log out"
+  logins:
+    form:
+      prohibited: "prohibited this login from being saved"
+      save_login: "Save login"
+    login:
+      name: "Name"
+      urls: "URLs"
+      login_name: "Login name"
+      login_password: "Login password"
+      custom_fields: "Custom fields"
+      notes: "Notes"
+      is_favorite: "Is favorite"
+      folder: "Folder"
+      file: "File"
+      date_added_in_trash: "Date added in trash"
+    search_form:
+      search_for: "Search for:"
+      favorite: "Favorite"
+      search: "Search"
+    edit:
+      edit_login: "Edit login"
+      back_to_logins: "Back to logins"
+    index:
+      logins: "Logins"
+      new_login: "New login"
+      edit_login: "Edit login"
+      trash_login: "Send login to trash"
+      folders: "Folders"
+      all_logins: "All logins"
+      manage_folders: "Manage folders"
+      trash: "Trash"
+    new:
+      new_login: "New login"
+      back_to_logins: "Back to logins"
+  sessions:
+    new:
+      enter_your_email_address: "Enter your email address"
+      enter_your_password: "Enter your password"
+      sign_in: "Sign in"
+      create_account: "Create account"
+      forgot_password: "Forgot password?"
+  trash:
+    index:
+      back_to_logins: "Back to logins"
+      permanently_delete_login: "Permanently delete login"
+      restore_login: "Restore login"
+  users:
+    new:
+      prohibited: "prohibited this user from being saved"
+      sign_up: "Sign up"

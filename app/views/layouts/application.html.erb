@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Password Manager Rails3" %></title>
+    <title><%= content_for(:title) || "Password Manager" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -28,7 +28,7 @@
           <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
         <% end %>
       <% end %>
-    <%= button_to "Log out", session_path, method: :delete if Current.user %>
+    <%= button_to t(".log_out"), session_path, method: :delete if Current.user %>
     <%= yield %>
   </body>
 </html>

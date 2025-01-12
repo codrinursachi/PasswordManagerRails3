@@ -1,2 +1,83 @@
 ro:
-  hello: "Hello world"
+  activerecord:
+    models:
+      login: "Logare"
+      folder: "Folder"
+      custom_field: "Camp customizat"
+      user: "Utilizator"
+    attributes:
+      login:
+        name: "Nume"
+        urls: "URLs"
+        login_name: "Nume de logare"
+        login_password: "Parola de logare"
+        custom_fields: "Campuri customizate"
+        notes: "Notite"
+        is_favorite: "Este favorit"
+        folder: "Folder"
+        file: "Fisier"
+        date_added_in_trash: "Data adaugarii in cosul de gunoi"
+      folder:
+        name: "Nume"
+      custom_field:
+        name: "Nume"
+        value: "Valoare"
+      user:
+        email_address: "Adresa de email"
+        password: "Parola"
+        password_confirmation: "Confirmare parola"
+        first_name: "Prenume"
+        last_name: "Nume"
+  layouts:
+    application:
+      log_out: "Deconectare"
+  logins:
+    form:
+      prohibited: "au impiedicat aceasta logare sa fie salvata"
+      save_login: "Salveaza logarea"
+    login:
+      name: "Nume"
+      urls: "URLs"
+      login_name: "Nume de logare"
+      login_password: "Parola de logare"
+      custom_fields: "Campuri customizate"
+      notes: "Notite"
+      is_favorite: "Este favorit"
+      folder: "Folder"
+      file: "Fisier"
+      date_added_in_trash: "Data adaugarii in cosul de gunoi"
+    search_form:
+      search_for: "Cauta:"
+      favorite: "Favorite"
+      search: "Cauta"
+    edit:
+      edit_login: "Editeaza logarea"
+      back_to_logins: "Inapoi la logari"
+    index:
+      logins: "Logari"
+      new_login: "Logare noua"
+      edit_login: "Editeaza logarea"
+      trash_login: "Trimitere logare in cosul de gunoi"
+      folders: "Foldere"
+      all_logins: "Toate logarile"
+      manage_folders: "Administreaza foldere"
+      trash: "Cosul de gunoi"
+    new:
+      new_login: "Logare noua"
+      back_to_logins: "Inapoi la logari"
+  sessions:
+    new:
+      enter_your_email_address: "Introdu adresa de email"
+      enter_your_password: "Introdu parola"
+      sign_in: "Autentificare"
+      create_account: "Creare cont"
+      forgot_password: "Ai uitat parola?"
+  trash:
+    index:
+      back_to_logins: "Inapoi la logari"
+      permanently_delete_login: "Stergere definitiva a logarii"
+      restore_login: "Restaurare logare"
+  users:
+    new:
+      prohibited: "au impiedicat acest utilizator sa fie salvat"
+      sign_up: "Inregistrare"

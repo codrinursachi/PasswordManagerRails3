@@ -1,56 +1,56 @@
 <div id="<%= dom_id login %>">
   <p>
-    <strong>Name:</strong>
+    <strong><%= t(".name") %>:</strong>
     <%= login.name %>
   </p>
 
   <p>
-    <strong>URLs:</strong>
+    <strong><%= t(".urls") %>:</strong>
     <% login.urls.each do |url| %>
       <%= url.uri %> <br />      
     <% end %>
   </p>
 
   <p>
-    <strong>Login name:</strong>
+    <strong><%= t(".login_name") %>:</strong>
     <%= login.login_name %>
   </p>
 
   <p>
-    <strong>Login password:</strong>
+    <strong><%= t(".login_password") %>:</strong>
     <%= login.login_password %>
   </p>
 
   <p>
-    <strong>Custom fields:</strong>
+    <strong><%= t(".custom_fields") %>:</strong>
     <% login.custom_fields.each do |custom_field| %>
       <%= custom_field.name %> : <%= custom_field.value %> <br />
     <% end %>
   </p>
 
   <p>
-    <strong>Notes:</strong>
+    <strong><%= t(".notes") %>:</strong>
     <%= login.notes %>
   </p>
 
   <p>
-    <strong>Is favorite:</strong>
+    <strong><%= t(".is_favorite") %>:</strong>
     <%= login.is_favorite %>
   </p>
 
   <p>
-    <strong>Folder:</strong>
+    <strong><%= t(".folder") %>:</strong>
     <%= login.folder.name %>
   </p>
 
   <p>
-    <strong>File:</strong>
+    <strong><%= t(".file") %>:</strong>
     <%=  login.file.attached? ? (link_to 'Download file', rails_blob_path(login.file, disposition: "attachment")) : "No attachment" %>
   </p>
 
   <% if login.trash_date %>
     <p>
-      <strong>Date added in trash:</strong>
+      <strong><%= t(".date_added_in_trash") %>:</strong>
       <%= login.trash_date %>
     </p>
   <% end %>

@@ -16,10 +16,6 @@ class LoginsController < ApplicationController
     filter_scopes[:folder].call if params[:folder_id].present?
   end
 
-  # GET /logins/1 or /logins/1.json
-  def show
-  end
-
   # GET /logins/new
   def new
     @login.urls.build
@@ -52,7 +48,7 @@ class LoginsController < ApplicationController
     respond_to do |format|
       if @login.update(login_params)
         format.html { redirect_to @login, notice: "Login was successfully updated." }
-        format.json { render :show, status: :ok, location: @login }
+        format.json { render :index, status: :ok, location: @login }
       else
         (1 - @login.urls.size).times { @login.urls.build }
         (1 - @login.custom_fields.size).times { @login.custom_fields.build }

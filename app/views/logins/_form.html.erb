@@ -1,7 +1,7 @@
 <%= form_with(model: login) do |form| %>
   <% if login.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(login.errors.count, "error") %> prohibited this login from being saved:</h2>
+      <h2><%= pluralize(login.errors.count, "error") + " " + t(".prohibited") %>:</h2>
 
       <ul>
         <% login.errors.each do |error| %>
@@ -64,6 +64,6 @@
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit t(".save_login")  %>
   </div>
 <% end %>

@@ -1,10 +1,10 @@
-<%= link_to "Show all logins", logins_path %>
+<%= link_to t(".back_to_logins"), logins_path %>
 <% @logins.each do |login| %>
     <%= render login %>
     <p>
-        <%= button_to "Permanently delete login", 'trash/' + login.id.to_s, method: :delete  %>
+        <%= button_to t(".permanently_delete_login"), 'trash/' + login.id.to_s, method: :delete  %>
     </p>
     <p>
-        <%= link_to "Restore login", 'trash/restore/' + login.id.to_s%>
+        <%= link_to t(".restore_login"), 'trash/restore/' + login.id.to_s%>
     </p>
 <% end %>

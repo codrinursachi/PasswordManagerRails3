@@ -2,25 +2,24 @@
 
 <% content_for :title, "Logins" %>
 
-<h1>Logins</h1>
+<h1><%= t(".logins") %></h1>
 <%= render "search_form" %>
-<%= link_to "New login", new_login_path %>
+<%= link_to t(".new_login"), new_login_path %>
 <div id="logins">
   <% @logins.each do |login| %>
     <%= render login %>
     <p>
-      <%= link_to "Edit this login", edit_login_path(login) %>
-      <%= button_to "Send login to trash", login, method: :delete %>
+      <%= link_to t(".edit_login"), edit_login_path(login) %>
+      <%= button_to t(".trash_login"), login, method: :delete %>
     </p>
   <% end %>
 </div>
 <aside>
-  <h1>Folders</h1>
-  <%= link_to "Show all logins", logins_path %> <br />
-  <%= link_to "Manage folders", folders_path %> <br />
+  <h1><%= t(".folders") %></h1>
+  <%= link_to t(".all_logins"), logins_path %> <br />
+  <%= link_to t(".mange_folders"), folders_path %> <br />
     <% Folder.accessible_by(current_ability).each do |folder| %>
       <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br />
     <% end %>
-  <h1>Trash</h1>
-  <%= link_to "Show trash", trash_index_path %>
+  <h1><%= link_to t(".trash"), trash_index_path %></h1>
 </aside>
