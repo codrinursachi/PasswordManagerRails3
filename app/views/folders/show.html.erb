@@ -3,9 +3,9 @@
 <%= render @folder %>
 
 <div>
-  <%= link_to "Edit this folder", edit_folder_path(@folder) %> |
-  <%= link_to "Back to folders", folders_path %> |
-  <%= link_to "View passwords for folder", logins_path+"?folder_id=#{@folder.id}"%>
+  <%= link_to t(".edit_this_folder"), edit_folder_path(@folder) %> |
+  <%= link_to t(".back_to_folder"), folders_path %> |
+  <%= link_to t(".view_passwords_for_folder"), logins_path+"?folder_id=#{@folder.id}"%>
 
-  <%= button_to "Destroy this folder", @folder, method: :delete %>
+  <%= button_to t(".destroy_this_folder"), @folder, method: :delete %>
 </div>

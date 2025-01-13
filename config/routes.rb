@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope "/:locale" do
+  scope "(/:locale)" do
     resources :trash, only: [ :index, :destroy ]
     get "trash/restore/:id" => "trash#restore"
     resources :users, only: [ :new, :create ]

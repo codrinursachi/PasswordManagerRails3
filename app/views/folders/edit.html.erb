@@ -1,12 +1,12 @@
-<% content_for :title, "Editing folder" %>
+<% content_for :title, t(".editing_folder") %>
 
-<h1>Editing folder</h1>
+<h1><%= t(".editing_folder") %></h1>
 
 <%= render "form", folder: @folder %>
 
 <br>
 
 <div>
-  <%= link_to "Show this folder", @folder %> |
-  <%= link_to "Back to folders", folders_path %>
+  <%= link_to t(".show_this_folder"), @folder %> |
+  <%= link_to t(".back_to_folders"), folders_path %>
 </div>

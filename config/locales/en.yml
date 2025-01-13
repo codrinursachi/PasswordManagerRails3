@@ -57,6 +57,30 @@ en:
         password_confirmation: "Password confirmation"
         first_name: "First name"
         last_name: "Last name"
+  folders:
+    folder:
+      back_to_logins: "Back to logins"
+      new_folder: "New folder"
+      show_this_folder: "Show this folder"
+    form:
+      prohibited: "prohibited this folder from being saved"
+      save_folder: "Save folder"
+    edit:
+      editing_folder: "Editing folder"
+      show_this_folder: "Show this folder"
+      back_to_folders: "Back to folders"
+    index:
+      folders: "Folders"
+      new_folder: "New folder"
+      show_this_folder: "Show this folder"
+    new:
+      new_folder: "New folder"
+      back_to_folders: "Back to folders"
+    show:
+      edit_this_folder: "Edit this folder"
+      back_to_folders: "Back to folders"
+      virew_passwords_for_folder: "View passwords for folder"
+      destroy_this_folder: "Destroy this folder"
   layouts:
     application:
       log_out: "Log out"
@@ -104,6 +128,7 @@ en:
   trash:
     index:
       back_to_logins: "Back to logins"
+      trash: "Trash"
       permanently_delete_login: "Permanently delete login"
       restore_login: "Restore login"
   users:

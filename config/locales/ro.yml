@@ -28,6 +28,30 @@ ro:
         password_confirmation: "Confirmare parola"
         first_name: "Prenume"
         last_name: "Nume"
+  folders:
+    folder:
+      back_to_logins: "Inapoi la logari"
+      new_folder: "Folder nou"
+      show_this_folder: "Afiseaza acest folder"
+    form:
+      prohibited: "au impiedicat acest folder sa fie salvat"
+      save_folder: "Salveaza folder"
+    edit:
+      editing_folder: "Editeaza folder"
+      show_this_folder: "Afiseaza acest folder"
+      back_to_folders: "Inapoi la foldere"
+    index:
+      folders: "Foldere"
+      new_folder: "Folder nou"
+      show_this_folder: "Afiseaza acest folder"
+    new:
+      new_folder: "Folder nou"
+      back_to_folders: "Inapoi la foldere"
+    show:
+      edit_this_folder: "Editeaza acest folder"
+      back_to_folders: "Inapoi la foldere"
+      virew_passwords_for_folder: "Vezi parolele pentru acest folder"
+      destroy_this_folder: "Sterge acest folder"
   layouts:
     application:
       log_out: "Deconectare"
@@ -75,6 +99,7 @@ ro:
   trash:
     index:
       back_to_logins: "Inapoi la logari"
+      trash: "Cosul de gunoi"
       permanently_delete_login: "Stergere definitiva a logarii"
       restore_login: "Restaurare logare"
   users:
