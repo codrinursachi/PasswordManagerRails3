@@ -1,12 +1,19 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
-
-<%= form_with url: session_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: t(".enter_your_email_address"), value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t(".enter_your_password"), maxlength: 72 %><br>
-  <%= form.submit t(".sign_in") %>
-<% end %>
-<%= link_to t(".create_account"), new_user_path %>
-<br>
-
-<%= link_to t(".forgot_password"), new_password_path %>
+<div class="flex flex-col items-center justify-center h-full">
+  <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+  <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+  <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
+  <div class="mb-10 text-3xl font-bold"><%= t(".sign_in") %></div>
+  <div class="bg-white w-[500px] h-[400px] rounded-xl border border-gray-500">
+    <%= form_with url: session_path do |form| %>
+      <fieldset class="p-4 m-10 border border-gray-500 rounded-xl focus-within:border-blue-500">
+        <legend class="pl-2 ml-4 text-gray-500"><%= t(".login_data") %></legend>
+        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: t(".enter_your_email_address"), value: params[:email_address], class: "user-data-input" %><br>
+        <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t(".enter_your_password"), class: "user-data-input" %><br>
+      </fieldset>
+      <%= form.submit t(".sign_in"), class:"btn-primary" %>
+    <% end %>
+    <%= link_to t(".forgot_password"), new_password_path, class: "m-10" %>
+    <hr class="w-[calc(100%-80px)] mx-auto my-8 border-gray-500">
+    <%= link_to t(".create_account"), new_user_path, class: "m-10 text-blue-700" %>
+  </div>
+</div>
