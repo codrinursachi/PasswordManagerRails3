@@ -5,8 +5,8 @@
   <div class="mb-10 text-3xl font-bold"><%= t(".sign_in") %></div>
   <div class="bg-white w-[500px] h-[400px] rounded-xl border border-gray-500">
     <%= form_with url: session_path do |form| %>
-      <fieldset class="p-4 m-10 border border-gray-500 rounded-xl focus-within:border-blue-500">
-        <legend class="pl-2 ml-4 text-gray-500"><%= t(".login_data") %></legend>
+      <fieldset class="form-fieldset">
+        <legend class="fieldset-legend"><%= t(".login_data") %></legend>
         <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: t(".enter_your_email_address"), value: params[:email_address], class: "user-data-input" %><br>
         <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t(".enter_your_password"), class: "user-data-input" %><br>
       </fieldset>
