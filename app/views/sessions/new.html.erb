@@ -3,14 +3,16 @@
   <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
   <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
   <div class="mb-10 text-3xl font-bold"><%= t(".sign_in") %></div>
-  <div class="password-form">
+  <div class="form">
     <%= form_with url: session_path do |form| %>
       <fieldset class="m-10">
         <legend><%= t(".login_data") %></legend>
-        <div>
+        <div class="label-input-pair">
+          <%= form.label :email_address %>
           <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "user-data-input" %><br>
         </div>
-        <div>
+        <div class="label-input-pair">
+          <%= form.label :password %>
           <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t(".enter_your_password"), class: "user-data-input" %><br>
         </div>
       </fieldset>

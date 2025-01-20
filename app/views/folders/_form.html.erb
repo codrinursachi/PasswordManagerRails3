@@ -2,7 +2,6 @@
   <% if folder.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(folder.errors.count, "error") + " " + t(".prohibited") %>:</h2>
-
       <ul>
         <% folder.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,13 +9,13 @@
       </ul>
     </div>
   <% end %>
-
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <fieldset>
+      <legend><%= form.label :name, style: "display: block" %></legend>
+      <%= form.text_field :name %>
+    </fieldset>
   </div>
-
   <div>
-    <%= form.submit t(".save_folder") %>
+    <%= form.submit t(".save_folder"), class: "btn-primary mt-2" %>
   </div>
 <% end %>

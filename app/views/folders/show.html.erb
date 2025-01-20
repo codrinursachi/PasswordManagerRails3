@@ -1,11 +1,8 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @folder %>
-
-<div>
-  <%= link_to t(".edit_this_folder"), edit_folder_path(@folder) %> |
-  <%= link_to t(".back_to_folder"), folders_path %> |
-  <%= link_to t(".view_passwords_for_folder"), logins_path+"?folder_id=#{@folder.id}"%>
-
-  <%= button_to t(".destroy_this_folder"), @folder, method: :delete %>
+<div class="flex flex-col items-center flex-1 mt-16 ml-16">
+  <%= render @folder %>
+  <div>
+    <%= link_to t(".edit_this_folder"), edit_folder_path(@folder) %> |
+    <%= button_to t(".destroy_this_folder"), @folder, method: :delete, class: "btn-primary" %>
+  </div>
 </div>

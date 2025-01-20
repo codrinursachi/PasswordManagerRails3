@@ -35,6 +35,11 @@
   fieldset {
     @apply px-1 pb-1 border border-gray-500 rounded-xl focus-within:border-blue-500;
   }
+
+  input,
+  textarea {
+    @apply pl-2 rounded-md focus:outline-none;
+  }
 }
 
 @layer utilities {
@@ -52,13 +57,8 @@
     @apply px-4 py-2 font-bold text-center text-blue-600 bg-white rounded-full cursor-pointer ring-2 ring-blue-600 hover:bg-blue-600 hover:text-white;
   }
 
-  .user-data-input,
-  .data-input {
-    @apply pl-2 rounded-md focus:outline-none;
-  }
-
   .user-data-input {
-    @apply w-full mt-2 border border-gray-500;
+    @apply w-full mt-2 border border-gray-500 focus:border-blue-600;
   }
 
   .label-input-pair {
@@ -69,7 +69,7 @@
     @apply w-[calc(33.3333%-8px)] p-4 rounded-xl bg-zinc-200;
   }
 
-  .password-form {
+  .form {
     @apply bg-white w-[500px] rounded-xl border border-gray-500 p-2;
   }
 }

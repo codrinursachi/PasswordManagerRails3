@@ -23,7 +23,7 @@
     <div class="flex min-h-full">
       <%= render "layouts/sidepanel" if Current.user %>
       <%= yield %>
-      <div class="p-4">
+      <div class="w-32 text-blue-600">
         <% I18n.available_locales.each do |locale| %>
           <% if I18n.locale != locale %>
             <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>

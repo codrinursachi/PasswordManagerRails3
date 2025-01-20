@@ -4,7 +4,7 @@
   <br>
   <i class="fas fa-gear"></i> <%= link_to t(".mange_folders"), folders_path %> <br>
   <br>
-  <%= ">" unless params[:folder_id] %>
+  <%= ">" unless params[:folder_id] || request.original_url.include?("folder") %>
   <%= link_to t(".all_logins"), logins_path %> <br>
   <% Folder.accessible_by(current_ability).each do |folder| %>
     <%= ">" if params[:folder_id].to_i == folder.id %>
