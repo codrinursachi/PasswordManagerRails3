@@ -1,27 +1,19 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Logins" %>
-
-<h1><%= t(".logins") %></h1>
-<%= render "search_form" %>
-<%= link_to t(".new_login"), new_login_path %>
-<div id="logins">
+<div class="flex-1 mt-16 ml-16">
+  <p style="color: green"><%= notice %></p>
+  <% content_for :title, "Logins" %>
+  <div class="flex justify-between">
+    <h1><%= t(".logins") %></h1>
+    <%= link_to t(".new_login"), new_login_path, class: "btn-primary" %>
+  </div>
+  <%= render "search_form" %>
   <% @logins.each do |login| %>
-    <%= render login %>
-    <p>
-      <%= link_to t(".edit_login"), edit_login_path(login) %>
-      <%= button_to t(".trash_login"), login, method: :delete %>
-    </p>
+    <div class="password-card">
+      <%= render login %>
+      <div class="flex mt-2">
+        <%= link_to t(".edit_login"), edit_login_path(login), class: "btn-primary" %>
+        <div class="mx-2"></div>
+        <%= button_to t(".trash_login"), login, method: :delete, class: "btn-secondary" %>
+      </div>
+    </div>
   <% end %>
 </div>
-<aside>
-  <h1><%= t(".folders") %></h1>
-  <%= ">" unless params[:folder_id] %>
-  <%= link_to t(".all_logins"), logins_path %> <br />
-  <%= link_to t(".mange_folders"), folders_path %> <br />
-    <% Folder.accessible_by(current_ability).each do |folder| %>
-        <%= ">" if params[:folder_id].to_i == folder.id %>
-        <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br />
-    <% end %>
-  <h1><%= link_to t(".trash"), trash_index_path %></h1>
-</aside>

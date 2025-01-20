@@ -32,7 +32,7 @@ class LoginsController < ApplicationController
   def create
     respond_to do |format|
       if @login.save
-        format.html { redirect_to @login, notice: "Login was successfully created." }
+        format.html { redirect_to logins_path, notice: "Login was successfully created." }
         format.json { render :show, status: :created, location: @login }
       else
         (1 - @login.urls.size).times { @login.urls.build }

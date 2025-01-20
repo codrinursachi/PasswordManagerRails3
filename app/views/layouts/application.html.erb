@@ -19,15 +19,18 @@
     <%= javascript_importmap_tags %>
     <script src="https://kit.fontawesome.com/dc2b84518f.js" crossorigin="anonymous"></script>
   </head>
-  <body class="h-[calc(100vh-60px)] bg-zinc-50">
-    <div class="p-4 text-right">
-      <% I18n.available_locales.each do |locale| %>
-        <% if I18n.locale != locale %>
-          <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
+  <body>
+    <div class="flex min-h-full">
+      <%= render "layouts/sidepanel" if Current.user %>
+      <%= yield %>
+      <div class="p-4">
+        <% I18n.available_locales.each do |locale| %>
+          <% if I18n.locale != locale %>
+            <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
+          <% end %>
         <% end %>
-      <% end %>
-      <%= button_to t(".log_out"), session_path, method: :delete if Current.user %>
+        <%= button_to t(".log_out"), session_path, method: :delete if Current.user %>
+      </div>
     </div>
-    <%= yield %>
   </body>
 </html>

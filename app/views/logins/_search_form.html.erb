@@ -1,7 +1,11 @@
-<%= form_with url: logins_path, method: :get do |form| %>
-  <%= form.label :q, t(".search_for") %>
-  <%= form.search_field :q %>
-  <%= form.label :favorite, t(".favorite")%>
-  <%= form.check_box :favorite, include_hidden: false %>
-  <%= form.submit t(".search") %>
+<%= form_with url: logins_path, class: "flex gap-10 mt-8 items-center text-2xl", method: :get do |form| %>
+  <div>
+    <%= form.label :q, t(".search_for"), class: "text-2xl" %>
+    <%= form.search_field :q, class: "data-input" %>
+  </div>
+  <div>
+    <%= form.label :favorite, t(".favorite")%>
+    <%= form.check_box :favorite, include_hidden: false, class: "size-[21px]" %>
+  </div>
+  <%= form.submit t(".search"), class: "btn-primary text-lg" %>
 <% end %>

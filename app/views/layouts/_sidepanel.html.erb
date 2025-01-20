@@ -1,0 +1,15 @@
+<aside>
+  <div class="mb-4 text-lg"><i class="fas fa-shield-halved"></i> <%= link_to "Password Manager", root_path %></div>
+  <h2><%= t(".folders") %></h2>
+  <br>
+  <i class="fas fa-gear"></i> <%= link_to t(".mange_folders"), folders_path %> <br>
+  <br>
+  <%= ">" unless params[:folder_id] %>
+  <%= link_to t(".all_logins"), logins_path %> <br>
+  <% Folder.accessible_by(current_ability).each do |folder| %>
+    <%= ">" if params[:folder_id].to_i == folder.id %>
+    <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br>
+  <% end %><br>
+  <i class="fas fa-trash-alt"></i>
+  <%= link_to t(".trash"), trash_index_path %>
+</aside>

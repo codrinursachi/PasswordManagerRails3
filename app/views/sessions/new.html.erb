@@ -1,16 +1,20 @@
-<div class="flex flex-col items-center justify-center h-full">
+<div class="flex flex-col items-center justify-center flex-1 h-full">
   <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
   <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
   <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
   <div class="mb-10 text-3xl font-bold"><%= t(".sign_in") %></div>
-  <div class="bg-white w-[500px] h-[400px] rounded-xl border border-gray-500">
+  <div class="password-form">
     <%= form_with url: session_path do |form| %>
-      <fieldset class="form-fieldset">
-        <legend class="fieldset-legend"><%= t(".login_data") %></legend>
-        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: t(".enter_your_email_address"), value: params[:email_address], class: "user-data-input" %><br>
-        <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t(".enter_your_password"), class: "user-data-input" %><br>
+      <fieldset class="m-10">
+        <legend><%= t(".login_data") %></legend>
+        <div>
+          <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "user-data-input" %><br>
+        </div>
+        <div>
+          <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t(".enter_your_password"), class: "user-data-input" %><br>
+        </div>
       </fieldset>
-      <%= form.submit t(".sign_in"), class:"btn-primary" %>
+      <%= form.submit t(".sign_in"), class:"btn-primary-user-action" %>
     <% end %>
     <%= link_to t(".forgot_password"), new_password_path, class: "m-10" %>
     <hr class="w-[calc(100%-80px)] mx-auto my-8 border-gray-500">

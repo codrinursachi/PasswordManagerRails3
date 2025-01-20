@@ -1,7 +1,7 @@
-<div class="flex flex-col items-center justify-center h-full">
+<div class="flex flex-col items-center justify-center flex-1 h-full">
   <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
   <div class="mb-10 text-3xl font-bold"><%= t(".sign_up") %></div>
-  <div class="bg-white w-[500px] h-[550px] rounded-xl border border-gray-500">
+  <div class="bg-white w-[500px] h-[570px] rounded-xl border border-gray-500">
     <%= form_with(model: @user) do |form| %>
       <% if @user.errors.any? %>
         <div style="color: red">
@@ -13,30 +13,30 @@
           </ul>
         </div>
       <% end %>
-      <fieldset class="form-fieldset">
-        <legend class="fieldset-legend"><%= t(".registration_data") %></legend>
+      <fieldset class="m-10">
+        <legend><%= t(".registration_data") %></legend>
         <div class="label-input-pair">
-          <%= form.label :email_address, class: "pl-2" %>
+          <%= form.label :email_address %>
           <%= form.text_field :email_address, class: "user-data-input" %>
         </div>
         <div class="label-input-pair">
-          <%= form.label :password, class: "pl-2" %>
+          <%= form.label :password %>
           <%= form.password_field :password, class: "user-data-input" %>
         </div>
         <div class="label-input-pair">
-          <%= form.label :password_confirmation, class: "pl-2" %>
+          <%= form.label :password_confirmation %>
           <%= form.password_field :password_confirmation, class: "user-data-input" %>
         </div>
         <div class="label-input-pair">
-          <%= form.label :first_name, class: "pl-2" %>
+          <%= form.label :first_name %>
           <%= form.text_field :first_name, class: "user-data-input" %>
         </div>
         <div class="label-input-pair">
-          <%= form.label :last_name, class: "pl-2" %>
+          <%= form.label :last_name %>
           <%= form.text_field :last_name, class: "user-data-input" %>
         </div>
       </fieldset>
-      <div class="btn-primary">
+      <div class="btn-primary-user-action">
         <%= form.submit t(".sign_up") %>
       </div>
     <% end %>

@@ -3,56 +3,46 @@
     <strong><%= t(".name") %>:</strong>
     <%= login.name %>
   </p>
-
   <p>
     <strong><%= t(".urls") %>:</strong>
     <% login.urls.each do |url| %>
-      <%= url.uri %> <br />      
+      <%= url.uri %> <br />
     <% end %>
   </p>
-
   <p>
     <strong><%= t(".login_name") %>:</strong>
     <%= login.login_name %>
   </p>
-
   <p>
     <strong><%= t(".login_password") %>:</strong>
     <%= login.login_password %>
   </p>
-
   <p>
     <strong><%= t(".custom_fields") %>:</strong>
     <% login.custom_fields.each do |custom_field| %>
       <%= custom_field.name %> : <%= custom_field.value %> <br />
     <% end %>
   </p>
-
   <p>
     <strong><%= t(".notes") %>:</strong>
     <%= login.notes %>
   </p>
-
   <p>
     <strong><%= t(".is_favorite") %>:</strong>
     <%= login.is_favorite %>
   </p>
-
   <p>
     <strong><%= t(".folder") %>:</strong>
     <%= login.folder.name %>
   </p>
-
   <p>
     <strong><%= t(".file") %>:</strong>
     <%=  login.file.attached? ? (link_to 'Download file', rails_blob_path(login.file, disposition: "attachment")) : "No attachment" %>
   </p>
-
   <% if login.trash_date %>
     <p>
       <strong><%= t(".date_added_in_trash") %>:</strong>
       <%= login.trash_date %>
     </p>
   <% end %>
-
 </div>
