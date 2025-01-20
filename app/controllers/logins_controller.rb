@@ -47,7 +47,7 @@ class LoginsController < ApplicationController
   def update
     respond_to do |format|
       if @login.update(login_params)
-        format.html { redirect_to @login, notice: "Login was successfully updated." }
+        format.html { redirect_to logins_path, notice: "Login was successfully updated." }
         format.json { render :index, status: :ok, location: @login }
       else
         (1 - @login.urls.size).times { @login.urls.build }
