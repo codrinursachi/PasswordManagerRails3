@@ -22,14 +22,16 @@
   <body>
     <div class="flex min-h-full">
       <%= render "layouts/sidepanel" if Current.user %>
-      <%= yield %>
-      <div class="w-32 text-blue-600">
-        <% I18n.available_locales.each do |locale| %>
-          <% if I18n.locale != locale %>
-            <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
+      <div class="flex flex-col w-full">
+        <div class="w-32 ml-auto text-blue-600">
+          <% I18n.available_locales.each do |locale| %>
+            <% if I18n.locale != locale %>
+              <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
+            <% end %>
           <% end %>
-        <% end %>
-        <%= button_to t(".log_out"), session_path, method: :delete if Current.user %>
+          <%= button_to t(".log_out"), session_path, method: :delete if Current.user %>
+        </div>
+        <%= yield %>
       </div>
     </div>
   </body>

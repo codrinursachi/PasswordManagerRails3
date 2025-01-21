@@ -17,7 +17,7 @@
   }
 
   aside {
-    @apply min-h-full p-8 text-white bg-blue-800 w-[270px] text-xl;
+    @apply min-h-full p-8 text-white bg-blue-800 w-[290px] text-xl;
   }
 
   h1 {
@@ -66,7 +66,7 @@
   }
 
   .password-card {
-    @apply w-[calc(33.3333%-8px)] p-4 rounded-xl bg-zinc-200;
+    @apply w-[calc(33.3333%-4px)] p-4 rounded-xl bg-zinc-200;
   }
 
   .form {
