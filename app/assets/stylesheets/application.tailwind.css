@@ -8,7 +8,11 @@
   }
 
   aside {
-    @apply min-h-full p-8 text-white bg-blue-800 w-[290px] text-xl;
+    @apply min-h-full p-8 text-white bg-blue-800 min-w-full md:min-w-[290px] text-xl absolute md:static;
+  }
+
+  main {
+    @apply flex-1 mx-2 md:mx-16;
   }
 
   h1 {
@@ -30,7 +34,7 @@
   input,
   textarea,
   select {
-    @apply pl-2 rounded-md focus:outline-none dark:bg-zinc-800;
+    @apply w-full pl-2 rounded-md focus:outline-none dark:bg-zinc-800;
   }
 }
 
@@ -38,7 +42,7 @@
 
   .btn-primary,
   .btn-primary-user-action {
-    @apply px-4 py-2 font-bold text-center text-white bg-blue-600 rounded-full cursor-pointer hover:bg-blue-700;
+    @apply w-auto px-4 py-2 font-bold text-center text-white bg-blue-600 rounded-full cursor-pointer hover:bg-blue-700;
   }
 
   .btn-primary-user-action {
@@ -58,10 +62,10 @@
   }
 
   .password-card {
-    @apply w-[calc(33.3333%-4px)] p-4 rounded-xl bg-zinc-200 dark:bg-zinc-800;
+    @apply w-full md:w-[calc(33.3333%-4px)] p-4 rounded-xl bg-zinc-200 dark:bg-zinc-800;
   }
 
   .form {
-    @apply bg-white w-[500px] rounded-xl border border-gray-500 p-2 dark:bg-zinc-800;
+    @apply bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 p-2 dark:bg-zinc-800;
   }
 }

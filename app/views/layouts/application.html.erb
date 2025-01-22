@@ -18,6 +18,19 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <script src="https://kit.fontawesome.com/dc2b84518f.js" crossorigin="anonymous"></script>
+    <script>
+      window.onload = () => {
+      const mobileMenuIcon = document.getElementById("mobile-menu-button");
+      const sidePanel = document.getElementById("side-panel");
+      mobileMenuIcon.addEventListener("click", () => {
+      if (sidePanel.classList.contains("hidden")) {
+      sidePanel.classList.remove("hidden");
+      } else {
+      sidePanel.classList.add("hidden");
+      }
+      });
+      }
+    </script>
   </head>
   <body>
     <div class="flex min-h-full">
@@ -31,7 +44,22 @@
           <% end %>
           <%= button_to t(".log_out"), session_path, method: :delete if Current.user %>
         </div>
-        <%= yield %>
+        <div class="block pl-2 mr-auto cursor-pointer md:hidden">
+          <button id="mobile-menu-button">
+            <div
+                class="w-8 h-1 rounded-full bg-zinc-200"
+              ></div>
+            <div
+                class="w-8 h-1 mt-1 rounded-full bg-zinc-200"
+              ></div>
+            <div
+                class="w-8 h-1 mt-1 rounded-full bg-zinc-200"
+              ></div>
+          </button>
+        </div>
+        <main>
+          <%= yield %>
+        </main>
       </div>
     </div>
   </body>
