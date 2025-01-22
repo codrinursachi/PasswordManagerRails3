@@ -2,18 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply px-4 py-2 bg-blue-200;
-  }
-}
-
-*/
 @layer base {
   body {
-    @apply h-screen bg-zinc-100;
+    @apply h-screen text-gray-800 bg-zinc-100 dark:bg-zinc-900 dark:text-gray-200;
   }
 
   aside {
@@ -37,12 +28,13 @@
   }
 
   input,
-  textarea {
-    @apply pl-2 rounded-md focus:outline-none;
+  textarea,
+  select {
+    @apply pl-2 rounded-md focus:outline-none dark:bg-zinc-800;
   }
 }
 
-@layer utilities {
+@layer components {
 
   .btn-primary,
   .btn-primary-user-action {
@@ -66,10 +58,10 @@
   }
 
   .password-card {
-    @apply w-[calc(33.3333%-4px)] p-4 rounded-xl bg-zinc-200;
+    @apply w-[calc(33.3333%-4px)] p-4 rounded-xl bg-zinc-200 dark:bg-zinc-800;
   }
 
   .form {
-    @apply bg-white w-[500px] rounded-xl border border-gray-500 p-2;
+    @apply bg-white w-[500px] rounded-xl border border-gray-500 p-2 dark:bg-zinc-800;
   }
 }
