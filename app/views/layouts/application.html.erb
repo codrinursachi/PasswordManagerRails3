@@ -36,13 +36,13 @@
     <div class="flex min-h-full">
       <%= render "layouts/sidepanel" if Current.user %>
       <div class="flex flex-col w-full">
-        <div class="w-32 ml-auto text-blue-600">
+        <div class="flex gap-2 pr-2 ml-auto text-blue-600">
           <% I18n.available_locales.each do |locale| %>
             <% if I18n.locale != locale %>
               <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
             <% end %>
           <% end %>
-          <%= button_to t(".log_out"), session_path, method: :delete if Current.user %>
+          <%= button_to content_tag(:i,'', class: "fas fa-arrow-right-from-bracket"), session_path, method: :delete if Current.user %>
         </div>
         <div class="block pl-2 mr-auto cursor-pointer md:hidden">
           <button id="mobile-menu-button">

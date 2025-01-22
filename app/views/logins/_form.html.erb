@@ -1,4 +1,4 @@
-  <%= form_with(model: login) do |form| %>
+<%= form_with(model: login) do |form| %>
   <% if login.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(login.errors.count, "error") + " " + t(".prohibited") %>:</h2>
@@ -9,67 +9,65 @@
       </ul>
     </div>
   <% end %>
-  <div class="flex flex-col gap-1">
-    <div>
+  <div>
+    <fieldset>
+      <legend class="fieldset-legend"><%= form.label :name, style: "display: block" %></legend>
+      <%= form.text_field :name, class: "data-input w-full" %>
+    </fieldset>
+  </div>
+  <div>
+    <fieldset>
+      <legend><%= form.label :login_name, style: "display: block" %></legend>
+      <%= form.text_field :login_name, class: "data-input w-full" %>
+    </fieldset>
+  </div>
+  <div>
+    <fieldset>
+      <legend><%= form.label :login_password, style: "display: block" %></legend>
+      <%= form.password_field :login_password, value: login.login_password, class: "data-input w-full" %>
+    </fieldset>
+  </div>
+  <div>
+    <%= form.fields_for :urls do |urls_form| %>
       <fieldset>
-        <legend class="fieldset-legend"><%= form.label :name, style: "display: block" %></legend>
-        <%= form.text_field :name, class: "data-input w-full" %>
+        <legend><%= urls_form.label :uri, style: "display: block" %></legend>
+        <%= urls_form.text_field :uri, class: "data-input w-full" %>
       </fieldset>
-    </div>
-    <div>
+    <% end %>
+  </div>
+  <div>
+    <fieldset>
+      <legend><%= form.label :notes, style: "display: block" %></legend>
+      <%= form.textarea :notes, class: "data-input w-full" %>
+    </fieldset>
+  </div>
+  <div>
+    Custom fields:
+    <%= form.fields_for :custom_fields do |custom_field_form| %>
       <fieldset>
-        <legend><%= form.label :login_name, style: "display: block" %></legend>
-        <%= form.text_field :login_name, class: "data-input w-full" %>
+        <legend><%= custom_field_form.label :name, style: "display: block" %></legend>
+        <%= custom_field_form.text_field :name, class: "data-input w-full" %>
       </fieldset>
-    </div>
-    <div>
       <fieldset>
-        <legend><%= form.label :login_password, style: "display: block" %></legend>
-        <%= form.password_field :login_password, value: login.login_password, class: "data-input w-full" %>
+        <legend><%= custom_field_form.label :value, style: "display: block" %></legend>
+        <%= custom_field_form.text_field :value, class: "data-input w-full" %>
       </fieldset>
-    </div>
-    <div>
-      <%= form.fields_for :urls do |urls_form| %>
-        <fieldset>
-          <legend><%= urls_form.label :uri, style: "display: block" %></legend>
-          <%= urls_form.text_field :uri, class: "data-input w-full" %>
-        </fieldset>
-      <% end %>
-    </div>
-    <div>
-      <fieldset>
-        <legend><%= form.label :notes, style: "display: block" %></legend>
-        <%= form.textarea :notes, class: "data-input w-full" %>
-      </fieldset>
-    </div>
-    <div>
-      Custom fields:
-      <%= form.fields_for :custom_fields do |custom_field_form| %>
-        <fieldset>
-          <legend><%= custom_field_form.label :name, style: "display: block" %></legend>
-          <%= custom_field_form.text_field :name, class: "data-input w-full" %>
-        </fieldset>
-        <fieldset>
-          <legend><%= custom_field_form.label :value, style: "display: block" %></legend>
-          <%= custom_field_form.text_field :value, class: "data-input w-full" %>
-        </fieldset>
-      <% end %>
-    </div>
-    <div>
-      <%= form.label :is_favorite %>
-      <%= form.checkbox :is_favorite, class: "size-4" %>
-    </div>
-    <div>
-      <%= form.label :folder_id, style: "display: block" %>
-      <%= form.collection_select :folder_id, Folder.accessible_by(current_ability),:id,:name %>
-    </div>
-    <div>
-      <%= form.label :file %>
-      <%= form.file_field :file %>
-    </div>
-    <div class="mt-10">
-      <%= form.submit t(".save_login"), class: "btn-primary"  %>
-      <%= link_to t(".cancel"), logins_path, class: "btn-secondary" %>
-    </div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :is_favorite %>
+    <%= form.checkbox :is_favorite, class: "size-4" %>
+  </div>
+  <div>
+    <%= form.label :folder_id, style: "display: block" %>
+    <%= form.collection_select :folder_id, Folder.accessible_by(current_ability),:id,:name %>
+  </div>
+  <div>
+    <%= form.label :file %>
+    <%= form.file_field :file %>
+  </div>
+  <div>
+    <%= form.submit t(".save_login"), class: "btn-primary"  %>
+    <%= link_to t(".cancel"), logins_path, class: "btn-secondary" %>
   </div>
 <% end %>

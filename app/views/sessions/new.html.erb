@@ -5,7 +5,7 @@
   <div class="mb-10 text-3xl font-bold"><%= t(".sign_in") %></div>
   <div class="form">
     <%= form_with url: session_path do |form| %>
-      <fieldset class="m-10">
+      <fieldset>
         <legend><%= t(".login_data") %></legend>
         <div class="label-input-pair">
           <%= form.label :email_address %>
@@ -18,8 +18,8 @@
       </fieldset>
       <%= form.submit t(".sign_in"), class:"btn-primary-user-action" %>
     <% end %>
-    <%= link_to t(".forgot_password"), new_password_path, class: "m-10" %>
-    <hr class="w-[calc(100%-80px)] mx-auto my-8 border-gray-500">
-    <%= link_to t(".create_account"), new_user_path, class: "m-10 text-blue-700" %>
+    <%= link_to t(".forgot_password"), new_password_path %>
+    <hr>
+    <%= link_to t(".create_account"), new_user_path %>
   </div>
 </div>

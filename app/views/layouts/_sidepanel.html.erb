@@ -1,15 +1,23 @@
-<aside id="side-panel" class="hidden md:block">
-  <div class="mb-4 text-lg"><i class="fas fa-shield-halved"></i> <%= link_to "Password Manager", root_path %></div>
-  <h2><%= t(".folders") %></h2>
-  <br>
-  <i class="fas fa-gear"></i> <%= link_to t(".mange_folders"), folders_path %> <br>
-  <br>
-  <%= ">" unless params[:folder_id] || request.original_url.include?("folder") || request.original_url.include?("trash") %>
-  <%= link_to t(".all_logins"), logins_path %> <br>
-  <% Folder.accessible_by(current_ability).each do |folder| %>
-    <%= ">" if params[:folder_id].to_i == folder.id %>
-    <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br>
-  <% end %><br>
-  <i class="fas fa-trash-alt"></i>
-  <%= link_to t(".trash"), trash_index_path %>
+<aside id="side-panel" class="hidden md:flex">
+  <div class="text-lg"><i class="fas fa-shield-halved"></i> <%= link_to "Password Manager", root_path %></div>
+  <div>
+    <h2><%= t(".folders") %> <%= link_to content_tag(:i, '', class: "fas fa-gear"), folders_path %></h2>
+  </div>
+  <div>
+    <%= ">" unless params[:folder_id] || request.original_url.include?("folder") || request.original_url.include?("trash") %>
+    <%= link_to t(".all_logins"), logins_path %><br>
+    <br>
+    <% Folder.accessible_by(current_ability).each do |folder| %>
+      <% if params[:folder_id].to_i == folder.id %>
+        <i class="fas fa-folder-open"></i>
+      <% else %>
+        <i class="fas fa-folder"></i>
+      <% end %>
+      <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br>
+    <% end %>
+  </div>
+  <div>
+    <%= link_to content_tag(:i, t(".trash"), class: "fas fa-trash-alt"), trash_index_path %>
+    <%= link_to t(".trash"), trash_index_path %>
+  </div>
 </aside>

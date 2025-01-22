@@ -8,19 +8,35 @@
   }
 
   aside {
-    @apply min-h-full p-8 text-white bg-blue-800 min-w-full md:min-w-[290px] text-xl absolute md:static;
+    @apply h-screen p-8 text-white bg-blue-800 min-w-full md:min-w-[290px] text-lg flex-col gap-2 sticky top-0 overflow-auto;
   }
 
   main {
     @apply flex-1 mx-2 md:mx-16;
   }
 
+  a {
+    @apply text-blue-600;
+  }
+
+  aside a {
+    @apply text-white;
+  }
+
   h1 {
-    @apply text-4xl font-bold;
+    @apply text-3xl font-bold;
   }
 
   h2 {
-    @apply text-3xl font-bold;
+    @apply text-2xl font-bold;
+  }
+
+  hr {
+    @apply border-gray-500;
+  }
+
+  form {
+    @apply flex flex-col gap-4;
   }
 
   legend {
@@ -28,7 +44,7 @@
   }
 
   fieldset {
-    @apply px-1 pb-1 border border-gray-500 rounded-xl focus-within:border-blue-500;
+    @apply flex flex-col gap-1 px-1 pb-2 border border-gray-500 rounded-xl focus-within:border-blue-500;
   }
 
   input,
@@ -46,7 +62,7 @@
   }
 
   .btn-primary-user-action {
-    @apply w-[calc(100%-80px)] ml-10;
+    @apply w-full;
   }
 
   .btn-secondary {
@@ -54,18 +70,18 @@
   }
 
   .user-data-input {
-    @apply w-full mt-2 border border-gray-500 focus:border-blue-600;
+    @apply w-full border border-gray-500 focus:border-blue-600;
   }
 
   .label-input-pair {
-    @apply flex flex-col p-2;
+    @apply flex flex-col gap-0.5 mx-2;
   }
 
   .password-card {
-    @apply w-full md:w-[calc(33.3333%-4px)] p-4 rounded-xl bg-zinc-200 dark:bg-zinc-800;
+    @apply w-full md:w-[calc(25%-4px)] p-4 rounded-xl bg-zinc-200 dark:bg-zinc-800 text-sm;
   }
 
   .form {
-    @apply bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 p-2 dark:bg-zinc-800;
+    @apply bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 dark:bg-zinc-800 p-4 md:p-8 flex flex-col gap-2;
   }
 }
