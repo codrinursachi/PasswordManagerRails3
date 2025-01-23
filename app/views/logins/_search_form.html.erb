@@ -1,7 +1,7 @@
-<%= form_with url: logins_path, class: "flex-row mt-8 items-center flex-wrap", method: :get do |form| %>
+<%= form_with url: logins_path, class: "flex-row mt-8 items-center flex-wrap justify-between md:justify-start", method: :get do |form| %>
   <div>
     <%= form.label :q, t(".search_for") %>
-    <%= form.search_field :q, class: "hover:ring-1 hover:ring-blue-600 focus:ring-2 focus:ring-blue:600 w-full md:w-4/6" %>
+    <%= form.search_field :q, class: "hover:ring-1 hover:ring-blue-600 focus:ring-2 focus:ring-blue:600 w-full md:w-80" %>
   </div>
   <div>
     <%= form.label :favorite, t(".favorite")%>

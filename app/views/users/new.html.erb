@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center justify-center flex-1 h-full">
   <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
   <h1 class="mb-10"><%= t(".sign_up") %></h1>
-  <div class="form">
+  <div class="form-bg">
     <%= form_with(model: @user) do |form| %>
       <% if @user.errors.any? %>
         <div style="color: red">

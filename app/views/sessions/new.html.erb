@@ -3,7 +3,7 @@
   <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
   <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
   <div class="mb-10 text-3xl font-bold"><%= t(".sign_in") %></div>
-  <div class="form">
+  <div class="form-bg">
     <%= form_with url: session_path do |form| %>
       <fieldset>
         <legend><%= t(".login_data") %></legend>

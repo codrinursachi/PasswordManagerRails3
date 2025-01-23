@@ -8,7 +8,7 @@
   }
 
   aside {
-    @apply h-screen p-8 text-white bg-blue-800 min-w-full md:min-w-[290px] text-lg flex-col gap-2 sticky top-0 overflow-auto;
+    @apply h-screen text-white bg-blue-800 min-w-full md:min-w-[270px] text-lg flex-col gap-2 sticky top-0 overflow-auto;
   }
 
   main {
@@ -36,7 +36,7 @@
   }
 
   form {
-    @apply flex flex-col gap-4;
+    @apply flex flex-col gap-2;
   }
 
   legend {
@@ -44,13 +44,17 @@
   }
 
   fieldset {
-    @apply flex flex-col gap-1 px-1 pb-2 border border-gray-500 rounded-xl focus-within:border-blue-500;
+    @apply flex flex-col px-2 pb-1 border border-gray-500 rounded-xl focus-within:border-blue-500;
   }
 
   input,
   textarea,
   select {
     @apply w-full pl-2 rounded-md focus:outline-none dark:bg-zinc-800;
+  }
+
+  select {
+    @apply h-8
   }
 }
 
@@ -74,14 +78,14 @@
   }
 
   .label-input-pair {
-    @apply flex flex-col gap-0.5 mx-2;
+    @apply flex flex-col mb-1;
   }
 
   .password-card {
     @apply w-full md:w-[calc(25%-4px)] p-4 rounded-xl bg-zinc-200 dark:bg-zinc-800 text-sm;
   }
 
-  .form {
+  .form-bg {
     @apply bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 dark:bg-zinc-800 p-4 md:p-8 flex flex-col gap-2;
   }
 }

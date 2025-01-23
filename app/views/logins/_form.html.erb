@@ -43,16 +43,18 @@
   </div>
   <div>
     Custom fields:
-    <%= form.fields_for :custom_fields do |custom_field_form| %>
-      <fieldset>
-        <legend><%= custom_field_form.label :name, style: "display: block" %></legend>
-        <%= custom_field_form.text_field :name, class: "data-input w-full" %>
-      </fieldset>
-      <fieldset>
-        <legend><%= custom_field_form.label :value, style: "display: block" %></legend>
-        <%= custom_field_form.text_field :value, class: "data-input w-full" %>
-      </fieldset>
-    <% end %>
+    <div class="flex flex-col gap-1">
+      <%= form.fields_for :custom_fields do |custom_field_form| %>
+        <fieldset>
+          <legend><%= custom_field_form.label :name, style: "display: block" %></legend>
+          <%= custom_field_form.text_field :name, class: "data-input w-full" %>
+        </fieldset>
+        <fieldset>
+          <legend><%= custom_field_form.label :value, style: "display: block" %></legend>
+          <%= custom_field_form.text_field :value, class: "data-input w-full" %>
+        </fieldset>
+      <% end %>
+    </div>
   </div>
   <div>
     <%= form.label :is_favorite %>
@@ -64,7 +66,7 @@
   </div>
   <div>
     <%= form.label :file %>
-    <%= form.file_field :file %>
+    <%= form.file_field :file, class:"pl-0 rounded-none" %>
   </div>
   <div>
     <%= form.submit t(".save_login"), class: "btn-primary"  %>

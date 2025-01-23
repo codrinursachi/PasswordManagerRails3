@@ -5,7 +5,7 @@ class LoginsController < ApplicationController
     filter_scopes = {
       not_in_trash: -> { @logins = @logins.by_is_in_trash(false) },
       favorite: -> { @logins = @logins.by_favorite },
-      search: -> { @logins = @logins.search(params[:q]) },
+      search: -> { params[:q].split.each { |p| @logins = @logins.search(p) } },
       folder: -> { @logins = @logins.by_folder(params[:folder_id]) }
     }
 

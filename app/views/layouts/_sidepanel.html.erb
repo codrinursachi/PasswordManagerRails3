@@ -1,23 +1,32 @@
-<aside id="side-panel" class="hidden md:flex">
-  <div class="text-lg"><i class="fas fa-shield-halved"></i> <%= link_to "Password Manager", root_path %></div>
-  <div>
+<aside id="side-panel" class="hidden md:gap-3 md:flex">
+  <div class="pt-8 pl-8 text-lg"><i class="fas fa-shield-halved"></i> <%= link_to "Password Manager", root_path %></div>
+  <div class="pl-8">
     <h2><%= t(".folders") %> <%= link_to content_tag(:i, '', class: "fas fa-gear"), folders_path %></h2>
   </div>
+  <%= link_to logins_path do %>
+    <div class="pl-8 hover:bg-blue-600 <%= "bg-blue-950" unless params[:folder_id] || request.original_url.include?("folder") || request.original_url.include?("trash") %>">
+      <%=  t(".all_logins") %>
+    </div>
+  <% end %>
   <div>
-    <%= ">" unless params[:folder_id] || request.original_url.include?("folder") || request.original_url.include?("trash") %>
-    <%= link_to t(".all_logins"), logins_path %><br>
-    <br>
     <% Folder.accessible_by(current_ability).each do |folder| %>
-      <% if params[:folder_id].to_i == folder.id %>
-        <i class="fas fa-folder-open"></i>
-      <% else %>
-        <i class="fas fa-folder"></i>
+      <%= link_to logins_path + "?folder_id=#{folder.id}" do %>
+        <% if params[:folder_id].to_i == folder.id %>
+          <div class="pl-8 bg-blue-950 hover:bg-blue-600">
+            <i class="fas fa-folder-open"></i>
+          <% else %>
+            <div class="pl-8 hover:bg-blue-600">
+              <i class="fas fa-folder"></i>
+            <% end %>
+            <%= folder.name %>
+          </div>
+        <% end %>
       <% end %>
-      <%= link_to folder.name, logins_path + "?folder_id=#{folder.id}" %><br>
+    </div>
+    <%= link_to trash_index_path do %>
+      <div class="pl-8 hover:bg-blue-600 <%= "bg-blue-950" if request.original_url.include?("trash") %>">
+        <i class="fas fa-trash-alt"></i>
+        <%= t(".trash") %>
+      </div>
     <% end %>
-  </div>
-  <div>
-    <%= link_to content_tag(:i, t(".trash"), class: "fas fa-trash-alt"), trash_index_path %>
-    <%= link_to t(".trash"), trash_index_path %>
-  </div>
-</aside>
+  </aside>
