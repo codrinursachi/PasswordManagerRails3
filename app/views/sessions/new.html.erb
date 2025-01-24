@@ -1,20 +1,17 @@
 <div class="flex flex-col items-center justify-center flex-1 h-full">
-  <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-  <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
   <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
   <div class="mb-10 text-3xl font-bold"><%= t(".sign_in") %></div>
   <div class="form-bg">
+  <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+  <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
     <%= form_with url: session_path do |form| %>
       <fieldset>
-        <legend><%= t(".login_data") %></legend>
-        <div class="label-input-pair">
-          <%= form.label :email_address %>
-          <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "user-data-input" %><br>
-        </div>
-        <div class="label-input-pair">
-          <%= form.label :password %>
-          <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: t(".enter_your_password"), class: "user-data-input" %><br>
-        </div>
+        <legend><%= form.label :email_address %></legend>
+        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
+      </fieldset>
+      <fieldset>
+          <legend><%= form.label :password %></legend>
+          <%= form.password_field :password, required: true, autocomplete: "current-password", class: "user-data-input" %>
       </fieldset>
       <%= form.submit t(".sign_in"), class:"btn-primary-user-action" %>
     <% end %>

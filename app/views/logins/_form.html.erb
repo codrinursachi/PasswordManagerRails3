@@ -12,33 +12,33 @@
   <div>
     <fieldset>
       <legend class="fieldset-legend"><%= form.label :name, style: "display: block" %></legend>
-      <%= form.text_field :name, class: "data-input w-full" %>
+      <%= form.text_field :name %>
     </fieldset>
   </div>
   <div>
     <fieldset>
       <legend><%= form.label :login_name, style: "display: block" %></legend>
-      <%= form.text_field :login_name, class: "data-input w-full" %>
+      <%= form.text_field :login_name %>
     </fieldset>
   </div>
   <div>
     <fieldset>
       <legend><%= form.label :login_password, style: "display: block" %></legend>
-      <%= form.password_field :login_password, value: login.login_password, class: "data-input w-full" %>
+      <%= form.password_field :login_password, value: login.login_password %>
     </fieldset>
   </div>
   <div>
     <%= form.fields_for :urls do |urls_form| %>
       <fieldset>
         <legend><%= urls_form.label :uri, style: "display: block" %></legend>
-        <%= urls_form.text_field :uri, class: "data-input w-full" %>
+        <%= urls_form.text_field :uri %>
       </fieldset>
     <% end %>
   </div>
   <div>
     <fieldset>
       <legend><%= form.label :notes, style: "display: block" %></legend>
-      <%= form.textarea :notes, class: "data-input w-full" %>
+      <%= form.textarea :notes %>
     </fieldset>
   </div>
   <div>
@@ -47,11 +47,11 @@
       <%= form.fields_for :custom_fields do |custom_field_form| %>
         <fieldset>
           <legend><%= custom_field_form.label :name, style: "display: block" %></legend>
-          <%= custom_field_form.text_field :name, class: "data-input w-full" %>
+          <%= custom_field_form.text_field :name %>
         </fieldset>
         <fieldset>
           <legend><%= custom_field_form.label :value, style: "display: block" %></legend>
-          <%= custom_field_form.text_field :value, class: "data-input w-full" %>
+          <%= custom_field_form.text_field :value %>
         </fieldset>
       <% end %>
     </div>

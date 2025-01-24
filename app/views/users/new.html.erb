@@ -2,7 +2,6 @@
   <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
   <h1 class="mb-10"><%= t(".sign_up") %></h1>
   <div class="form-bg">
-    <%= form_with(model: @user) do |form| %>
       <% if @user.errors.any? %>
         <div style="color: red">
           <h2><%= pluralize(@user.errors.count, "error") + " " + t(".prohibited") %>:</h2>
@@ -13,28 +12,26 @@
           </ul>
         </div>
       <% end %>
+    <%= form_with(model: @user) do |form| %>
       <fieldset>
-        <legend><%= t(".registration_data") %></legend>
-        <div class="label-input-pair">
-          <%= form.label :email_address %>
-          <%= form.text_field :email_address, class: "user-data-input" %>
-        </div>
-        <div class="label-input-pair">
-          <%= form.label :password %>
-          <%= form.password_field :password, class: "user-data-input" %>
-        </div>
-        <div class="label-input-pair">
-          <%= form.label :password_confirmation %>
-          <%= form.password_field :password_confirmation, class: "user-data-input" %>
-        </div>
-        <div class="label-input-pair">
-          <%= form.label :first_name %>
-          <%= form.text_field :first_name, class: "user-data-input" %>
-        </div>
-        <div class="label-input-pair">
-          <%= form.label :last_name %>
-          <%= form.text_field :last_name, class: "user-data-input" %>
-        </div>
+        <legend><%= form.label :email_address %></legend>
+        <%= form.text_field :email_address, class: "user-data-input" %>
+      </fieldset>
+      <fieldset>
+        <legend><%= form.label :password %></legend>
+        <%= form.password_field :password, class: "user-data-input" %>
+      </fieldset>
+      <fieldset>
+        <legend><%= form.label :password_confirmation %></legend>
+        <%= form.password_field :password_confirmation, class: "user-data-input" %>
+      </fieldset>
+      <fieldset>
+        <legend><%= form.label :first_name %></legend>
+        <%= form.text_field :first_name, class: "user-data-input" %>
+      </fieldset>
+      <fieldset>
+        <legend><%= form.label :last_name %></legend>
+        <%= form.text_field :last_name, class: "user-data-input" %>
       </fieldset>
       <%= form.submit t(".sign_up"), class: "btn-primary-user-action" %>
     <% end %>
