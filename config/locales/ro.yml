@@ -44,6 +44,8 @@ ro:
       folders: "Foldere"
       new_folder: "Folder nou"
       show_this_folder: "Afiseaza acest folder"
+      edit_this_folder: "Editeaza acest folder"
+      destroy_this_folder: "Sterge acest folder"
     new:
       new_folder: "Folder nou"
       back_to_folders: "Inapoi la foldere"
@@ -53,8 +55,9 @@ ro:
       virew_passwords_for_folder: "Vezi parolele pentru acest folder"
       destroy_this_folder: "Sterge acest folder"
   layouts:
-    application:
-      log_out: "Deconectare"
+    sidepanel:
+      folders: "Foldere"
+      trash: "Cosul de gunoi"
   logins:
     form:
       prohibited: "au impiedicat aceasta logare sa fie salvata"
@@ -67,8 +70,12 @@ ro:
       custom_fields: "Campuri customizate"
       notes: "Notite"
       is_favorite: "Este favorit"
+      "false": "fals"
+      "true": "adevarat"
       folder: "Folder"
       file: "Fisier"
+      download_file: "Descarca fisier"
+      no_attachment: "Fara atasament"
       date_added_in_trash: "Data adaugarii in cosul de gunoi"
     search_form:
       search_for: "Cauta:"
@@ -106,3 +113,5 @@ ro:
     new:
       prohibited: "au impiedicat acest utilizator sa fie salvat"
       sign_up: "Inregistrare"
+      already_have_an_account: "Ai deja un cont?"
+      sign_in: "Autentificare"

@@ -29,7 +29,7 @@
   </p>
   <p>
     <strong><%= t(".is_favorite") %>:</strong>
-    <%= login.is_favorite %>
+    <%= t(".#{ login.is_favorite }") %>
   </p>
   <p>
     <strong><%= t(".folder") %>:</strong>
@@ -37,7 +37,7 @@
   </p>
   <p>
     <strong><%= t(".file") %>:</strong>
-    <%=  login.file.attached? ? (link_to 'Download file', rails_blob_path(login.file, disposition: "attachment")) : "No attachment" %>
+    <%=  login.file.attached? ? (link_to t('.download_file'), rails_blob_path(login.file, disposition: "attachment")) : t(".no_attachment") %>
   </p>
   <% if login.trash_date %>
     <p>

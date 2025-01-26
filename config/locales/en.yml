@@ -73,6 +73,8 @@ en:
       folders: "Folders"
       new_folder: "New folder"
       show_this_folder: "Show this folder"
+      edit_this_folder: "Edit this folder"
+      destroy_this_folder: "Destroy this folder"
     new:
       new_folder: "New folder"
       back_to_folders: "Back to folders"
@@ -82,8 +84,9 @@ en:
       virew_passwords_for_folder: "View passwords for folder"
       destroy_this_folder: "Destroy this folder"
   layouts:
-    application:
-      log_out: "Log out"
+    sidepanel:
+      folders: "Folders"
+      trash: "Trash"
   logins:
     form:
       prohibited: "prohibited this login from being saved"
@@ -96,8 +99,12 @@ en:
       custom_fields: "Custom fields"
       notes: "Notes"
       is_favorite: "Is favorite"
+      "true": "true"
+      "false": "false"
       folder: "Folder"
       file: "File"
+      download_file: "Download file"
+      no_attachment: "No attachment"
       date_added_in_trash: "Date added in trash"
     search_form:
       search_for: "Search for:"
@@ -135,3 +142,5 @@ en:
     new:
       prohibited: "prohibited this user from being saved"
       sign_up: "Sign up"
+      already_have_an_account: "Already have an account?"
+      sign_in: "Sign in"
