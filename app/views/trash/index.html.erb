@@ -1,13 +1,17 @@
 <h1><%= t(".trash") %></h1>
-<div class="flex flex-wrap gap-1 mt-2">
-  <% @logins.each do |login| %>
-    <div class="password-card">
+<table class="w-full mt-8 table-fixed">
+  <thead>
+    <tr class="border-b hover:bg-white">
+      <th class="w-12"></th>
+      <th><%= t(".name") %></th>
+      <th><%= t(".urls") %></th>
+      <th><%= t(".trash_date") %></th>
+      <th class="w-12"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @logins.each do |login| %>
       <%= render login %>
-      <div class="flex mt-2">
-        <%= button_to t(".permanently_delete_login"), 'trash/' + login.id.to_s, method: :delete, class: "btn-primary"  %>
-        <div class="mx-2"></div>
-        <%= link_to t(".restore_login"), 'trash/restore/' + login.id.to_s, class: "btn-secondary" %>
-      </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </tbody>
+</table>

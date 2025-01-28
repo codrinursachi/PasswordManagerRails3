@@ -19,17 +19,13 @@
     <%= javascript_importmap_tags %>
     <script src="https://kit.fontawesome.com/dc2b84518f.js" crossorigin="anonymous"></script>
     <script>
-      window.onload = () => {
-      const mobileMenuIcon = document.getElementById("mobile-menu-button");
-      const sidePanel = document.getElementById("side-panel");
-      mobileMenuIcon.addEventListener("click", () => {
-      if (sidePanel.classList.contains("hidden")) {
-      sidePanel.classList.remove("hidden");
-      } else {
-        sidePanel.classList.add("hidden");
-      }
+      document.addEventListener('turbo:load', () => {
+        const mobileMenuIcon = document.getElementById("mobile-menu-button");
+        const sidePanel = document.getElementById("side-panel");
+        mobileMenuIcon.addEventListener("click", () => {
+          sidePanel.classList.toggle("hidden");
+        });
       });
-      }
     </script>
   </head>
   <body>
@@ -44,8 +40,8 @@
           <% end %>
           <%= button_to content_tag(:i,'', class: "fas fa-arrow-right-from-bracket"), session_path, method: :delete if Current.user %>
         </div>
-        <div class="fixed top-0 z-10 ml-2 mr-auto cursor-pointer md:collapse">
-          <button id="mobile-menu-button">
+        <div id="mobile-menu-button" class="fixed top-0 z-10 ml-2 cursor-pointer md:collapse">
+          <button>
             <div class="w-8 h-1 bg-white rounded-full"></div>
             <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>
             <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>

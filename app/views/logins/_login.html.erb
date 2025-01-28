@@ -1,48 +1,54 @@
-<div id="<%= dom_id login %>">
-  <p>
-    <strong><%= t(".name") %>:</strong>
-    <%= login.name %>
-  </p>
-  <p>
-    <strong><%= t(".urls") %>:</strong>
-    <% login.urls.each do |url| %>
-      <%= url.uri %> <br />
-    <% end %>
-  </p>
-  <p>
-    <strong><%= t(".login_name") %>:</strong>
+<tr>
+  <td></td>
+  <td>
+    <%= link_to login.name, edit_login_path(login), class: "font-bold" %><br />
     <%= login.login_name %>
-  </p>
-  <p>
-    <strong><%= t(".login_password") %>:</strong>
-    <%= login.login_password %>
-  </p>
-  <p>
-    <strong><%= t(".custom_fields") %>:</strong>
-    <% login.custom_fields.each do |custom_field| %>
-      <%= custom_field.name %> : <%= custom_field.value %> <br />
+  </td>
+  <td>
+    <% login.urls.each do |url| %>
+      <%= link_to url.uri, "https://#{url.uri}" %><br />
     <% end %>
-  </p>
-  <p>
-    <strong><%= t(".notes") %>:</strong>
-    <%= login.notes %>
-  </p>
-  <p>
-    <strong><%= t(".is_favorite") %>:</strong>
-    <%= t(".#{ login.is_favorite }") %>
-  </p>
-  <p>
-    <strong><%= t(".folder") %>:</strong>
-    <%= login.folder.name %>
-  </p>
-  <p>
-    <strong><%= t(".file") %>:</strong>
-    <%=  login.file.attached? ? (link_to t('.download_file'), rails_blob_path(login.file, disposition: "attachment")) : t(".no_attachment") %>
-  </p>
+  </td>
   <% if login.trash_date %>
-    <p>
-      <strong><%= t(".date_added_in_trash") %>:</strong>
+    <td>
       <%= login.trash_date %>
-    </p>
+    </td>
   <% end %>
-</div>
+  <td class="relative">
+    <div id="toggle<%= dom_id login %>" class="top-0 right-0 w-6 ml-auto text-center rounded-md cursor-pointer hover:ring-1 hover:ring-blue-600">
+      <i class="fas fa-ellipsis-v"></i>
+    </div>
+    <div id="menu<%= dom_id login %>" class="absolute right-0 z-10 hidden py-2 bg-white border border-gray-500 top-12 rounded-xl">
+      <% unless request.original_url.include?("trash") %>
+        <%= link_to edit_login_path(login) do %>
+          <div class="menu-item text-nowrap"><%= t(".edit_login") %></div>
+        <% end %>
+        <%= button_to login, method: :delete, class: "text-red-600" do %>
+          <div class="menu-item text-nowrap"><%= t(".trash_login") %></div>
+        <% end%>
+      <% else %>
+        <%= link_to('trash/restore/' + login.id.to_s, data: { turbo: false }) do %>
+          <div class="menu-item text-nowrap"><%= t(".restore_login") %></div>
+        <% end %>
+        <%= button_to login, method: :delete, class: "text-red-600" do %>
+          <div class="text-left menu-item text-nowrap"><%= t(".delete_login") %></div>
+        <% end %>
+      <% end %>
+    </div>
+  </td>
+</tr>
+<script>
+  document.addEventListener('turbo:load', () => {
+    const toggle = document.getElementById("toggle<%= dom_id login %>");
+    const menuToToggle = document.getElementById("menu<%= dom_id login %>");
+    const menus = document.querySelectorAll("[id^='menu']");
+    toggle.addEventListener("click", () => {
+      menus.forEach((menu) => {
+        if (menu !== menuToToggle) {
+          menu.classList.add("hidden");
+        }
+      });
+      menuToToggle.classList.toggle("hidden");
+    });
+  });
+</script>

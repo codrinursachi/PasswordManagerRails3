@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply h-screen text-gray-800 bg-zinc-100 dark:bg-zinc-900 dark:text-gray-200;
+    @apply h-screen text-gray-800 bg-white dark:bg-zinc-900 dark:text-white;
   }
 
   aside {
@@ -36,7 +36,7 @@
   }
 
   form {
-    @apply flex flex-col gap-2;
+    @apply flex flex-col gap-4;
   }
 
   legend {
@@ -50,11 +50,23 @@
   input,
   textarea,
   select {
-    @apply w-full pl-2 rounded-md focus:outline-none dark:bg-zinc-800;
+    @apply w-full p-2 rounded-md focus:outline-none dark:bg-zinc-800;
   }
 
   select {
     @apply h-8
+  }
+
+  tr {
+    @apply text-gray-500 border-b-[0.5px] border-gray-500 hover:bg-gray-200;
+  }
+
+  th {
+    @apply text-left;
+  }
+
+  td {
+    @apply py-3;
   }
 }
 
@@ -73,11 +85,11 @@
     @apply px-4 py-2 font-bold text-center text-blue-600 bg-white rounded-full cursor-pointer ring-2 ring-blue-600 hover:bg-blue-600 hover:text-white;
   }
 
-  .password-card {
-    @apply w-full md:w-[calc(25%-4px)] p-4 rounded-xl bg-zinc-200 dark:bg-zinc-800 text-sm;
-  }
-
   .form-bg {
     @apply bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 dark:bg-zinc-800 p-4 md:p-8 flex flex-col gap-2;
+  }
+
+  .menu-item {
+    @apply p-2 hover:bg-gray-200;
   }
 }

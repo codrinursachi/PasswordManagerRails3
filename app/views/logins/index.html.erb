@@ -5,15 +5,22 @@
   <%= link_to t(".new_login"), new_login_path, class: "btn-primary" %>
 </div>
 <%= render "search_form" %>
-<div class="flex flex-wrap gap-1 mt-2">
-  <% @logins.each do |login| %>
-    <div class="password-card">
-      <%= render login %>
-      <div class="flex mt-2">
-        <%= link_to t(".edit_login"), edit_login_path(login), class: "btn-primary" %>
-        <div class="mx-2"></div>
-        <%= button_to t(".trash_login"), login, method: :delete, class: "btn-secondary" %>
-      </div>
-    </div>
-  <% end %>
+<div class="mt-2">
+  <table class="w-full mt-8 table-fixed">
+    <thead>
+      <tr class="border-b hover:bg-white">
+        <th class="w-12"></th>
+        <th><%= t(".name") %></th>
+        <th><%= t(".urls") %></th>
+        <th class="w-12"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @logins.each do |login| %>
+        <tr>
+          <%= render login %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
