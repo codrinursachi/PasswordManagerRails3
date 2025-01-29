@@ -1,12 +1,24 @@
 <tr>
-  <td></td>
+  <td class="text-center">
+    <% if login.urls.length > 0 %>
+      <% login.urls.each do |u| %>
+        <% if u.fav_icon.representable? %>
+          <%= image_tag u.fav_icon, class: "mx-auto" %>
+        <% else %>
+          <i class="fas fa-xl fa-globe"></i>
+        <% end %>
+      <% end %>
+    <% else %>
+      <i class="fas fa-xl fa-globe"></i>
+    <% end %>
+  </td>
   <td>
     <%= link_to login.name, edit_login_path(login), class: "font-bold" %><br />
     <%= login.login_name %>
   </td>
   <td>
     <% login.urls.each do |url| %>
-      <%= link_to url.uri, "https://#{url.uri}" %><br />
+      <%= link_to url.uri, "https://#{URI.parse(url.uri).host}" %><br />
     <% end %>
   </td>
   <% if login.trash_date %>

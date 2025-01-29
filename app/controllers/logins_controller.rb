@@ -32,6 +32,8 @@ class LoginsController < ApplicationController
   def create
     respond_to do |format|
       if @login.save
+        @login.urls.each { |u| u.download_favicon(u.uri) }
+        @login.save
         format.html { redirect_to logins_path, notice: "Login was successfully created." }
         format.json { render :show, status: :created, location: @login }
       else
