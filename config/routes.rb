@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :shared_login_data
   scope "(/:locale)", locale: /en|ro/ do
     resources :trash, only: [ :index, :destroy ]
     get "trash/restore/:id" => "trash#restore"
