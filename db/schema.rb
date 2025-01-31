@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_28_201124) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_31_084559) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -79,6 +79,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_201124) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "shared_login_data", force: :cascade do |t|
+    t.integer "login_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["login_id"], name: "index_shared_login_data_on_login_id"
+    t.index ["user_id"], name: "index_shared_login_data_on_user_id"
+  end
+
   create_table "urls", force: :cascade do |t|
     t.string "uri"
     t.integer "login_id", null: false
@@ -104,5 +113,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_201124) do
   add_foreign_key "folders", "users"
   add_foreign_key "logins", "folders"
   add_foreign_key "sessions", "users"
+  add_foreign_key "shared_login_data", "logins"
+  add_foreign_key "shared_login_data", "users"
   add_foreign_key "urls", "logins"
 end
