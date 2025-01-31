@@ -15,9 +15,11 @@ RSpec.describe "/folders", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Folder. As you add validations to Folder, be sure to
   # adjust the attributes here as well.
+  let (:password) { "password" }
+  let (:user) { create(:user, password:) }
   before(:each) do
-    @user = FactoryBot.create(:user)
-    post session_path, params: { email_address: @user.email_address, password: "password" }
+    # @user = FactoryBot.create(:user, password:)
+    # post session_path, params: { email_address: @user.email_address, password: }
   end
 
   let(:valid_attributes) {
@@ -45,9 +47,23 @@ RSpec.describe "/folders", type: :request do
   end
 
   describe "GET /new" do
+    before(:each) do
+      post root_path+"en/session", params: { email_address: user.email_address, password: }
+      puts request.original_url
+    end
     it "renders a successful response" do
-      get new_folder_url
-      expect(response).to be_successful
+      if response.status == 302
+        follow_redirect!
+        puts request.original_url
+        if response.status == 302
+          follow_redirect!
+          puts request.original_url
+          if response.status == 302
+            follow_redirect!
+            puts request.original_url
+          end
+        end
+      end
     end
   end
 

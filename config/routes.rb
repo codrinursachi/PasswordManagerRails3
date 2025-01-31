@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope "(/:locale)" do
+  scope "(/:locale)", locale: /en|ro/ do
     resources :trash, only: [ :index, :destroy ]
     get "trash/restore/:id" => "trash#restore"
     resources :users, only: [ :new, :create ]
@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :folders
     resource :session
     resources :passwords, param: :token
+    get ":locale" => "logins#index"
     root "logins#index"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
