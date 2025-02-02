@@ -1,9 +1,8 @@
 class SharedLoginDataController < ApplicationController
-  before_action :set_shared_login_datum, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /shared_login_data or /shared_login_data.json
   def index
-    @shared_login_data = SharedLoginDatum.all
   end
 
   # GET /shared_login_data/1 or /shared_login_data/1.json
@@ -12,7 +11,6 @@ class SharedLoginDataController < ApplicationController
 
   # GET /shared_login_data/new
   def new
-    @shared_login_datum = SharedLoginDatum.new
   end
 
   # GET /shared_login_data/1/edit
@@ -21,8 +19,6 @@ class SharedLoginDataController < ApplicationController
 
   # POST /shared_login_data or /shared_login_data.json
   def create
-    @shared_login_datum = SharedLoginDatum.new(shared_login_datum_params)
-
     respond_to do |format|
       if @shared_login_datum.save
         format.html { redirect_to @shared_login_datum, notice: "Shared login datum was successfully created." }
@@ -58,11 +54,6 @@ class SharedLoginDataController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_shared_login_datum
-      @shared_login_datum = SharedLoginDatum.find(params.expect(:id))
-    end
-
     # Only allow a list of trusted parameters through.
     def shared_login_datum_params
       params.expect(shared_login_datum: [ :login_id, :user_id ])
