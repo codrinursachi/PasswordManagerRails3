@@ -31,12 +31,17 @@
       <i class="fas fa-ellipsis-v"></i>
     </div>
     <div id="menu<%= dom_id login %>" class="absolute right-0 z-10 hidden py-2 bg-white border border-gray-500 top-12 rounded-xl">
-      <% unless request.original_url.include?("trash") %>
+      <% unless controller_name == "trash" %>
+        <div class="text-blue-600 cursor-pointer menu-item text-nowrap" onclick="copyToClipboard('<%= login.login_name %>')"><%= t(".copy_username") %></div>
+        <div class="text-blue-600 cursor-pointer menu-item text-nowrap" onclick="copyToClipboard('<%= login.login_password %>')"><%= t(".copy_password") %></div>
         <%= link_to edit_login_path(login) do %>
           <div class="menu-item text-nowrap"><%= t(".edit_login") %></div>
         <% end %>
+        <%= link_to url_for(controller: :shared_login_data, action: :new, login_id: login.id), method: :get do %>
+          <div class="menu-item text-nowrap"><%= t(".share_login") %></div>
+        <% end %>
         <%= button_to login, method: :delete, class: "text-red-600" do %>
-          <div class="menu-item text-nowrap"><%= t(".trash_login") %></div>
+          <div class="text-left menu-item text-nowrap"><%= t(".trash_login") %></div>
         <% end%>
       <% else %>
         <%= link_to('trash/restore/' + login.id.to_s, data: { turbo: false }) do %>
@@ -63,4 +68,8 @@
       menuToToggle.classList.toggle("hidden");
     });
   });
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+  }
 </script>

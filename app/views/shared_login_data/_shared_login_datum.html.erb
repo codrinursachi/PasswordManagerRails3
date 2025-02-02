@@ -1,10 +1,52 @@
-<div id="<%= dom_id shared_login_datum %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Login:</strong>
-    <%= shared_login_datum.login_id %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">User:</strong>
-    <%= shared_login_datum.user_id %>
-  </p>
-</div>
+<tr>
+  <td class="text-center">
+    <% if shared_login_datum.login.urls.length > 0 %>
+      <% shared_login_datum.login.urls.each do |u| %>
+        <% if u.fav_icon.representable? %>
+          <%= image_tag u.fav_icon, class: "mx-auto" %>
+        <% else %>
+          <i class="fas fa-xl fa-globe"></i>
+        <% end %>
+      <% end %>
+    <% else %>
+      <i class="fas fa-xl fa-globe"></i>
+    <% end %>
+  </td>
+  <td>
+    <%= link_to shared_login_datum.login.name, edit_login_path(shared_login_datum.login), class: "font-bold" %><br />
+    <%= shared_login_datum.login.login_name %>
+  </td>
+  <td>
+    <% shared_login_datum.login.urls.each do |url| %>
+      <%= link_to url.uri, "https://#{URI.parse(url.uri).host}" %><br />
+    <% end %>
+  </td>
+  <td class="relative">
+    <div id="toggle<%= dom_id shared_login_datum %>" class="top-0 right-0 w-6 ml-auto text-center rounded-md cursor-pointer hover:ring-1 hover:ring-blue-600">
+      <i class="fas fa-ellipsis-v"></i>
+    </div>
+    <div id="menu<%= dom_id shared_login_datum %>" class="absolute right-0 z-10 hidden py-2 bg-white border border-gray-500 top-12 rounded-xl">
+      <%= link_to login_path(shared_login_datum.login) do %>
+        <div class="menu-item text-nowrap"><%= t(".view_login") %></div>
+      <% end %>
+      <%= button_to shared_login_datum, method: :delete, class: "text-red-600" do %>
+        <div class="menu-item text-nowrap"><%= t(".trash_login_share") %></div>
+      <% end%>
+    </div>
+  </td>
+</tr>
+<script>
+  document.addEventListener('turbo:load', () => {
+    const toggle = document.getElementById("toggle<%= dom_id shared_login_datum %>");
+    const menuToToggle = document.getElementById("menu<%= dom_id shared_login_datum %>");
+    const menus = document.querySelectorAll("[id^='menu']");
+    toggle.addEventListener("click", () => {
+      menus.forEach((menu) => {
+        if (menu !== menuToToggle) {
+          menu.classList.add("hidden");
+        }
+      });
+      menuToToggle.classList.toggle("hidden");
+    });
+  });
+</script>

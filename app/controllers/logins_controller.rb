@@ -16,6 +16,9 @@ class LoginsController < ApplicationController
     filter_scopes[:folder].call if params[:folder_id].present?
   end
 
+  def show
+  end
+
   # GET /logins/new
   def new
     @login.urls.build

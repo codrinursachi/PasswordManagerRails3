@@ -1,27 +1,31 @@
 class SharedLoginDataController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
 
   # GET /shared_login_data or /shared_login_data.json
   def index
-  end
-
-  # GET /shared_login_data/1 or /shared_login_data/1.json
-  def show
+    @shared_login_data = SharedLoginDatum.accessible_by(current_ability)
+    @shared_login_data = @shared_login_data.group_by { |sld| sld.login.folder.user }
   end
 
   # GET /shared_login_data/new
   def new
   end
 
-  # GET /shared_login_data/1/edit
-  def edit
-  end
-
   # POST /shared_login_data or /shared_login_data.json
   def create
+    user = User.find_by(email_address: params[:user_email])
+    if user
+      @shared_login_datum = SharedLoginDatum.new(login_id: params[:login_id], user_id: user.id)
+    else
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity, notice: "User not found." }
+        format.json { render json: { error: "User not found" }, status: :unprocessable_entity }
+      end
+      return
+    end
     respond_to do |format|
       if @shared_login_datum.save
-        format.html { redirect_to @shared_login_datum, notice: "Shared login datum was successfully created." }
+        format.html { redirect_to shared_login_data_path, notice: "Shared login datum was successfully created." }
         format.json { render :show, status: :created, location: @shared_login_datum }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -30,21 +34,9 @@ class SharedLoginDataController < ApplicationController
     end
   end
 
-  # PATCH/PUT /shared_login_data/1 or /shared_login_data/1.json
-  def update
-    respond_to do |format|
-      if @shared_login_datum.update(shared_login_datum_params)
-        format.html { redirect_to @shared_login_datum, notice: "Shared login datum was successfully updated." }
-        format.json { render :show, status: :ok, location: @shared_login_datum }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @shared_login_datum.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /shared_login_data/1 or /shared_login_data/1.json
   def destroy
+    @shared_login_datum = SharedLoginDatum.find(params[:id])
     @shared_login_datum.destroy!
 
     respond_to do |format|
@@ -52,10 +44,4 @@ class SharedLoginDataController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
-    # Only allow a list of trusted parameters through.
-    def shared_login_datum_params
-      params.expect(shared_login_datum: [ :login_id, :user_id ])
-    end
 end
