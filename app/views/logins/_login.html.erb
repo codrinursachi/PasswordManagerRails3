@@ -52,7 +52,7 @@
         <%= link_to('trash/restore/' + login.id.to_s, data: { turbo: false }) do %>
           <div class="menu-item text-nowrap"><%= t(".restore_login") %></div>
         <% end %>
-        <%= button_to login, method: :delete, class: "text-red-600" do %>
+        <%= button_to trash_path(login), method: :delete, class: "text-red-600" do %>
           <div class="text-left menu-item text-nowrap"><%= t(".delete_login") %></div>
         <% end %>
       <% end %>

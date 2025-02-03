@@ -6,6 +6,7 @@ class TrashController < ApplicationController
 
   def destroy
     @login = Login.accessible_by(current_ability).find(params[:id]).destroy
+    redirect_to trash_index_path
   end
 
   def restore

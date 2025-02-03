@@ -7,10 +7,11 @@ class Url < ApplicationRecord
   def download_favicon(url)
     domain = URI.parse(url).host
 
-    favicon_url = "https://#{domain}/favicon.ico"
-
-    file = URI.open(favicon_url)
-    content_type = file.meta["content-type"]
-    fav_icon.attach(io: file, filename: "favicon.ico", content_type:)
+    if domain
+      favicon_url = "https://#{domain}/favicon.ico"
+      file = URI.open(favicon_url)
+      content_type = file.meta["content-type"]
+      fav_icon.attach(io: file, filename: "favicon.ico", content_type:)
+    end
   end
 end

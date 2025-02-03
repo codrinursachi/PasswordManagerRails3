@@ -54,8 +54,7 @@ class LoginsController < ApplicationController
   def update
     respond_to do |format|
       if @login.update(login_params)
-        @login.urls.each { |u| u.download_favicon(u.uri) }
-        @login.save
+        FavIconDownloadJob.perform_later(@login)
         format.html { redirect_to logins_path, notice: "Login was successfully updated." }
         format.json { render :index, status: :ok, location: @login }
       else
