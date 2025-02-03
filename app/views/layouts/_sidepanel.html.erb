@@ -1,32 +1,37 @@
-<aside id="side-panel" class="hidden md:gap-3 md:flex">
+<aside id="side-panel" class="hidden md:gap-2 md:flex">
   <div class="pt-8 pl-8 text-lg"><i class="fas fa-shield-halved"></i> <%= link_to "Password Manager", root_path %></div>
   <div class="pl-8">
     <h2><%= t(".folders") %> <%= link_to content_tag(:i, '', class: "fas fa-gear"), folders_path %></h2>
   </div>
   <%= link_to logins_path do %>
-    <div class="pl-8 hover:bg-blue-600 <%= "bg-blue-950" unless params[:folder_id] || request.original_url.include?("folder") || request.original_url.include?("trash") %>">
-      <%=  t(".all_logins") %>
+    <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" unless params[:folder_id] || params[:favorite] || ["folder", "trash", "shared_login_data"].include?(controller_name) %>">
+      <%= t(".all_logins") %>
+    </div>
+  <% end %>
+  <%= link_to logins_path(favorite: 1) do %>
+    <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" if params[:favorite] %>">
+      <%= t(".favorites") %>
+    </div>
+  <% end %>
+  <%= link_to shared_login_data_path do %>
+    <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" if controller_name == "shared_login_data" %>">
+      <%= t(".shared_logins") %>
     </div>
   <% end %>
   <div>
     <% Folder.accessible_by(current_ability).each do |folder| %>
-      <%= link_to logins_path + "?folder_id=#{folder.id}" do %>
-        <% if params[:folder_id].to_i == folder.id %>
-          <div class="pl-8 bg-blue-950 hover:bg-blue-600">
-            <i class="fas fa-folder-open"></i>
-          <% else %>
-            <div class="pl-8 hover:bg-blue-600">
-              <i class="fas fa-folder"></i>
-            <% end %>
-            <%= folder.name %>
-          </div>
-        <% end %>
+      <%= link_to logins_path(folder_id: folder.id) do %>
+        <div class="pl-8 py-1 <%= "bg-blue-950" if params[:folder_id].to_i == folder.id %> hover:bg-blue-600">
+          <i class="fas fa-folder<%= "-open" if params[:folder_id].to_i == folder.id %>"></i>
+          <%= folder.name %>
+        </div>
       <% end %>
-    </div>
-    <%= link_to trash_index_path do %>
-      <div class="pl-8 hover:bg-blue-600 <%= "bg-blue-950" if request.original_url.include?("trash") %>">
-        <i class="fas fa-trash-alt"></i>
-        <%= t(".trash") %>
-      </div>
     <% end %>
-  </aside>
+  </div>
+  <%= link_to trash_index_path do %>
+    <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" if controller_name == "trash" %>">
+      <i class="fas fa-trash-alt"></i>
+      <%= t(".trash") %>
+    </div>
+  <% end %>
+</aside>
