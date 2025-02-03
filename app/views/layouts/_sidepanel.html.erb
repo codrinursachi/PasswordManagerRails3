@@ -13,9 +13,14 @@
       <%= t(".favorites") %>
     </div>
   <% end %>
+  <%= link_to shared_login_data_path(by_me: true) do %>
+    <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" if controller_name == "shared_login_data" && params[:by_me] %>">
+      <%= t(".shared_by_me") %>
+    </div>
+  <% end %>
   <%= link_to shared_login_data_path do %>
-    <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" if controller_name == "shared_login_data" %>">
-      <%= t(".shared_logins") %>
+    <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" if controller_name == "shared_login_data" && !params[:by_me] %>">
+      <%= t(".shared_with_me") %>
     </div>
   <% end %>
   <div>

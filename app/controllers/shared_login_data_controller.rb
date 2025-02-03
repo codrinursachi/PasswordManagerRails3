@@ -4,6 +4,7 @@ class SharedLoginDataController < ApplicationController
   # GET /shared_login_data or /shared_login_data.json
   def index
     @shared_login_data = SharedLoginDatum.accessible_by(current_ability)
+    @shared_login_data = @shared_login_data.by_current_user(params[:by_me] == "true")
     @shared_login_data = @shared_login_data.group_by { |sld| sld.login.folder.user }
   end
 
