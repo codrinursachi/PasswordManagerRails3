@@ -13,7 +13,7 @@
     <% end %>
   </td>
   <td>
-    <%= link_to shared_login_datum.login.name, login_path(shared_login_datum.login), class: "font-bold" %><br />
+    <%= link_to shared_login_datum.login.name, Current.user == shared_login_datum.user ? login_path(shared_login_datum.login) : edit_login_path(shared_login_datum.login), class: "font-bold" %><br />
     <%= shared_login_datum.login.login_name %>
   </td>
   <td>
@@ -37,9 +37,10 @@
       <div class="text-blue-600 cursor-pointer menu-item text-nowrap" onclick="copyToClipboard('<%= shared_login_datum.login.login_name %>')"><%= t(".copy_username") %></div>
       <div class="text-blue-600 cursor-pointer menu-item text-nowrap" onclick="copyToClipboard('<%= shared_login_datum.login.login_password %>')"><%= t(".copy_password") %></div>
       <% if shared_login_datum.login.file.attached? %>
-        <div class="text-blue-600 cursor-pointer menu-item text-nowrap">
-          <%= link_to t(".download_attachment"), rails_blob_path(shared_login_datum.login.file, disposition: "attachment") %>
-        </div>
+        <%= link_to rails_blob_path(shared_login_datum.login.file, disposition: "attachment") do %>
+          <div class="text-blue-600 cursor-pointer menu-item text-nowrap"> <%= t(".download_attachment") %>
+          </div>
+        <% end %>
       <% end %>
       <%= button_to shared_login_datum, method: :delete, class: "text-red-600" do %>
         <div class="text-left menu-item text-nowrap"><%= t(".trash_login_share") %></div>
@@ -61,7 +62,7 @@
       menuToToggle.classList.toggle("hidden");
     });
   });
-  
+
   function copyToClipboard(text) {
   navigator.clipboard.writeText(text);
   }
