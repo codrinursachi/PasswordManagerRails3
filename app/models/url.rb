@@ -10,6 +10,7 @@ class Url < ApplicationRecord
     favicon_url = "https://#{domain}/favicon.ico"
 
     file = URI.open(favicon_url)
-    fav_icon.attach(io: file, filename: "favicon.ico", content_type: "image/x-icon")
+    content_type = file.meta["content-type"]
+    fav_icon.attach(io: file, filename: "favicon.ico", content_type:)
   end
 end
