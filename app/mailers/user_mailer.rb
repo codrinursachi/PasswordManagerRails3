@@ -5,8 +5,9 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.shared_login.subject
   #
   def shared_login
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+    @sender = params[:sender]
+    @receiver = params[:receiver]
+    @login = params[:login]
+    mail(to: @receiver, subject: "You have been shared a login")
   end
 end

@@ -18,7 +18,7 @@
   </td>
   <td>
     <% login.urls.each do |url| %>
-      <%= link_to url.uri, "https://#{URI.parse(url.uri).host}" %><br />
+      <%= link_to url.uri, "https://#{URI.parse(url.uri).host}", target: "_blank" %><br />
     <% end %>
   </td>
   <% if login.trash_date %>

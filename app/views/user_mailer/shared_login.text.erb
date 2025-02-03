@@ -1,3 +1,7 @@
-User#shared_login
-
-<%= @greeting %>, find me in app/views/user_mailer/shared_login.text.erb
+<%= t(".you_have_been_shared_mail") %>
+  <%= t(".user") + " " + @sender + " " + t(".has_shared_a_login_with_you")%>
+  <%= t(".name") + " " + @login.name %>
+  <%= t(".urls") %> <% @login.urls.each do |u| %>
+    <%= u.uri %>
+  <% end %>
+  <%= link_to t(".view_shared_login"), login_url(locale: :en, id: @login.id, host: 'http://127.0.0.1:3000/'), target: "_blank" %>
