@@ -12,33 +12,33 @@
   <div>
     <fieldset>
       <legend class="fieldset-legend"><%= form.label :name, style: "display: block" %></legend>
-      <%= form.text_field :name, readonly: !(can? :edit, login) %>
+      <%= form.text_field :name, readonly: !(action_name == "new" or can? :edit, login) %>
     </fieldset>
   </div>
   <div>
     <fieldset>
       <legend><%= form.label :login_name, style: "display: block" %></legend>
-      <%= form.text_field :login_name, readonly: !(can? :edit, login) %>
+      <%= form.text_field :login_name, readonly: !(action_name == "new" or can? :edit, login) %>
     </fieldset>
   </div>
   <div>
     <fieldset>
       <legend><%= form.label :login_password, style: "display: block" %></legend>
-      <%= form.password_field :login_password, value: login.login_password, readonly: !(can? :edit, login) %>
+      <%= form.password_field :login_password, value: login.login_password, readonly: !(action_name == "new" or can? :edit, login) %>
     </fieldset>
   </div>
   <div>
     <%= form.fields_for :urls do |urls_form| %>
       <fieldset>
         <legend><%= urls_form.label :uri, style: "display: block" %></legend>
-        <%= urls_form.text_field :uri, readonly: !(can? :edit, login) %>
+        <%= urls_form.text_field :uri, readonly: !(action_name == "new" or can? :edit, login) %>
       </fieldset>
     <% end %>
   </div>
   <div>
     <fieldset>
       <legend><%= form.label :notes, style: "display: block" %></legend>
-      <%= form.textarea :notes, readonly: !(can? :edit, login) %>
+      <%= form.textarea :notes, readonly: !(action_name == "new" or can? :edit, login) %>
     </fieldset>
   </div>
   <div>
@@ -47,11 +47,11 @@
       <%= form.fields_for :custom_fields do |custom_field_form| %>
         <fieldset>
           <legend><%= custom_field_form.label :name, style: "display: block" %></legend>
-          <%= custom_field_form.text_field :name, readonly: !(can? :edit, login) %>
+          <%= custom_field_form.text_field :name, readonly: !(action_name == "new" or can? :edit, login) %>
         </fieldset>
         <fieldset>
           <legend><%= custom_field_form.label :value, style: "display: block" %></legend>
-          <%= custom_field_form.text_field :value, readonly: !(can? :edit, login) %>
+          <%= custom_field_form.text_field :value, readonly: !(action_name == "new" or can? :edit, login) %>
         </fieldset>
       <% end %>
     </div>
@@ -62,13 +62,13 @@
   </div>
   <div>
     <%= form.label :folder_id, style: "display: block" %>
-    <%= form.collection_select :folder_id, Folder.accessible_by(current_ability), :id, :name, {}, { disabled: !(can? :edit, login) } %>
+    <%= form.collection_select :folder_id, Folder.accessible_by(current_ability), :id, :name, { disabled: !(action_name == "new" or can? :edit, login) } %>
   </div>
   <div>
     <%= form.label :file %>
-    <%= form.file_field :file, disabled: !(can? :edit, login), class:"pl-0 rounded-none" %>
+    <%= form.file_field :file, disabled: !(action_name == "new" or can? :edit, login), class:"pl-0 rounded-none" %>
   </div>
-  <% if can? :edit, login %>
+  <% if action_name == "new" or can? :edit, login %>
     <div>
       <%= form.submit t(".save_login"), class: "btn-primary"  %>
       <%= link_to t(".cancel"), logins_path, class: "btn-secondary" %>
