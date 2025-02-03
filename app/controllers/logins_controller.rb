@@ -17,6 +17,8 @@ class LoginsController < ApplicationController
   end
 
   def show
+    (1 - @login.urls.size).times { @login.urls.build }
+    (1 - @login.custom_fields.size).times { @login.custom_fields.build }
   end
 
   # GET /logins/new

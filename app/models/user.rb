@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :folders, dependent: :destroy
   has_many :logins, through: :folders
   has_many :urls, through: :logins
+  has_many :login_shared_data, dependent: :destroy
 
   validates :email_address, :password, :password_confirmation, presence: true
   validates :password, confirmation: true

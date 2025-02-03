@@ -2,6 +2,7 @@ class Login < ApplicationRecord
   belongs_to :folder
   has_many :urls, dependent: :destroy
   has_many :custom_fields, dependent: :destroy
+  has_many :shared_login_data, dependent: :destroy
   has_one_attached :file
 
   validates :name, :login_name, :login_password, presence: true

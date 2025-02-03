@@ -34,6 +34,11 @@
       <% unless controller_name == "trash" %>
         <div class="text-blue-600 cursor-pointer menu-item text-nowrap" onclick="copyToClipboard('<%= login.login_name %>')"><%= t(".copy_username") %></div>
         <div class="text-blue-600 cursor-pointer menu-item text-nowrap" onclick="copyToClipboard('<%= login.login_password %>')"><%= t(".copy_password") %></div>
+        <% if login.file.attached? %>
+          <div class="text-blue-600 cursor-pointer menu-item text-nowrap">
+            <%= link_to t(".download_attachment"), rails_blob_path(login.file, disposition: "attachment") %>
+          </div>
+        <% end %>
         <%= link_to edit_login_path(login) do %>
           <div class="menu-item text-nowrap"><%= t(".edit_login") %></div>
         <% end %>

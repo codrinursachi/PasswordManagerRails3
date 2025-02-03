@@ -12,7 +12,6 @@ RSpec.describe "shared_login_data/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", shared_login_data_path, "post" do
-
       assert_select "input[name=?]", "shared_login_datum[login_id]"
 
       assert_select "input[name=?]", "shared_login_datum[user_id]"
