@@ -58,6 +58,8 @@ ro:
     sidepanel:
       folders: "Foldere"
       trash: "Cosul de gunoi"
+      shared_by_me: "Partajat de mine"
+      shared_with_me: "Partajat cu mine"
   logins:
     form:
       prohibited: "au impiedicat aceasta logare sa fie salvata"
@@ -77,6 +79,13 @@ ro:
       download_file: "Descarca fisier"
       no_attachment: "Fara atasament"
       date_added_in_trash: "Data adaugarii in cosul de gunoi"
+      copy_username: "Copiaza numele de logare"
+      copy_password: "Copiaza parola"
+      edit_login: "Editeaza logarea"
+      share_login: "Partajeaza logarea"
+      trash_login: "Trimite logarea in cosul de gunoi"
+      restore_login: "Restaureaza logarea"
+      delete_login: "Sterge logarea"
     search_form:
       search_for: "Cauta:"
       favorite: "Favorite"
@@ -93,6 +102,8 @@ ro:
       all_logins: "Toate logarile"
       manage_folders: "Administreaza foldere"
       trash: "Cosul de gunoi"
+      name: "Nume"
+      urls: "URLs"
     new:
       new_login: "Logare noua"
       back_to_logins: "Inapoi la logari"
@@ -103,12 +114,35 @@ ro:
       sign_in: "Autentificare"
       create_account: "Creare cont"
       forgot_password: "Ai uitat parola?"
+  shared_login_data:
+    form:
+      email_address: "Adresa de email"
+      share_login: "Partajeaza logarea"
+    shared_login_datum:
+      view_login: "Vezi logarea"
+      copy_username: "Copiaza numele de logare"
+      copy_password: "Copiaza parola"
+      download_attachment: "Descarca atasament"
+      trash_login_share: "Sterge partajarea logarii"
+    index:
+      shared_logins: "Logari partajate"
+      shared_by_me: "Partajate de mine"
+      name: "Nume"
+      urls: "URLs"
+      shared_with: "Partajat cu"
+      shared_with_me: "Partajat cu mine"
+      no_shared_login_found: "Nicio logare partajata gasita"
+    new:
+      share_login: "Partajeaza logarea"
   trash:
     index:
       back_to_logins: "Inapoi la logari"
       trash: "Cosul de gunoi"
       permanently_delete_login: "Stergere definitiva a logarii"
       restore_login: "Restaurare logare"
+      name: "Nume"
+      urls: "URLs"
+      trash_date: "Data adaugarrii in cosul de gunoi"
   users:
     new:
       prohibited: "au impiedicat acest utilizator sa fie salvat"

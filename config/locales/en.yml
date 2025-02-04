@@ -87,6 +87,8 @@ en:
     sidepanel:
       folders: "Folders"
       trash: "Trash"
+      shared_by_me: "Shared by me"
+      shared_with_me: "Shared with me"
   logins:
     form:
       prohibited: "prohibited this login from being saved"
@@ -106,6 +108,13 @@ en:
       download_file: "Download file"
       no_attachment: "No attachment"
       date_added_in_trash: "Date added in trash"
+      copy_username: "Copy username"
+      copy_password: "Copy password"
+      edit_login: "Edit login"
+      share_login: "Share login"
+      trash_login: "Send login to trash"
+      restore_login: "Restore login"
+      delete_login: "Delete login"
     search_form:
       search_for: "Search for:"
       favorite: "Favorite"
@@ -122,6 +131,8 @@ en:
       all_logins: "All logins"
       manage_folders: "Manage folders"
       trash: "Trash"
+      name: "Name"
+      urls: "URLs"
     new:
       new_login: "New login"
       back_to_logins: "Back to logins"
@@ -132,12 +143,35 @@ en:
       sign_in: "Sign in"
       create_account: "Create account"
       forgot_password: "Forgot password?"
+  shared_login_data:
+    form:
+      email_address: "Email address"
+      share_login: "Share login"
+    shared_login_datum:
+      view_login: "View login"
+      copy_username: "Copy username"
+      copy_password: "Copy password"
+      download_attachment: "Download attachment"
+      trash_login_share: "Delete login share"
+    index:
+      shared_logins: "Shared logins"
+      shared_by_me: "Shared by me"
+      name: "Name"
+      urls: "URLs"
+      shared_with: "Shared with"
+      shared_with_me: "Shared with me"
+      no_shared_login_found: "No shared login found"
+    new:
+      share_login: "Share login"
   trash:
     index:
       back_to_logins: "Back to logins"
       trash: "Trash"
       permanently_delete_login: "Permanently delete login"
       restore_login: "Restore login"
+      name: "Nume"
+      urls: "URLs"
+      trash_date: "Date added in trash"
   users:
     new:
       prohibited: "prohibited this user from being saved"

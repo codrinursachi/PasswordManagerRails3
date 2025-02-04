@@ -68,7 +68,7 @@
     <%= form.label :file %>
     <%= form.file_field :file, disabled: !(action_name == "new" or can? :edit, login), class:"pl-0 rounded-none" %>
   </div>
-  <% if action_name == "new" or can? :edit, login %>
+  <% if can? :edit, login %>
     <div>
       <%= form.submit t(".save_login"), class: "btn-primary"  %>
       <%= link_to t(".cancel"), logins_path, class: "btn-secondary" %>
