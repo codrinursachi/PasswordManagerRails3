@@ -3,11 +3,13 @@
     <%= form.label :login_id %>
     <%= form.text_field :login_id, value: params[:login_id] %>
   </div>
-  <div class="my-5">
-    <%= form.label :user_email, t(".email_address") %>
-    <%= form.email_field :user_email, class: "block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full" %>
+  <div>
+    <fieldset>
+      <legend><%= form.label :user_email, t(".email_address") %></legend>
+      <%= form.email_field :user_email %>
+    </fieldset>
   </div>
   <div class="inline">
-    <%= form.submit t(".share_login"), class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit t(".share_login"), class: "btn-primary mt-2" %>
   </div>
 <% end %>
