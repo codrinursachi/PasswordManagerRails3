@@ -36,7 +36,7 @@
         <div class="flex gap-2 ml-auto mr-2 text-blue-600">
           <% I18n.available_locales.each do |locale| %>
             <% if I18n.locale != locale %>
-              <%= link_to t(".lang.#{locale}"), url_for(locale: locale == :en ? nil : locale) %>
+              <%= link_to t(".lang.#{locale}"), request.query_parameters.merge(locale: locale == :en ? nil : locale) %>
             <% end %>
           <% end %>
           <%= button_to content_tag(:i,'', class: "fas fa-arrow-right-from-bracket"), session_path, method: :delete if Current.user %>
