@@ -37,8 +37,7 @@ class LoginsController < ApplicationController
   def create
     respond_to do |format|
       if @login.save
-        @login.urls.each { |u| u.download_favicon(u.uri) }
-        @login.save
+        FavIconDownloadJob.perform_later(@login)
         format.html { redirect_to logins_path, notice: "Login was successfully created." }
         format.json { render :show, status: :created, location: @login }
       else
@@ -75,6 +74,11 @@ class LoginsController < ApplicationController
     end
   end
 
+  def js_version
+    respond_to do |format|
+      format.html { render template: "logins/js_version", layout: false }
+    end
+  end
   private
     # Only allow a list of trusted parameters through.
     def login_params

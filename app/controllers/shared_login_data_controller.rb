@@ -26,7 +26,7 @@ class SharedLoginDataController < ApplicationController
     end
     respond_to do |format|
       if @shared_login_datum.save
-        UserMailer.with(sender: current_user, receiver: user.email_address, login: @shared_login_datum.login).shared_login.deliver_later
+        UserMailer.with(sender: current_user.email_address, receiver: user.email_address, login: @shared_login_datum.login).shared_login.deliver_later
         format.html { redirect_to shared_login_data_path, notice: "Shared login datum was successfully created." }
         format.json { render :show, status: :created, location: @shared_login_datum }
       else

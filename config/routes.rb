@@ -4,12 +4,12 @@ Rails.application.routes.draw do
     get "trash/restore/:id" => "trash#restore"
     resources :users, only: [ :new, :create ]
     resources :urls
+    get "js_version" => "logins#js_version"
     resources :logins
     resources :folders
     resource :session
     resources :passwords, param: :token
     resources :shared_login_data
-    get ":locale" => "logins#index"
     root "logins#index"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
