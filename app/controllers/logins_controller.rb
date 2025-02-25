@@ -1,5 +1,6 @@
 class LoginsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: %i[ js_version ]
+  allow_unauthenticated_access only: %i[ js_version ]
   # GET /logins or /logins.json
   def index
     filter_scopes = {

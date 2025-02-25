@@ -1,4 +1,5 @@
 <% content_for :title, t(".shared_logins") %>
+<% @shared_login_data = @shared_login_data.group_by { |sld| sld.login.folder.user } %>
 <div class="w-full">
   <% if notice.present? %>
     <p class="inline-block px-3 py-2 mb-5 font-medium text-green-500 rounded-md bg-green-50" id="notice"><%= notice %></p>

@@ -8,7 +8,7 @@
       <%= t(".all_logins") %>
     </div>
   <% end %>
-  <%= link_to logins_path(favorite: 1) do %>
+  <%= link_to logins_path(favorite: true) do %>
     <div class="pl-8 py-1 hover:bg-blue-600 <%= "bg-blue-950" if params[:favorite] %>">
       <%= t(".favorites") %>
     </div>
