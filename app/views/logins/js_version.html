@@ -6,98 +6,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <style type="text/tailwindcss">
-      @layer base {
-        body {
-          @apply h-screen text-gray-800 bg-white dark:bg-zinc-900 dark:text-white;
-        }
-
-        aside {
-          @apply h-screen text-white bg-blue-800 min-w-full md:min-w-[270px] text-lg flex-col gap-2 sticky top-0 overflow-auto;
-        }
-
-        main {
-          @apply flex-1 mx-2 md:mx-16;
-        }
-
-        a {
-          @apply text-blue-600;
-        }
-
-        aside a {
-          @apply text-white;
-        }
-
-        h1 {
-          @apply text-3xl font-bold;
-        }
-
-        h2 {
-          @apply text-2xl font-bold;
-        }
-
-        hr {
-          @apply border-gray-500;
-        }
-
-        form {
-          @apply flex flex-col gap-4;
-        }
-
-        legend {
-          @apply px-2 text-gray-500;
-        }
-
-        fieldset {
-          @apply flex flex-col px-2 pb-1 border border-gray-500 rounded-xl focus-within:border-blue-500;
-        }
-
-        input,
-        textarea,
-        select {
-          @apply w-full p-2 rounded-md focus:outline-none dark:bg-zinc-800;
-        }
-
-        select {
-          @apply h-8;
-        }
-
-        tr {
-          @apply text-gray-500 border-b-[0.5px] border-gray-500 hover:bg-gray-200;
-        }
-
-        th {
-          @apply text-left;
-        }
-
-        td {
-          @apply py-3;
-        }
-      }
-
-      @layer components {
-        .btn-primary,
-        .btn-primary-user-action {
-          @apply w-auto px-4 py-2 font-bold text-center text-white bg-blue-600 rounded-full cursor-pointer hover:bg-blue-700;
-        }
-
-        .btn-primary-user-action {
-          @apply w-full;
-        }
-
-        .btn-secondary {
-          @apply px-4 py-2 font-bold text-center text-blue-600 bg-white rounded-full cursor-pointer ring-2 ring-blue-600 hover:bg-blue-600 hover:text-white;
-        }
-
-        .form-bg {
-          @apply bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 dark:bg-zinc-800 p-4 md:p-8 flex flex-col gap-2;
-        }
-
-        .menu-item {
-          @apply p-2 hover:bg-gray-200;
-        }
-      }
-    </style>
     <script defer>
       const getResponse = async (url, method = "GET", data = {}) => {
         const options = {
@@ -162,230 +70,173 @@
       };
 
       const renderLoginPage = () => {
-        document.body.innerHTML = `
-          <div class="flex min-h-full">
-            <div class="flex flex-col flex-1">
-              <div
-                id="mobile-menu-button"
-                class="fixed top-0 z-10 ml-2 cursor-pointer md:collapse"
-              >
-                <button>
-                  <div class="w-8 h-1 bg-white rounded-full"></div>
-                  <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>
-                  <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>
-                </button>
-              </div>
-              <main>
-                <!-- BEGIN app/views/sessions/new.html.erb -->
-                <div
-                  class="flex flex-col items-center justify-center flex-1 h-full"
-                >
-                  <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
-                  <div class="mb-10 text-3xl font-bold">Sign in</div>
-                  <div class="form-bg">
-                    <form
-                      id="login-form"
-                      action="/session"
-                      accept-charset="UTF-8"
-                      method="post"
-                    >
-                      <fieldset>
-                        <legend>
-                          <label for="email_address">Email address</label>
-                        </legend>
-                        <input
-                          required="required"
-                          autofocus="autofocus"
-                          autocomplete="username"
-                          type="email"
-                          name="email_address"
-                          id="email_address"
-                        />
-                      </fieldset>
-                      <fieldset>
-                        <legend><label for="password">Password</label></legend>
-                        <input
-                          required="required"
-                          autocomplete="current-password"
-                          class="user-data-input"
-                          type="password"
-                          name="password"
-                          id="password"
-                        />
-                      </fieldset>
-                      <input
-                        type="submit"
-                        name="commit"
-                        value="Sign in"
-                        class="btn-primary-user-action"
-                        data-disable-with="Sign in"
-                      />
-                    </form>
-                    <a href="/passwords/new">Forgot password?</a>
-                    <hr />
-                    <a href="#register">Create account</a>
-                  </div>
-                </div>
-                <!-- END app/views/sessions/new.html.erb -->
-              </main>
-            </div>
-          </div>
-        `;
-        const loginForm = document.getElementById("login-form");
-        loginForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(loginForm);
-          const formDataObj = {};
-          formData.forEach((value, key) => (formDataObj[key] = value));
-          const email_address = formData.get("email_address");
-          const password = formData.get("password");
-          const response = await getResponse("/session/", "POST", {
-            email_address,
-            password,
-          });
-          if (response.status === 200) {
-            window.location.hash = "";
-          }
-        });
+        document.body.appendChild(
+          d("div", { class: "flex min-h-full" }, [
+            d("div", { class: "flex flex-col flex-1" }, [
+              d("main", { class: "flex-1 mx-2 md:mx-16" }, [
+                d(
+                  "div",
+                  {
+                    class:
+                      "flex flex-col items-center justify-center flex-1 h-full",
+                  },
+                  [
+                    d("i", {
+                      class: "mb-4 text-blue-700 fas fa-7x fa-shield-halved",
+                    }),
+                    d("h1", { class: "mb-10 text-3xl font-bold" }, ["Sign in"]),
+                    d("div", { class: formContainerStyle() }, [
+                      d(
+                        "form",
+                        {
+                          class: "flex flex-col gap-4",
+                          id: "app-login-form",
+                          action: "/session",
+                          acceptCharset: "UTF-8",
+                          method: "post",
+                          submit: async (e) => {
+                            e.preventDefault();
+                            const loginForm =
+                              document.getElementById("app-login-form");
+                            const formData = new FormData(loginForm);
+                            const email_address = formData.get("email_address");
+                            const password = formData.get("password");
+                            const response = await getResponse(
+                              "/session/",
+                              "POST",
+                              {
+                                email_address,
+                                password,
+                              }
+                            );
+                            if (response.status === 200) {
+                              window.location.hash = "";
+                            }
+                          },
+                        },
+                        [
+                          InputDiv("Email address", "email", "email_address"),
+                          InputDiv("Password", "password", "password"),
+                          d("input", {
+                            type: "submit",
+                            name: "commit",
+                            value: "Sign in",
+                            class: buttonPrimaryUserActionStyle(),
+                          }),
+                        ]
+                      ),
+                      d(
+                        "a",
+                        { class: "text-blue-600", href: "/passwords/new" },
+                        ["Forgot password?"]
+                      ),
+                      d("hr", { class: "border-gray-500" }),
+                      d("a", { class: "text-blue-600", href: "#register" }, [
+                        "Create account",
+                      ]),
+                    ]),
+                  ]
+                ),
+              ]),
+            ]),
+          ])
+        );
       };
 
       const renderRegisterPage = () => {
-        document.body.innerHTML = ` <div class="flex min-h-full">
-          <div class="flex flex-col flex-1">
-            <div class="flex gap-2 ml-auto mr-2 text-blue-600">
-              <a href="/ro/users/new"
-                ><span
-                  class="translation_missing"
-                  title="translation missing: en.layouts.application.lang.ro"
-                  >Ro</span
-                ></a
-              >
-            </div>
-            <div
-              id="mobile-menu-button"
-              class="fixed top-0 z-10 ml-2 cursor-pointer md:collapse"
-            >
-              <button>
-                <div class="w-8 h-1 bg-white rounded-full"></div>
-                <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>
-                <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>
-              </button>
-            </div>
-            <main>
-              <!-- BEGIN app/views/users/new.html.erb -->
-              <div
-                class="flex flex-col items-center justify-center flex-1 h-full"
-              >
-                <i class="mb-4 text-blue-700 fas fa-7x fa-shield-halved"></i>
-                <h1 class="mb-10">Sign up</h1>
-                <div class="form-bg">
-                  <form
-                    id="registration-form"
-                    action="/users"
-                    accept-charset="UTF-8"
-                    method="post"
-                  >
-                    <fieldset>
-                      <legend>
-                        <label for="user_email_address">Email address</label>
-                      </legend>
-                      <input
-                        class="user-data-input"
-                        type="text"
-                        name="user[email_address]"
-                        id="user_email_address"
-                      />
-                    </fieldset>
-                    <fieldset>
-                      <legend>
-                        <label for="user_password">Password</label>
-                      </legend>
-                      <input
-                        class="user-data-input"
-                        type="password"
-                        name="user[password]"
-                        id="user_password"
-                      />
-                    </fieldset>
-                    <fieldset>
-                      <legend>
-                        <label for="user_password_confirmation"
-                          >Password confirmation</label
-                        >
-                      </legend>
-                      <input
-                        class="user-data-input"
-                        type="password"
-                        name="user[password_confirmation]"
-                        id="user_password_confirmation"
-                      />
-                    </fieldset>
-                    <fieldset>
-                      <legend>
-                        <label for="user_first_name">First name</label>
-                      </legend>
-                      <input
-                        class="user-data-input"
-                        type="text"
-                        name="user[first_name]"
-                        id="user_first_name"
-                      />
-                    </fieldset>
-                    <fieldset>
-                      <legend>
-                        <label for="user_last_name">Last name</label>
-                      </legend>
-                      <input
-                        class="user-data-input"
-                        type="text"
-                        name="user[last_name]"
-                        id="user_last_name"
-                      />
-                    </fieldset>
-                    <input
-                      type="submit"
-                      name="commit"
-                      value="Sign up"
-                      class="btn-primary-user-action"
-                      data-disable-with="Sign up"
-                    />
-                  </form>
-                  <hr />
-                  <div>
-                    Already have an account?
-                    <a href="">Sign in</a>
-                  </div>
-                </div>
-              </div>
-              <!-- END app/views/users/new.html.erb -->
-            </main>
-          </div>
-        </div>`;
-        const registerForm = document.getElementById("registration-form");
-        registerForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(registerForm);
-          const email_address = formData.get("user[email_address]");
-          const password = formData.get("user[password]");
-          const password_confirmation = formData.get(
-            "user[password_confirmation]"
-          );
-          const first_name = formData.get("user[first_name]");
-          const last_name = formData.get("user[last_name]");
-          const response = await getResponse("/users/", "POST", {
-            email_address,
-            password,
-            password_confirmation,
-            first_name,
-            last_name,
-          });
-          if (response.status === 200) {
-            window.location.reload();
-          }
-        });
+        document.body.appendChild(
+          d("div", { class: "flex min-h-full" }, [
+            d("div", { class: "flex flex-col flex-1" }, [
+              d("main", { class: "flex-1 mx-2 md:mx-16" }, [
+                d(
+                  "div",
+                  {
+                    class:
+                      "flex flex-col items-center justify-center flex-1 h-full",
+                  },
+                  [
+                    d("i", {
+                      class: "mb-4 text-blue-700 fas fa-7x fa-shield-halved",
+                    }),
+                    d("h1", { class: "mb-10 text-3xl font-bold" }, ["Sign up"]),
+                    d("div", { class: formContainerStyle() }, [
+                      d(
+                        "form",
+                        {
+                          class: "flex flex-col gap-4",
+                          id: "registration-form",
+                          action: "/users",
+                          acceptCharset: "UTF-8",
+                          method: "post",
+                          submit: async (e) => {
+                            e.preventDefault();
+                            const registerForm =
+                              document.getElementById("registration-form");
+                            const formData = new FormData(registerForm);
+                            const email_address = formData.get(
+                              "user[email_address]"
+                            );
+                            const password = formData.get("user[password]");
+                            const password_confirmation = formData.get(
+                              "user[password_confirmation]"
+                            );
+                            const first_name = formData.get("user[first_name]");
+                            const last_name = formData.get("user[last_name]");
+                            const response = await getResponse(
+                              "/users/",
+                              "POST",
+                              {
+                                email_address,
+                                password,
+                                password_confirmation,
+                                first_name,
+                                last_name,
+                              }
+                            );
+                            if (response.status === 200) {
+                              window.location.reload();
+                            }
+                          },
+                        },
+                        [
+                          InputDiv(
+                            "Email address",
+                            "email",
+                            "user[email_address]"
+                          ),
+                          InputDiv("Password", "password", "user[password]"),
+                          InputDiv(
+                            "Password confirmation",
+                            "password",
+                            "user[password_confirmation]"
+                          ),
+                          InputDiv("First name", "text", "user[first_name]"),
+                          InputDiv("Last name", "text", "user[last_name]"),
+                          d("input", {
+                            type: "submit",
+                            name: "commit",
+                            value: "Sign up",
+                            class: buttonPrimaryUserActionStyle(),
+                          }),
+                        ]
+                      ),
+                      d("hr", { class: "border-gray-500" }),
+                      d("div", {}, [
+                        "Already have an account?",
+                        d("a", { class: "text-blue-600", href: "" }, [
+                          "Sign in",
+                        ]),
+                      ]),
+                    ]),
+                  ]
+                ),
+              ]),
+            ]),
+          ])
+        );
       };
 
-      const generateNavMenu = async () => {
+      const NavMenu = async () => {
         const response = await getResponse(
           "http://127.0.0.1:3000/folders",
           "GET"
@@ -397,12 +248,9 @@
           ["Shared by me", "#sharedIndex?by_me=true"],
           ["Shared with me", "#sharedIndex"],
         ];
-        let result = specialFolders
-          .map(
-            (folder) =>
-              `<a href="${folder[1]}"><div class="py-1 pl-8 hover:bg-blue-600 ${window.location.hash === folder[1] ? "bg-blue-950" : ""}">${folder[0]}</div></a>`
-          )
-          .join("");
+        let specialFoldersNodes = specialFolders.map((folder) =>
+          HighlightableSpecialFolder(folder, window.location.hash)
+        );
         let current_folder_id = null;
         if (window.location.hash.includes("folder_id")) {
           current_folder_id = parseInt(
@@ -411,232 +259,154 @@
             )
           );
         }
-        result += `<div>`;
-        for (let folder of userFolders) {
-          result += `<a href="#index?folder_id=${
-            folder.id
-          }"><div class="py-1 pl-8 hover:bg-blue-600 ${
-            folder.id === current_folder_id ? "bg-blue-950" : ""
-          }"><i class="fas fa-folder${
-            folder.id === current_folder_id ? "-open" : ""
-          }"></i> ${folder.name}</div></a>`;
-        }
-        result += `</div>`;
-        result += `<a href="#trash"><div class="py-1 pl-8 hover:bg-blue-600 ${
-          window.location.hash.includes("trash") ? "bg-blue-950" : ""
-        }"><i class="fas fa-trash-alt"></i> Trash</div></a>`;
-        return `
-          <aside id="side-panel" class="hidden md:gap-2 md:flex">
-            <a href="#"><div class="pt-8 pl-8 text-lg"><i class="fas fa-shield-halved"></i> Password Manager</div></a>
-            <div class="pl-8">
-              <h2>Folders <a href="#folders"><i class="fas fa-gear"></a></i></h2>
-            </div>
-            ${result}
-          </aside>
-        `;
+
+        const userFoldersNodes = userFolders.map((folder) =>
+          HighlightableUserFolder(folder, current_folder_id)
+        );
+
+        let result = d(
+          "aside",
+          {
+            class:
+              "h-screen text-white bg-blue-800 min-w-full md:min-w-[270px] text-lg flex-col gap-2 sticky top-0 overflow-auto flex",
+          },
+          [
+            Logo(),
+            FoldersHeader(),
+            ...specialFoldersNodes,
+            d("div", {}, userFoldersNodes),
+            TrashFolder(),
+          ]
+        );
+        return result;
       };
 
-      const getStandardMenu = (login) => {
+      const StandardMenu = (login) => {
         if (login.trash_date) {
-          return `
-          <div class="text-left text-blue-600 cursor-pointer menu-item text-nowrap" onclick="restoreLogin(${login.id})">Restore Login</div>
-          <div class="text-left text-red-600 cursor-pointer menu-item text-nowrap" onclick="deleteLogin(${login.id})">Delete Login</div>
-          `;
+          return [
+            TrashRestoreLoginOption(login),
+            TrashDeleteLoginOption(login),
+          ];
         }
-        return ` <div
-            class="text-blue-600 cursor-pointer menu-item text-nowrap"
-            onclick="copyToClipboard('${login.login_name}')"
-          >
-            Copy Username
-          </div>
-          <div
-            class="text-blue-600 cursor-pointer menu-item text-nowrap"
-            onclick="copyToClipboard('${login.login_password}')"
-          >
-            Copy Password
-          </div>
-          ${
-            login.file
-              ? `<a href="${login.file}" download><div class="text-blue-600 cursor-pointer menu-item text-nowrap">Download Attachment</div></a>`
-              : ""
-          }
-          <a href="#loginView_${login.id}"
-            ><div class="menu-item text-nowrap">Edit Login</div></a
-          >
-          <a href="#shareLogin_${login.id}"
-            ><div class="menu-item text-nowrap">Share Login</div></a
-          >
-          <div
-            class="text-left text-red-600 cursor-pointer menu-item text-nowrap"
-            onclick="sendLoginToTrash(${login.id})"
-          >
-            Send login to trash
-          </div>`;
+        return [
+          CopyUsernameLoginOption(login),
+          CopyPasswordLoginOption(login),
+          login.file ? DownloadAttachmentLoginOption(login) : "",
+          EditLoginOption(login),
+          ShareLoginOption(login),
+          SendLoginToTrashOption(login),
+        ];
       };
 
-      const getSharedMenu = (login, sharedByMe) => `
-        <a href="#loginView${sharedByMe ? "" : "R"}_${login.id}"
-          ><div class="menu-item text-nowrap">View Login</div></a
-        >
-        <div
-          class="text-blue-600 cursor-pointer menu-item text-nowrap"
-          onclick="copyToClipboard('${login.login_name}')"
-        >
-          Copy Username
-        </div>
-        <div
-          class="text-blue-600 cursor-pointer menu-item text-nowrap"
-          onclick="copyToClipboard('${login.login_password}')"
-        >
-          Copy Password
-        </div>
-        ${
-          login.file
-            ? `<div class="text-blue-600 cursor-pointer menu-item text-nowrap"><a href="${login.file}" download>Download Attachment</a></div>`
-            : ""
-        }
-        <div
-          class="text-red-600 cursor-pointer menu-item text-nowrap"
-          onclick="deleteSharedLogin(${login.shared_id})"
-        >
-          Delete shared login
-        </div>
-      `;
+      const SharedMenu = (login, sharedByMe) => [
+        ViewLoginOption(login, sharedByMe),
+        CopyUsernameLoginOption(login),
+        CopyPasswordLoginOption(login),
+        login.file ? DownloadAttachmentLoginOption(login) : "",
+        DeleteSharedLoginOption(login),
+      ];
 
-      const generateLogin = (login, isShared = 0) => {
-        return `
-          <tr>
-            <td class="text-center">
-              ${
-                login.urls.length > 0
-                  ? login.fav_icons
-                      .map((fav_icon) =>
-                        fav_icon
-                          ? `<img src="${fav_icon}" class="mx-auto">`
-                          : `<i class="fas fa-xl fa-globe"></i>`
-                      )
-                      .join("</br>")
-                  : `<i class="fas fa-xl fa-globe"></i>`
-              }
-            </td>
-            <td>
-              <a
-                href="#loginView${isShared === 2 ? "R" : ""}_${login.id}"
-                class="font-bold"
-                >${login.name}</a
-              ><br />
-              ${login.login_name}
-            </td>
-            <td>
-              <a href="${login.urls[0]}" target="_blank"
-                >${login.urls[0] || ""}</a
-              >
-            </td>
-            ${
-              login.trash_date && isShared === 0
-                ? `<td>${login.trash_date}</td>`
-                : ""
-            }
-            ${isShared === 1 ? `<td>${login.shared_by}</td>` : ""}
-            ${isShared === 2 ? `<td>${login.shared_with}</td>` : ""}
-            <td class="relative">
-              <div
-                id="toggle_${login.id}"
-                onclick="openMenu(${login.id})"
-                class="top-0 right-0 w-6 ml-auto text-center rounded-md cursor-pointer hover:ring-1 hover:ring-blue-600"
-              >
-                <i class="fas fa-ellipsis-v"></i>
-              </div>
-              <div
-                id="menu_${login.id}"
-                class="absolute right-0 z-10 hidden py-2 bg-white border border-gray-500 top-12 rounded-xl"
-              >
-                ${
-                  isShared === 0
-                    ? getStandardMenu(login)
-                    : getSharedMenu(login, isShared === 1)
-                }
-              </div>
-            </td>
-          </tr>
-        `;
+      const Login = (login, isShared) => {
+        return d(
+          "tr",
+          {
+            class:
+              "text-gray-500 border-b-[0.5px] border-gray-500 hover:bg-gray-200/60",
+          },
+          [
+            d(
+              "td",
+              { class: "text-center py-3" },
+              getFavIconsIfAvailable(login)
+            ),
+            d("td", { class: "py-3" }, [
+              d(
+                "a",
+                {
+                  href: `#loginView${isShared === 1 ? "R" : ""}_${login.id}`,
+                  class: "font-bold text-blue-600",
+                },
+                [login.name]
+              ),
+              d("br"),
+              login.login_name,
+            ]),
+            d("td", { class: "py-3" }, [
+              d(
+                "a",
+                {
+                  class: "text-blue-600",
+                  href: login.urls[0] && login.url[0].uri,
+                  target: "_blank",
+                },
+                [(login.urls[0] && login.urls[0].uri) || ""]
+              ),
+            ]),
+            login.trash_date && !isShared
+              ? d("td", { class: "py-3" }, [login.trash_date])
+              : "",
+            isShared === 1 ? d("td", { class: "py-3" }, [login.shared_by]) : "",
+            isShared === 2
+              ? d("td", { class: "py-3" }, [login.shared_with])
+              : "",
+            ExpandableMenu(login, isShared),
+          ]
+        );
       };
 
       const renderIndexPage = async () => {
         const params = window.location.hash.split("?")[1];
-        const response = await getResponse("/logins" + "?" + params || "");
+        const response = await getResponse("/logins" + "?" + (params || ""));
         const logins = await response.json();
         const main = document.querySelector("main");
-        let result = "";
-        logins.forEach((login) => {
-          result += generateLogin(login);
-        });
-        main.innerHTML = `
-          <!-- BEGIN app/views/logins/index.html.erb -->
-          <p style="color: green"></p>
-          <div class="flex justify-between">
-            <h1>Logins</h1>
-            <a class="btn-primary" href="#loginNew">New login</a>
-          </div>
-          <!-- BEGIN app/views/logins/_search_form.html.erb -->
-          <form
-            id="search"
-            class="flex-row flex-wrap items-center justify-between mt-8 text-lg md:justify-start"
-            action="/logins"
-            accept-charset="UTF-8"
-            method="get"
-          >
-            <div class="hidden">
-              <label for="favorite">Favorite</label>
-              <input
-                class="size-4"
-                type="checkbox"
-                value="1"
-                name="favorite"
-                id="favorite"
-              />
-            </div>
-            <div>
-              <input
-                class="w-full text-sm border border-gray-500 hover:ring-1 hover:ring-blue-600 focus:ring-2 focus:ring-blue-600 md:w-80"
-                type="search"
-                name="q"
-                id="q"
-              />
-            </div>
-            <input
-              type="submit"
-              name="commit"
-              value="Search"
-              class="text-sm btn-primary"
-              data-disable-with="Search"
-            />
-          </form>
-          <!-- END app/views/logins/_search_form.html.erb -->
-          <div class="mt-2">
-            <table class="w-full mt-8 table-fixed">
-              <thead>
-                <tr class="border-b-2 hover:bg-white">
-                  <th class="w-12"></th>
-                  <th>Name</th>
-                  <th>URLs</th>
-                  <th class="w-12"></th>
-                </tr>
-              </thead>
-              <tbody>
-                ${result}
-              </tbody>
-            </table>
-          </div>
-          <!-- END app/views/logins/index.html.erb -->
-        `;
-        const searchForm = document.getElementById("search");
-        searchForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(searchForm);
-          const searchQuery = formData.get("q");
-          window.location.hash = `#index?q=${searchQuery}`;
-        });
+        main.append(
+          d("div", { class: "flex justify-between" }, [
+            d("h1", { class: "text-3xl font-bold" }, ["Logins"]),
+            d("a", { class: buttonPrimaryStyle(), href: "#loginNew" }, [
+              "New login",
+            ]),
+          ]),
+          d(
+            "form",
+            {
+              class:
+                "flex-row flex-wrap items-center justify-between mt-8 text-lg md:justify-start flex flex-col gap-4",
+              action: "/logins",
+              acceptCharset: "UTF-8",
+              method: "get",
+              submit: async (e) => {
+                e.preventDefault();
+                const formData = new FormData(searchForm);
+                const searchQuery = formData.get("q");
+                window.location.hash = `#index?q=${searchQuery}`;
+              },
+            },
+            [
+              d("div", {}, [
+                d("input", {
+                  class:
+                    "w-full text-sm border border-gray-500 hover:ring-1 hover:ring-blue-600 focus:ring-2 focus:ring-blue-600 md:w-80" +
+                    inputStyle(),
+                  type: "search",
+                  name: "q",
+                  id: "q",
+                }),
+              ]),
+              d("input", {
+                type: "submit",
+                name: "commit",
+                value: "Search",
+                class: "text-sm " + buttonPrimaryStyle(),
+              }),
+            ]
+          ),
+          d("div", { class: "mt-2" }, [
+            d("table", { class: "w-full mt-8 table-fixed" }, [
+              TableHeader(["Name", "URLs"]),
+              TableBody(logins),
+            ]),
+          ])
+        );
       };
 
       const renderLoginViewPage = async () => {
@@ -644,475 +414,158 @@
         const response = await getResponse(`/logins/${loginId}`);
         const login = await response.json();
         const main = document.querySelector("main");
-        main.innerHTML = `
-          <!-- BEGIN app/views/logins/edit.html.erb -->
-          <div class="mx-auto form-bg">
-            <h1 class="text-center">Edit login</h1>
-            <!-- BEGIN app/views/logins/_form.html.erb -->
-            <form
-              id="login-edit-form"
-              enctype="multipart/form-data"
-              action="/logins/${login.id}"
-              accept-charset="UTF-8"
-              method="post"
-            >
-              <input
-                type="hidden"
-                name="_method"
-                value="patch"
-                autocomplete="off"
-              />
-              <div>
-                <fieldset>
-                  <legend class="fieldset-legend">
-                    <label style="display: block" for="login_name">Name</label>
-                  </legend>
-                  <input
-                    type="text"
-                    value="${login.name || ""}"
-                    name="login[name]"
-                    id="login_name"
-                  />
-                </fieldset>
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="login_login_name"
-                      >Login name</label
-                    >
-                  </legend>
-                  <input
-                    type="text"
-                    value="${login.login_name || ""}"
-                    name="login[login_name]"
-                    id="login_login_name"
-                  />
-                </fieldset>
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="login_login_password"
-                      >Login password</label
-                    >
-                  </legend>
-                  <input
-                    value="${login.login_password || ""}"
-                    type="password"
-                    name="login[login_password]"
-                    id="login_login_password"
-                  />
-                </fieldset>
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label
-                      style="display: block"
-                      for="login_urls_attributes_0_uri"
-                      >Uri</label
-                    >
-                  </legend>
-                  <input
-                    type="text"
-                    value="${login.urls[0]}"
-                    name="login[urls_attributes][0][uri]"
-                    id="login_urls_attributes_0_uri"
-                  />
-                </fieldset>
-                <input
-                  autocomplete="off"
-                  type="hidden"
-                  value="2"
-                  name="login[urls_attributes][0][id]"
-                  id="login_urls_attributes_0_id"
-                />
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="login_notes"
-                      >Notes</label
-                    >
-                  </legend>
-                  <textarea name="login[notes]" id="login_notes">
-${login.notes || ""}
-</textarea
-                  >
-                </fieldset>
-              </div>
-              <div>
-                Custom fields:
-                <div class="flex flex-col gap-1">
-                  <fieldset>
-                    <legend>
-                      <label
-                        style="display: block"
-                        for="login_custom_fields_attributes_0_name"
-                        >Name</label
-                      >
-                    </legend>
-                    <input
-                      value="${login.custom_fields[0].name}"
-                      type="text"
-                      name="login[custom_fields_attributes][0][name]"
-                      id="login_custom_fields_attributes_0_name"
-                    />
-                  </fieldset>
-                  <fieldset>
-                    <legend>
-                      <label
-                        style="display: block"
-                        for="login_custom_fields_attributes_0_value"
-                        >Value</label
-                      >
-                    </legend>
-                    <input
-                      value="${login.custom_fields[0].value}"
-                      type="text"
-                      name="login[custom_fields_attributes][0][value]"
-                      id="login_custom_fields_attributes_0_value"
-                    />
-                  </fieldset>
-                </div>
-              </div>
-              <div>
-                <label for="login_is_favorite">Is favorite</label>
-                <input
-                  name="login[is_favorite]"
-                  type="hidden"
-                  value="0"
-                  autocomplete="off"
-                /><input
-                  class="size-4"
-                  type="checkbox"
-                  value="1"
-                  ${login.is_favorite ? 'checked="checked"' : ""}
-                  name="login[is_favorite]"
-                  id="login_is_favorite"
-                />
-              </div>
-              <div>
-                <label style="display: block" for="login_folder_id"
-                  >Folder</label
-                >
-                <select name="login[folder_id]" id="login_folder_id"></select>
-              </div>
-              <div>
-                <label for="login_file">File</label>
-                <input
-                  class="pl-0 rounded-none"
-                  type="file"
-                  name="login[file]"
-                  id="login_file"
-                />
-              </div>
-              <div>
-                <input
-                  type="submit"
-                  name="commit"
-                  value="Save login"
-                  class="btn-primary"
-                  data-disable-with="Save login"
-                />
-                <a class="btn-secondary" href="#index">Cancel</a>
-              </div>
-            </form>
-            <!-- END app/views/logins/_form.html.erb -->
-          </div>
-          <!-- END app/views/logins/edit.html.erb -->
-        `;
-        const loginSelect = document.getElementById("login_folder_id");
-        const folderResponse = await getResponse("/folders");
-        const folders = await folderResponse.json();
-        for (const folder of folders) {
-          const option = document.createElement("option");
-          if (folder.id === login.folder_id) {
-            option.selected = true;
-          }
-          option.value = folder.id;
-          option.text = folder.name;
-          loginSelect.appendChild(option);
-        }
+        const readonly = window.location.hash.includes("R");
+        main.appendChild(
+          d("div", { class: "mx-auto" + formContainerStyle() }, [
+            d(
+              "h1",
+              { class: "text-center text-3xl font-bold" },
+              readonly ? ["View Login"] : ["Edit login"]
+            ),
+            d(
+              "form",
+              {
+                class: "flex flex-col gap-4",
+                id: "login-form",
+                enctype: "multipart/form-data",
+                action: `/logins/${login.id}`,
+                method: "post",
+                submit: async (e) => {
+                  e.preventDefault();
+                  const loginObject = LoginObject();
+                  loginObject.id = login.id;
+                  const response = await getResponse(
+                    `/logins/${login.id}`,
+                    "PATCH",
+                    loginObject
+                  );
+                  window.location.hash = "#index";
+                },
+              },
+              [
+                InputDiv("Name", "text", "login[name]", login.name, readonly),
+                InputDiv(
+                  "Login name",
+                  "text",
+                  "login[login_name]",
+                  login.login_name,
+                  readonly
+                ),
+                InputDiv(
+                  "Login password",
+                  "password",
+                  "login[login_password]",
+                  login.login_password,
+                  readonly
+                ),
+                InputUriDiv(
+                  "Uri",
+                  "text",
+                  "login[urls_attributes][0][uri]",
+                  login.urls[0].uri,
+                  login.urls[0].id,
+                  readonly
+                ),
+                TextAreaDiv("Notes", "login[notes]", login.notes, readonly),
+                CustomFieldsDiv(login.custom_fields, readonly),
+                FavCheckboxDiv(login.is_favorite, readonly),
+                FolderSelectDiv(readonly),
+                readonly ? "" : FileInputDiv(),
+                readonly ? "" : LoginActionsDiv(),
+              ]
+            ),
+          ])
+        );
 
-        const loginEditForm = document.getElementById("login-edit-form");
-        loginEditForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const loginData = {};
-          const loginObject = {
-            id: login.id,
-            login: loginData,
-          };
-          loginData.name = loginEditForm["login[name]"].value;
-          loginData.login_name = loginEditForm["login[login_name]"].value;
-          loginData.login_password =
-            loginEditForm["login[login_password]"].value;
-          loginData.urls = [
-            loginEditForm["login[urls_attributes][0][uri]"].value,
-          ];
-          loginData.notes = loginEditForm["login[notes]"].value;
-          loginData.custom_fields = [
-            {
-              name: loginEditForm["login[custom_fields_attributes][0][name]"]
-                .value,
-              value:
-                loginEditForm["login[custom_fields_attributes][0][value]"]
-                  .value,
-            },
-          ];
-          loginData.is_favorite = loginEditForm["login[is_favorite]"].checked;
-          loginData.folder_id = loginEditForm["login[folder_id]"].value;
-          loginData.file = loginEditForm["login[file]"].files[0];
-          const response = await getResponse(
-            `/logins/${login.id}`,
-            "PATCH",
-            loginObject
-          );
-          window.location.hash = "#index";
-        });
+        await populateLoginSelectFolders(login.folder_name, readonly);
       };
 
       const renderNewLoginPage = async () => {
-        const response = await getResponse("/folders");
-        const folders = await response.json();
         const main = document.querySelector("main");
-        main.innerHTML = `
-          <!-- BEGIN app/views/logins/edit.html.erb -->
-          <div class="mx-auto form-bg">
-            <h1 class="text-center">New login</h1>
-            <!-- BEGIN app/views/logins/_form.html.erb -->
-            <form
-              id="login-new-form"
-              enctype="multipart/form-data"
-              accept-charset="UTF-8"
-              method="post"
-            >
-              <div>
-                <fieldset>
-                  <legend class="fieldset-legend">
-                    <label style="display: block" for="login_name">Name</label>
-                  </legend>
-                  <input type="text" name="login[name]" id="login_name" />
-                </fieldset>
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="login_login_name"
-                      >Login name</label
-                    >
-                  </legend>
-                  <input
-                    type="text"
-                    name="login[login_name]"
-                    id="login_login_name"
-                  />
-                </fieldset>
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="login_login_password"
-                      >Login password</label
-                    >
-                  </legend>
-                  <input
-                    type="password"
-                    name="login[login_password]"
-                    id="login_login_password"
-                  />
-                </fieldset>
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label
-                      style="display: block"
-                      for="login_urls_attributes_0_uri"
-                      >Uri</label
-                    >
-                  </legend>
-                  <input
-                    type="text"
-                    name="login[urls_attributes][0][uri]"
-                    id="login_urls_attributes_0_uri"
-                  />
-                </fieldset>
-                <input
-                  autocomplete="off"
-                  type="hidden"
-                  value="2"
-                  name="login[urls_attributes][0][id]"
-                  id="login_urls_attributes_0_id"
-                />
-              </div>
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="login_notes"
-                      >Notes</label
-                    >
-                  </legend>
-                  <textarea name="login[notes]" id="login_notes"></textarea>
-                </fieldset>
-              </div>
-              <div>
-                Custom fields:
-                <div class="flex flex-col gap-1">
-                  <fieldset>
-                    <legend>
-                      <label
-                        style="display: block"
-                        for="login_custom_fields_attributes_0_name"
-                        >Name</label
-                      >
-                    </legend>
-                    <input
-                      type="text"
-                      name="login[custom_fields_attributes][0][name]"
-                      id="login_custom_fields_attributes_0_name"
-                    />
-                  </fieldset>
-                  <fieldset>
-                    <legend>
-                      <label
-                        style="display: block"
-                        for="login_custom_fields_attributes_0_value"
-                        >Value</label
-                      >
-                    </legend>
-                    <input
-                      type="text"
-                      name="login[custom_fields_attributes][0][value]"
-                      id="login_custom_fields_attributes_0_value"
-                    />
-                  </fieldset>
-                </div>
-              </div>
-              <div>
-                <label for="login_is_favorite">Is favorite</label>
-                <input
-                  name="login[is_favorite]"
-                  type="hidden"
-                  value="0"
-                  autocomplete="off"
-                /><input
-                  class="size-4"
-                  type="checkbox"
-                  value="1"
-                  name="login[is_favorite]"
-                  id="login_is_favorite"
-                />
-              </div>
-              <div>
-                <label style="display: block" for="login_folder_id"
-                  >Folder</label
-                >
-                <select name="login[folder_id]" id="login_folder_id"></select>
-              </div>
-              <div>
-                <label for="login_file">File</label>
-                <input
-                  class="pl-0 rounded-none"
-                  type="file"
-                  name="login[file]"
-                  id="login_file"
-                />
-              </div>
-              <div>
-                <input
-                  type="submit"
-                  name="commit"
-                  value="Save login"
-                  class="btn-primary"
-                  data-disable-with="Save login"
-                />
-                <a class="btn-secondary" href="#index">Cancel</a>
-              </div>
-            </form>
-            <!-- END app/views/logins/_form.html.erb -->
-          </div>
-          <!-- END app/views/logins/edit.html.erb -->
-        `;
-        const loginSelect = document.getElementById("login_folder_id");
-        for (const folder of folders) {
-          const option = document.createElement("option");
-          option.value = folder.id;
-          option.text = folder.name;
-          loginSelect.appendChild(option);
-        }
-        const loginNewForm = document.getElementById("login-new-form");
-        loginNewForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const loginData = {};
-          const loginObject = {
-            login: loginData,
-          };
-          loginData.name = loginNewForm["login[name]"].value;
-          loginData.login_name = loginNewForm["login[login_name]"].value;
-          loginData.login_password =
-            loginNewForm["login[login_password]"].value;
-          loginData.urls = [
-            loginNewForm["login[urls_attributes][0][uri]"].value,
-          ];
-          loginData.notes = loginNewForm["login[notes]"].value;
-          loginData.custom_fields = [
-            {
-              name: loginNewForm["login[custom_fields_attributes][0][name]"]
-                .value,
-              value:
-                loginNewForm["login[custom_fields_attributes][0][value]"].value,
-            },
-          ];
-          loginData.is_favorite = loginNewForm["login[is_favorite]"].checked;
-          loginData.folder_id = loginNewForm["login[folder_id]"].value;
-          loginData.file = loginNewForm["login[file]"].files[0];
-          const response = await getResponse("/logins", "POST", loginObject);
-          window.location.hash = "#index";
-        });
+        main.appendChild(
+          d("div", { class: "mx-auto" + formContainerStyle() }, [
+            d("h1", { class: "text-center text-3xl font-bold" }, ["New login"]),
+            d(
+              "form",
+              {
+                class: "flex flex-col gap-4",
+                id: "login-form",
+                method: "post",
+                submit: async (e) => {
+                  e.preventDefault();
+                  const response = await getResponse(
+                    "/logins",
+                    "POST",
+                    LoginObject()
+                  );
+                  window.location.hash = "#index";
+                },
+              },
+              [
+                InputDiv("Name", "text", "login[name]"),
+                InputDiv("Login name", "text", "login[login_name]"),
+                InputDiv("Login password", "password", "login[login_password]"),
+                InputDiv("Uri", "text", "login[urls_attributes][0][uri]"),
+                TextAreaDiv("Notes", "login[notes]"),
+                CustomFieldsDiv(),
+                FavCheckboxDiv(),
+                FolderSelectDiv(),
+                FileInputDiv(),
+                LoginActionsDiv(),
+              ]
+            ),
+          ])
+        );
+
+        await populateLoginSelectFolders();
       };
 
       const generateFolder = (folder) => {
-        return `
-            <div class="my-2">
-              <div id="folder_${folder.id}">
-                <p>
-                  <strong>Name:</strong>
-                  ${folder.name}
-                  </p>
-              </div>
-              <div class="flex mt-2">
-                <a class="btn-primary" href="#viewFolder_${folder.id}">Edit this folder</a>
-                <div class="mx-2"></div>
-                <button class="btn-secondary" onclick="deleteFolder(${folder.id})">Destroy this folder</button>
-                </div>
-                </div>
-                `;
+        return d("div", { class: "my-2" }, [
+          d("div", { id: `folder_${folder.id}` }, [
+            d("p", {}, [d("strong", {}, ["Name:"]), folder.name]),
+          ]),
+          d("div", { class: "flex mt-2" }, [
+            d(
+              "a",
+              { class: buttonPrimaryStyle(), href: `#viewFolder_${folder.id}` },
+              ["Edit this folder"]
+            ),
+            d("div", { class: "mx-2" }),
+            d(
+              "button",
+              {
+                class: buttonSecondaryStyle(),
+                onclick: `deleteFolder(${folder.id})`,
+              },
+              ["Destroy this folder"]
+            ),
+          ]),
+        ]);
       };
 
       const renderFoldersPage = async () => {
         const response = await getResponse("/folders");
         const folders = await response.json();
         const main = document.querySelector("main");
-        let result = "";
-        folders.forEach((folder) => {
-          folder.name === "No folder"
-            ? (result += "")
-            : (result += generateFolder(folder));
-        });
-        main.innerHTML = `
-          <!-- BEGIN app/views/folders/index.html.erb -->
-          <div class="flex flex-col">
-            <p style="color: green"></p>
-            <div class="flex justify-between">
-              <h1>Folders</h1>
-              <a class="btn-primary" href="#newFolder">New folder</a>
-            </div>
-            <div id="folders">${result}</div>
-          </div>
-          <!-- END app/views/folders/index.html.erb -->
-        `;
+        main.appendChild(
+          d("div", { class: "flex flex-col" }, [
+            d("p", { style: "color: green" }),
+            d("div", { class: "flex justify-between" }, [
+              d("h1", { class: "text-3xl font-bold" }, ["Folders"]),
+              d("a", { class: buttonPrimaryStyle(), href: "#newFolder" }, [
+                "New folder",
+              ]),
+            ]),
+            d(
+              "div",
+              {},
+              folders
+                .filter((folder) => folder.name !== "No folder")
+                .map((folder) => d("div", {}, [generateFolder(folder)]))
+            ),
+          ])
+        );
       };
 
       const renderFolderViewPage = async () => {
@@ -1120,113 +573,69 @@ ${login.notes || ""}
         const response = await getResponse(`/folders/${folderId}`);
         const folder = await response.json();
         const main = document.querySelector("main");
-        main.innerHTML = `
-          <!-- BEGIN app/views/folders/edit.html.erb -->
-          <div class="mx-auto form-bg">
-            <h1>Editing folder</h1>
-            <!-- BEGIN app/views/folders/_form.html.erb -->
-            <form
-              id="folder-edit-form"
-              action="/folders/${folderId}"
-              accept-charset="UTF-8"
-              method="post"
-            >
-              <input
-                type="hidden"
-                name="_method"
-                value="patch"
-                autocomplete="off"
-              />
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="folder_name">Name</label>
-                  </legend>
-                  <input
-                    type="text"
-                    value="${folder.name}"
-                    name="folder[name]"
-                    id="folder_name"
-                  />
-                </fieldset>
-              </div>
-              <div>
-                <input
-                  type="submit"
-                  name="commit"
-                  value="Save folder"
-                  class="mt-2 btn-primary"
-                  data-disable-with="Save folder"
-                />
-              </div>
-            </form>
-            <!-- END app/views/folders/_form.html.erb -->
-          </div>
-          <!-- END app/views/folders/edit.html.erb -->
-        `;
-        const folderEditForm = document.getElementById("folder-edit-form");
-        folderEditForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(folderEditForm);
-          const folderName = formData.get("folder[name]");
-          const response = await getResponse(`/folders/${folderId}`, "PATCH", {
-            name: folderName,
-          });
-          window.location.hash = "#folders";
-        });
+        main.appendChild(
+          d("div", { class: "mx-auto" + formContainerStyle() }, [
+            d("h1", { class: "text-3xl font-bold" }, ["Editing folder"]),
+            d(
+              "form",
+              {
+                class: "flex flex-col gap-4",
+                id: "folder-edit-form",
+                action: `/folders/${folderId}`,
+                acceptCharset: "UTF-8",
+                method: "post",
+                submit: async (e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  const folderName = formData.get("folder[name]");
+                  const response = await getResponse(
+                    `/folders/${folderId}`,
+                    "PATCH",
+                    {
+                      name: folderName,
+                    }
+                  );
+                  window.location.hash = "#folders";
+                },
+              },
+              [
+                InputDiv("Name", "text", "folder[name]", folder.name),
+                ButtonDiv("Save folder", "submit", "commit"),
+              ]
+            ),
+          ])
+        );
       };
 
       const renderNewFolderPage = () => {
         const main = document.querySelector("main");
-        main.innerHTML = `
-          <!-- BEGIN app/views/folders/edit.html.erb -->
-          <div class="mx-auto form-bg">
-            <h1>New folder</h1>
-            <!-- BEGIN app/views/folders/_form.html.erb -->
-            <form
-              id="folder-new-form"
-              action="/folders"
-              accept-charset="UTF-8"
-              method="post"
-            >
-              <input
-                type="hidden"
-                name="_method"
-                value="patch"
-                autocomplete="off"
-              />
-              <div>
-                <fieldset>
-                  <legend>
-                    <label style="display: block" for="folder_name">Name</label>
-                  </legend>
-                  <input type="text" name="folder[name]" id="folder_name" />
-                </fieldset>
-              </div>
-              <div>
-                <input
-                  type="submit"
-                  name="commit"
-                  value="Save folder"
-                  class="mt-2 btn-primary"
-                  data-disable-with="Save folder"
-                />
-              </div>
-            </form>
-            <!-- END app/views/folders/_form.html.erb -->
-          </div>
-          <!-- END app/views/folders/edit.html.erb -->
-        `;
-        const folderNewForm = document.getElementById("folder-new-form");
-        folderNewForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(folderNewForm);
-          const folderName = formData.get("folder[name]");
-          const response = await getResponse("/folders", "POST", {
-            name: folderName,
-          });
-          window.location.hash = "#folders";
-        });
+        main.appendChild(
+          d("div", { class: "mx-auto" + formContainerStyle() }, [
+            d("h1", { class: "text-3xl font-bold" }, ["New folder"]),
+            d(
+              "form",
+              {
+                class: "flex flex-col gap-4",
+                action: "/folders",
+                acceptCharset: "UTF-8",
+                method: "post",
+                submit: async (e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  const folderName = formData.get("folder[name]");
+                  const response = await getResponse("/folders", "POST", {
+                    name: folderName,
+                  });
+                  window.location.hash = "#folders";
+                },
+              },
+              [
+                InputDiv("Name", "text", "folder[name]"),
+                ButtonDiv("Save folder", "submit", "commit"),
+              ]
+            ),
+          ])
+        );
       };
 
       const renderSharedIndexPage = async () => {
@@ -1234,158 +643,584 @@ ${login.notes || ""}
         const response = await getResponse("/shared_login_data" + "?" + params);
         const sharedLogins = await response.json();
         const main = document.querySelector("main");
-        let result = "";
-        sharedLogins.forEach((sharedLogin) => {
-          result += generateLogin(
-            sharedLogin.login,
-            params.includes("by_me") ? 1 : 2
-          );
-        });
-        main.innerHTML = `
-          <!-- BEGIN app/views/shared_login_data/index.html.erb -->
-          <div class="w-full">
-            <div class="flex items-center justify-between">
-              <h1>
-                Shared Logins ${params.includes("by_me") ? "by" : "with"} me
-              </h1>
-            </div>
-            <div id="shared_login_data" class="min-w-full">
-              <table class="w-full mt-8 table-fixed">
-                <thead>
-                  <tr class="border-b-2 hover:bg-white">
-                    <th class="w-12"></th>
-                    <th>Name</th>
-                    <th>URLs</th>
-                    <th>Shared ${params.includes("by_me") ? "with" : "by"}</th>
-                    <th class="w-12"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- BEGIN app/views/shared_login_data/_shared_login_datum.html.erb -->
-                  ${result}
-
-                  <!-- END app/views/shared_login_data/_shared_login_datum.html.erb -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- END app/views/shared_login_data/index.html.erb -->
-        `;
+        let result = d("div", { class: "w-full" }, [
+          d("div", { class: "flex items-center justify-between" }, [
+            d("h1", { class: "text-3xl font-bold" }, [
+              "Shared Logins ",
+              params.includes("by_me") ? "by" : "with",
+              " me",
+            ]),
+          ]),
+          d("div", { class: "min-w-full" }, [
+            d("table", { class: "w-full mt-8 table-fixed" }, [
+              TableHeader([
+                "Name",
+                "URLs",
+                params.includes("by_me") ? "Shared with" : "Shared by",
+              ]),
+              TableBody(sharedLogins, params.includes("by_me") ? 2 : 1),
+            ]),
+          ]),
+        ]);
+        main.append(result);
       };
 
       const renderNewSharedLoginPage = () => {
         const main = document.querySelector("main");
         const loginId = parseInt(window.location.hash.split("_")[1]);
-        main.innerHTML = `
-          <!-- BEGIN app/views/shared_login_data/new.html.erb -->
-          <div class="mx-auto form-bg">
-            <h1>Share login</h1>
-
-            <!-- BEGIN app/views/shared_login_data/_form.html.erb -->
-            <form
-              class="contents"
-              action="/shared_login_data"
-              accept-charset="UTF-8"
-              method="post"
-            >
-              <div class="hidden my-5">
-                <label for="login_id">Login</label>
-                <input value="${loginId}" type="text" name="login_id" id="login_id" />
-              </div>
-              <div>
-                <fieldset>
-                  <legend><label for="user_email">Email address</label></legend>
-                  <input type="email" name="user_email" id="user_email" />
-                </fieldset>
-              </div>
-              <div class="inline">
-                <input
-                  type="submit"
-                  name="commit"
-                  value="Share login"
-                  class="mt-2 btn-primary"
-                  data-disable-with="Share login"
-                />
-              </div>
-            </form>
-            <!-- END app/views/shared_login_data/_form.html.erb -->
-          </div>
-          <!-- END app/views/shared_login_data/new.html.erb -->
-        `;
-
-        const sharedLoginForm = document.querySelector("form");
-        sharedLoginForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(sharedLoginForm);
-          const email = formData.get("user_email");
-          const response = await getResponse("/shared_login_data", "POST", {
-            login_id: loginId,
-            user_email: email,
-          });
-          window.location.hash = "#sharedIndex?by_me=true";
-        });
+        main.append(
+          d("div", { class: "mx-auto" + formContainerStyle() }, [
+            d("h1", { class: "text-3xl font-bold" }, ["Share login"]),
+            d(
+              "form",
+              {
+                class: "flex flex-col gap-4",
+                id: "sharedLoginForm",
+                action: "/shared_login_data",
+                acceptCharset: "UTF-8",
+                method: "post",
+                submit: async (e) => {
+                  e.preventDefault();
+                  const sharedLoginForm =
+                    document.getElementById("sharedLoginForm");
+                  const formData = new FormData(sharedLoginForm);
+                  const email = formData.get("user_email");
+                  const response = await getResponse(
+                    "/shared_login_data",
+                    "POST",
+                    {
+                      login_id: loginId,
+                      user_email: email,
+                    }
+                  );
+                  window.location.hash = "#sharedIndex?by_me=true";
+                },
+              },
+              [
+                InputDiv("Email address", "email", "user_email"),
+                ButtonDiv("Share login", "submit", "commit"),
+              ]
+            ),
+          ])
+        );
       };
 
       const renderTrashPage = async () => {
         const response = await getResponse("/trash");
         const logins = await response.json();
         const main = document.querySelector("main");
-        let result = "";
-        logins.forEach((login) => {
-          result += generateLogin(login);
-        });
-        main.innerHTML = `
-          <!-- BEGIN app/views/trash/index.html.erb -->
-          <h1>Trash</h1>
-          <table class="w-full mt-8 table-fixed">
-            <thead>
-              <tr class="border-b-2 hover:bg-white">
-                <th class="w-12"></th>
-                <th>Nume</th>
-                <th>URLs</th>
-                <th>Date added in trash</th>
-                <th class="w-12"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- BEGIN app/views/logins/_login.html.erb -->
-              <tr>
-                ${result}
-                <!-- END app/views/logins/_login.html.erb -->
-              </tr>
-            </tbody>
-          </table>
-          <!-- END app/views/trash/index.html.erb -->
-        `;
+        let result = [
+          d("h1", { class: "text-3xl font-bold" }, ["Trash"]),
+          d("table", { class: "w-full mt-8 table-fixed" }, [
+            TableHeader(["Name", "URLs", "Date added in trash"]),
+            TableBody(logins),
+          ]),
+        ];
+        main.append(...result);
       };
 
       const renderLayout = async () => {
-        const navMenu = await generateNavMenu();
-        document.body.innerHTML = `
-        <div id="main-div" class="flex min-h-full">
-          <div class="flex flex-col flex-1">
-            <div class="flex gap-2 ml-auto mr-2 text-blue-600">
-            <button id="sign-out" class="cursor-pointer"><i class="fas fa-arrow-right-from-bracket"></i></button>
-            </div>
-            <div id="mobile-menu-button" class="fixed top-0 z-10 ml-2 cursor-pointer md:collapse">
-              <button>
-            <div class="w-8 h-1 bg-white rounded-full"></div>
-            <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>
-            <div class="w-8 h-1 mt-1 bg-white rounded-full"></div>
-          </button>
-        </div>
-        <main>
-        </main>
-        `;
-        document.getElementById("main-div").innerHTML =
-          navMenu + document.getElementById("main-div").innerHTML;
-        const signOutButton = document.getElementById("sign-out");
-        signOutButton.addEventListener("click", async () => {
-          const response = await getResponse("/session", "DELETE");
-          window.location.hash = "#login";
-        });
+        document.body.appendChild(
+          d("div", { class: "flex min-h-full" }, [
+            await NavMenu(),
+            d("div", { class: "flex flex-col flex-1" }, [
+              d("div", { class: "flex gap-2 ml-auto mr-2 text-blue-600" }, [
+                d(
+                  "button",
+                  {
+                    class: "cursor-pointer",
+                    click: async () => {
+                      const response = await getResponse("/session", "DELETE");
+                      window.location.hash = "#login";
+                    },
+                  },
+                  [d("i", { class: "fas fa-arrow-right-from-bracket" })]
+                ),
+              ]),
+              d("main", { class: "flex-1 mx-2 md:mx-16" }),
+            ]),
+          ])
+        );
       };
 
+      const HighlightableSpecialFolder = (folder, location) =>
+        d("a", { href: folder[1] }, [
+          d(
+            "div",
+            {
+              class: `py-1 pl-8 hover:bg-blue-600 ${
+                location === folder[1] ? "bg-blue-950" : ""
+              }`,
+            },
+            [folder[0]]
+          ),
+        ]);
+
+      const HighlightableUserFolder = (folder, current_folder_id) =>
+        d("a", { href: `#index?folder_id=${folder.id}` }, [
+          d(
+            "div",
+            {
+              class: `py-1 pl-8 hover:bg-blue-600 ${
+                folder.id === current_folder_id ? "bg-blue-950" : ""
+              }`,
+            },
+            [
+              d("i", {
+                class: `fas fa-folder${
+                  folder.id === current_folder_id ? "-open" : ""
+                }`,
+              }),
+              " " + folder.name,
+            ]
+          ),
+        ]);
+
+      const Logo = () =>
+        d("a", { href: "#index" }, [
+          d("div", { class: "pt-8 pl-8 text-lg" }, [
+            d("i", { class: "fas fa-shield-halved" }),
+            " Password Manager",
+          ]),
+        ]);
+
+      const FoldersHeader = () =>
+        d("div", { class: "pl-8" }, [
+          d("h2", { class: "text-2xl font-bold" }, [
+            "Folders ",
+            d("a", { href: "#folders" }, [d("i", { class: "fas fa-gear" })]),
+          ]),
+        ]);
+
+      const TrashFolder = () =>
+        d("a", { href: "#trash" }, [
+          d(
+            "div",
+            {
+              class: `py-1 pl-8 hover:bg-blue-600 ${
+                window.location.hash === "#trash" ? "bg-blue-950" : ""
+              }`,
+            },
+            [d("i", { class: "fas fa-trash-alt" }), " Trash"]
+          ),
+        ]);
+
+      const getFavIconsIfAvailable = (login) =>
+        login.urls.length > 0
+          ? login.fav_icons.map((fav_icon) =>
+              fav_icon
+                ? d("img", { src: fav_icon, class: "mx-auto" })
+                : d("i", { class: "fas fa-xl fa-globe" })
+            )
+          : [d("i", { class: "fas fa-xl fa-globe" })];
+
+      const ExpandableMenu = (login, isShared) =>
+        d("td", { class: "relative py-3" }, [
+          d(
+            "div",
+            {
+              id: `toggle_${login.id}`,
+              onclick: `openMenu(${login.id})`,
+              class:
+                "top-0 right-0 w-6 ml-auto text-center rounded-md cursor-pointer hover:ring-1 hover:ring-blue-600",
+            },
+            [d("i", { class: "fas fa-ellipsis-v" })]
+          ),
+          d(
+            "div",
+            {
+              id: `menu_${login.id}`,
+              class:
+                "absolute right-0 z-10 hidden py-2 bg-white border border-gray-500 top-12 rounded-xl",
+            },
+            !isShared ? StandardMenu(login) : SharedMenu(login, isShared === 2)
+          ),
+        ]);
+
+      const InputDiv = (label, type, name, value = "", readonly = false) => {
+        return d("div", {}, [
+          d("fieldset", { class: fieldsetStyle() }, [
+            d("legend", { class: "px-2 text-gray-500" }, [
+              d("label", { for: name }, [label]),
+            ]),
+            readonly
+              ? d("input", {
+                  class: inputStyle(),
+                  type,
+                  name,
+                  id: name,
+                  value,
+                  readonly,
+                })
+              : d("input", {
+                  class: inputStyle(),
+                  type,
+                  name,
+                  id: name,
+                  value,
+                }),
+          ]),
+        ]);
+      };
+
+      const InputUriDiv = (label, type, name, value, id, readonly) => {
+        return d("div", {}, [
+          d("fieldset", { class: fieldsetStyle() }, [
+            d("legend", { class: "px-2 text-gray-500" }, [
+              d("label", { for: name }, [label]),
+            ]),
+            readonly
+              ? d("input", {
+                  class: inputStyle(),
+                  type,
+                  name,
+                  id: name,
+                  value: value || "",
+                  readonly,
+                })
+              : d("input", {
+                  class: inputStyle(),
+                  type,
+                  name,
+                  id: name,
+                  value: value || "",
+                }),
+            d("input", {
+              autocomplete: "off",
+              type: "hidden",
+              value: id,
+              name: "login[urls_attributes][0][id]",
+              id: "login_urls_attributes_0_id",
+            }),
+          ]),
+        ]);
+      };
+
+      const TextAreaDiv = (label, name, value = "", readonly = false) => {
+        return d("div", {}, [
+          d("fieldset", { class: fieldsetStyle() }, [
+            d("legend", { class: "px-2 text-gray-500" }, [
+              d("label", { for: name }, [label]),
+            ]),
+            readonly
+              ? d(
+                  "textarea",
+                  { class: inputStyle(), name, id: name, readonly },
+                  [value]
+                )
+              : d("textarea", { class: inputStyle(), name, id: name }, [value]),
+          ]),
+        ]);
+      };
+
+      const CustomFieldsDiv = (
+        custom_fields = [{ name: "", value: "" }],
+        readonly = false
+      ) => {
+        return d("div", {}, [
+          "Custom fields:",
+          d("div", { class: "flex flex-col gap-1" }, [
+            InputDiv(
+              "Name",
+              "text",
+              "login[custom_fields_attributes][0][name]",
+              custom_fields[0].name,
+              readonly
+            ),
+            InputDiv(
+              "Value",
+              "text",
+              "login[custom_fields_attributes][0][value]",
+              custom_fields[0].value,
+              readonly
+            ),
+          ]),
+        ]);
+      };
+
+      const FavCheckboxDiv = (isChecked, readonly) => {
+        return d("div", {}, [
+          d("label", { for: "login_is_favorite" }, ["Is favorite "]),
+          d("input", {
+            name: "login[is_favorite]",
+            type: "hidden",
+            value: "0",
+            autocomplete: "off",
+          }),
+          readonly
+            ? d("input", {
+                class: "size-4",
+                type: "checkbox",
+                value: "1",
+                name: "login[is_favorite]",
+                id: "login_is_favorite",
+                checked: isChecked,
+                disabled: true,
+              })
+            : d("input", {
+                class: "size-4",
+                type: "checkbox",
+                value: "1",
+                name: "login[is_favorite]",
+                id: "login_is_favorite",
+                checked: isChecked,
+              }),
+        ]);
+      };
+
+      const FolderSelectDiv = (readonly) => {
+        return d("div", {}, [
+          d("label", { for: "login_folder_id" }, ["Folder"]),
+          readonly
+            ? d("select", {
+                class: "bg-gray-200 h-10" + inputStyle(),
+                name: "login[folder_id]",
+                id: "login_folder_id",
+                disabled: true,
+              })
+            : d("select", {
+                class: "bg-gray-200 h-10" + inputStyle(),
+                name: "login[folder_id]",
+                id: "login_folder_id",
+              }),
+        ]);
+      };
+
+      const FileInputDiv = (readonly) => {
+        return d("div", {}, [
+          d("label", { for: "login_file" }, ["File"]),
+          readonly
+            ? d("input", {
+                class: "pl-0 rounded-none" + inputStyle(),
+                type: "file",
+                name: "login[file]",
+                id: "login_file",
+                disabled: "",
+              })
+            : d("input", {
+                class: "pl-0 rounded-none" + inputStyle(),
+                type: "file",
+                name: "login[file]",
+                id: "login_file",
+              }),
+        ]);
+      };
+
+      const ButtonDiv = (label, type, name) => {
+        return d("div", {}, [
+          d("input", {
+            class: inputStyle(),
+            type,
+            name,
+            value: label,
+            class: buttonPrimaryStyle(),
+          }),
+        ]);
+      };
+
+      const LoginActionsDiv = () => {
+        return d("div", { class: "flex" }, [
+          ButtonDiv("Save login", "submit", "commit"),
+          d("div", { class: "mx-2" }),
+          d("a", { class: buttonSecondaryStyle(), href: "#index" }, ["Cancel"]),
+        ]);
+      };
+
+      const populateLoginSelectFolders = async (name, readonly) => {
+        const loginSelect = document.getElementById("login_folder_id");
+        if (readonly) {
+          const option = document.createElement("option");
+          option.value = "";
+          option.text = name;
+          loginSelect.appendChild(option);
+          return;
+        }
+        const response = await getResponse("/folders");
+        const folders = await response.json();
+        for (const folder of folders) {
+          const option = document.createElement("option");
+          option.value = folder.id;
+          option.text = folder.name;
+          if (folder.name === name) {
+            option.selected = true;
+          }
+          loginSelect.appendChild(option);
+        }
+      };
+
+      const TableHeader = (headers) => {
+        return d("thead", {}, [
+          d(
+            "tr",
+            {
+              class: "border-b-2 text-gray-500 border-gray-500",
+            },
+            [
+              d("th", { class: "w-12 text-left" }),
+              ...headers.map((header) =>
+                d("th", { class: "text-left" }, [header])
+              ),
+              d("th", { class: "w-12 text-left" }),
+            ]
+          ),
+        ]);
+      };
+
+      const TableBody = (logins, shareType) => {
+        return d(
+          "tbody",
+          {},
+          logins.map((login) =>
+            Login(shareType ? login.login : login, shareType)
+          )
+        );
+      };
+
+      const LoginObject = () => {
+        const loginForm = document.getElementById("login-form");
+        const loginData = {};
+        const loginObject = {
+          login: loginData,
+        };
+        loginData.name = loginForm["login[name]"].value;
+        loginData.login_name = loginForm["login[login_name]"].value;
+        loginData.login_password = loginForm["login[login_password]"].value;
+        loginData["urls_attributes"] = [
+          { uri: loginForm["login[urls_attributes][0][uri]"].value },
+        ];
+        loginData["urls_attributes"][0].id =
+          loginForm["login[urls_attributes][0][id]"].value;
+        loginData.notes = loginForm["login[notes]"].value;
+        loginData.custom_fields = [
+          {
+            name: loginForm["login[custom_fields_attributes][0][name]"].value,
+            value: loginForm["login[custom_fields_attributes][0][value]"].value,
+          },
+        ];
+        loginData.is_favorite = loginForm["login[is_favorite]"].checked;
+        loginData.folder_id = loginForm["login[folder_id]"].value;
+        loginData.file = loginForm["login[file]"].files[0];
+        return loginObject;
+      };
+
+      TrashRestoreLoginOption = (login) =>
+        d(
+          "div",
+          {
+            class: "text-blue-600" + menuItemStyle(),
+            onclick: `restoreLogin(${login.id})`,
+          },
+          ["Restore Login"]
+        );
+
+      TrashDeleteLoginOption = (login) =>
+        d(
+          "div",
+          {
+            class: "text-red-600" + menuItemStyle(),
+            onclick: `deleteLogin(${login.id})`,
+          },
+          ["Delete Login"]
+        );
+
+      CopyUsernameLoginOption = (login) =>
+        d(
+          "div",
+          {
+            class: "text-blue-600" + menuItemStyle(),
+            onclick: `copyToClipboard('${login.login_name}')`,
+          },
+          ["Copy Username"]
+        );
+
+      CopyPasswordLoginOption = (login) =>
+        d(
+          "div",
+          {
+            class: "text-blue-600" + menuItemStyle(),
+            onclick: `copyToClipboard('${login.login_password}')`,
+          },
+          ["Copy Password"]
+        );
+
+      DownloadAttachmentLoginOption = (login) =>
+        d("div", { class: "text-blue-600" + menuItemStyle() }, [
+          d("a", { href: login.file, download: "" }, ["Download Attachment"]),
+        ]);
+
+      EditLoginOption = (login) =>
+        d("a", { href: `#loginView_${login.id}` }, [
+          d("div", { class: "text-blue-600" + menuItemStyle() }, [
+            "Edit Login",
+          ]),
+        ]);
+
+      ShareLoginOption = (login) =>
+        d("a", { href: `#shareLogin_${login.id}` }, [
+          d("div", { class: "text-blue-600" + menuItemStyle() }, [
+            "Share Login",
+          ]),
+        ]);
+
+      SendLoginToTrashOption = (login) =>
+        d(
+          "div",
+          {
+            class: "text-red-600" + menuItemStyle(),
+            onclick: `sendLoginToTrash(${login.id})`,
+          },
+          ["Send login to trash"]
+        );
+
+      ViewLoginOption = (login, sharedByMe) =>
+        d("a", { href: `#loginView${sharedByMe ? "" : "R"}_${login.id}` }, [
+          d("div", { class: "text-blue-600" + menuItemStyle() }, [
+            "View Login",
+          ]),
+        ]);
+
+      DeleteSharedLoginOption = (login) =>
+        d(
+          "div",
+          {
+            class: "text-red-600" + menuItemStyle(),
+            onclick: `deleteSharedLogin(${login.shared_id})`,
+          },
+          ["Delete shared login"]
+        );
+
+      const fieldsetStyle = () =>
+        " flex flex-col px-2 pb-1 border border-gray-500 rounded-xl focus-within:border-blue-500";
+
+      const inputStyle = () =>
+        " w-full p-2 rounded-md focus:outline-none dark:bg-zinc-800";
+      const buttonPrimaryStyle = () =>
+        " w-auto px-4 py-2 font-bold text-center text-white bg-blue-600 rounded-full cursor-pointer hover:bg-blue-700";
+
+      const buttonPrimaryUserActionStyle = () => buttonPrimaryStyle + " w-full";
+
+      const buttonSecondaryStyle = () =>
+        " px-4 py-2 font-bold text-center text-blue-600 bg-white rounded-full cursor-pointer ring-2 ring-blue-600 hover:bg-blue-600 hover:text-white";
+
+      const formContainerStyle = () =>
+        " bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 dark:bg-zinc-800 p-4 md:p-8 flex flex-col gap-2";
+
+      const menuItemStyle = () =>
+        " text-left p-2 hover:bg-gray-200 cursor-pointer text-nowrap";
+      const d = (tag, attributes, children) => {
+        const result = document.createElement(tag);
+        for (const key in attributes) {
+          typeof attributes[key] === "function"
+            ? result.addEventListener(key, attributes[key])
+            : result.setAttribute(key, attributes[key]);
+        }
+        (children || []).forEach((child) => {
+          const node =
+            typeof child === "string" ? document.createTextNode(child) : child;
+          result.appendChild(node);
+        });
+        return result;
+      };
       const mainApp = async () => {
         const view = window.location.hash;
         document.body.innerHTML = "";
@@ -1432,7 +1267,11 @@ ${login.notes || ""}
             await renderTrashPage();
             break;
           default:
-            document.body.innerHTML = "<h1>404 Not Found</h1>";
+            document
+              .querySelector("main")
+              .appendChild(
+                d("h1", { class: "text-3xl font-bold" }, ["404 Not Found"])
+              );
         }
       };
       window.addEventListener("hashchange", mainApp);
@@ -1440,5 +1279,7 @@ ${login.notes || ""}
     </script>
   </head>
 
-  <body></body>
+  <body
+    class="h-screen text-gray-800 bg-white dark:bg-zinc-900 dark:text-white"
+  ></body>
 </html>
