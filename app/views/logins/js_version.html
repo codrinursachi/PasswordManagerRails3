@@ -71,170 +71,140 @@
 
       const renderLoginPage = () => {
         document.body.appendChild(
-          d("div", { class: "flex min-h-full" }, [
-            d("div", { class: "flex flex-col flex-1" }, [
-              d("main", { class: "flex-1 mx-2 md:mx-16" }, [
-                d(
-                  "div",
-                  {
-                    class:
-                      "flex flex-col items-center justify-center flex-1 h-full",
-                  },
-                  [
-                    d("i", {
-                      class: "mb-4 text-blue-700 fas fa-7x fa-shield-halved",
-                    }),
-                    d("h1", { class: "mb-10 text-3xl font-bold" }, ["Sign in"]),
-                    d("div", { class: formContainerStyle() }, [
-                      d(
-                        "form",
-                        {
-                          class: "flex flex-col gap-4",
-                          id: "app-login-form",
-                          action: "/session",
-                          acceptCharset: "UTF-8",
-                          method: "post",
-                          submit: async (e) => {
-                            e.preventDefault();
-                            const loginForm =
-                              document.getElementById("app-login-form");
-                            const formData = new FormData(loginForm);
-                            const email_address = formData.get("email_address");
-                            const password = formData.get("password");
-                            const response = await getResponse(
-                              "/session/",
-                              "POST",
-                              {
-                                email_address,
-                                password,
-                              }
-                            );
-                            if (response.status === 200) {
-                              window.location.hash = "";
-                            }
-                          },
-                        },
-                        [
-                          InputDiv("Email address", "email", "email_address"),
-                          InputDiv("Password", "password", "password"),
-                          d("input", {
-                            type: "submit",
-                            name: "commit",
-                            value: "Sign in",
-                            class: buttonPrimaryUserActionStyle(),
-                          }),
-                        ]
-                      ),
-                      d(
-                        "a",
-                        { class: "text-blue-600", href: "/passwords/new" },
-                        ["Forgot password?"]
-                      ),
-                      d("hr", { class: "border-gray-500" }),
-                      d("a", { class: "text-blue-600", href: "#register" }, [
-                        "Create account",
-                      ]),
-                    ]),
-                  ]
-                ),
+          FullPageForm(
+            "Sign in",
+            "/session",
+            "POST",
+            [
+              InputDiv("Email address", "email", "email_address"),
+              InputDiv("Password", "password", "password"),
+              d("input", {
+                type: "submit",
+                name: "commit",
+                value: "Sign in",
+                class: buttonPrimaryUserActionStyle(),
+              }),
+            ],
+            [
+              d("a", { class: "text-blue-600", href: "/passwords/new" }, [
+                "Forgot password?",
               ]),
-            ]),
-          ])
+              d("hr", { class: "border-gray-500" }),
+              d("a", { class: "text-blue-600", href: "#register" }, [
+                "Create account",
+              ]),
+            ]
+          )
         );
       };
 
       const renderRegisterPage = () => {
         document.body.appendChild(
-          d("div", { class: "flex min-h-full" }, [
-            d("div", { class: "flex flex-col flex-1" }, [
-              d("main", { class: "flex-1 mx-2 md:mx-16" }, [
-                d(
-                  "div",
-                  {
-                    class:
-                      "flex flex-col items-center justify-center flex-1 h-full",
-                  },
-                  [
-                    d("i", {
-                      class: "mb-4 text-blue-700 fas fa-7x fa-shield-halved",
-                    }),
-                    d("h1", { class: "mb-10 text-3xl font-bold" }, ["Sign up"]),
-                    d("div", { class: formContainerStyle() }, [
-                      d(
-                        "form",
-                        {
-                          class: "flex flex-col gap-4",
-                          id: "registration-form",
-                          action: "/users",
-                          acceptCharset: "UTF-8",
-                          method: "post",
-                          submit: async (e) => {
-                            e.preventDefault();
-                            const registerForm =
-                              document.getElementById("registration-form");
-                            const formData = new FormData(registerForm);
-                            const email_address = formData.get(
-                              "user[email_address]"
-                            );
-                            const password = formData.get("user[password]");
-                            const password_confirmation = formData.get(
-                              "user[password_confirmation]"
-                            );
-                            const first_name = formData.get("user[first_name]");
-                            const last_name = formData.get("user[last_name]");
-                            const response = await getResponse(
-                              "/users/",
-                              "POST",
-                              {
-                                email_address,
-                                password,
-                                password_confirmation,
-                                first_name,
-                                last_name,
-                              }
-                            );
-                            if (response.status === 200) {
-                              window.location.reload();
-                            }
-                          },
-                        },
-                        [
-                          InputDiv(
-                            "Email address",
-                            "email",
-                            "user[email_address]"
-                          ),
-                          InputDiv("Password", "password", "user[password]"),
-                          InputDiv(
-                            "Password confirmation",
-                            "password",
-                            "user[password_confirmation]"
-                          ),
-                          InputDiv("First name", "text", "user[first_name]"),
-                          InputDiv("Last name", "text", "user[last_name]"),
-                          d("input", {
-                            type: "submit",
-                            name: "commit",
-                            value: "Sign up",
-                            class: buttonPrimaryUserActionStyle(),
-                          }),
-                        ]
-                      ),
-                      d("hr", { class: "border-gray-500" }),
-                      d("div", {}, [
-                        "Already have an account?",
-                        d("a", { class: "text-blue-600", href: "" }, [
-                          "Sign in",
-                        ]),
-                      ]),
-                    ]),
-                  ]
-                ),
+          FullPageForm(
+            "Register",
+            "/users",
+            "POST",
+            [
+              InputDiv("Email address", "email", "user[email_address]"),
+              InputDiv("Password", "password", "user[password]"),
+              InputDiv(
+                "Password confirmation",
+                "password",
+                "user[password_confirmation]"
+              ),
+              InputDiv("First name", "text", "user[first_name]"),
+              InputDiv("Last name", "text", "user[last_name]"),
+              d("input", {
+                type: "submit",
+                name: "commit",
+                value: "Sign up",
+                class: buttonPrimaryUserActionStyle(),
+              }),
+            ],
+            [
+              d("hr", { class: "border-gray-500" }),
+              d("div", {}, [
+                "Already have an account?",
+                d("a", { class: "text-blue-600", href: "" }, ["Sign in"]),
               ]),
-            ]),
-          ])
+            ]
+          )
         );
       };
+
+      const FullPageForm = (
+        title,
+        path,
+        method,
+        formInputs,
+        additionalContent
+      ) =>
+        d("div", { class: "flex min-h-full" }, [
+          d("div", { class: "flex flex-col flex-1" }, [
+            d("main", { class: "flex-1 mx-2 md:mx-16" }, [
+              d(
+                "div",
+                {
+                  class:
+                    "flex flex-col items-center justify-center flex-1 h-full",
+                },
+                [
+                  d("i", {
+                    class: "mb-4 text-blue-700 fas fa-7x fa-shield-halved",
+                  }),
+                  d("h1", { class: "mb-10 text-3xl font-bold" }, [title]),
+                  Form(
+                    false,
+                    false,
+                    path,
+                    method,
+                    "#index",
+                    formInputs,
+                    additionalContent
+                  ),
+                ]
+              ),
+            ]),
+          ]),
+        ]);
+
+      const Form = (
+        objectToSend,
+        title,
+        path,
+        method,
+        redirectTo,
+        formInputs,
+        additionalContent = [""]
+      ) =>
+        d("div", { class: formContainerStyle() }, [
+          title
+            ? d("h1", { class: "text-center text-3xl font-bold" }, [title])
+            : "",
+          d(
+            "form",
+            {
+              class: "flex flex-col gap-4",
+              submit: async (e) => {
+                e.preventDefault();
+                const options = {
+                  method,
+                  headers: {
+                    Accept: "application/json",
+                  },
+                };
+
+                options.body = new FormData(e.target);
+                const response = await fetch(path, options);
+                if ([200, 201].includes(response.status)) {
+                  window.location.hash = redirectTo;
+                }
+              },
+            },
+            formInputs
+          ),
+          ...additionalContent,
+        ]);
 
       const NavMenu = async () => {
         const response = await getResponse(
@@ -371,12 +341,9 @@
             {
               class:
                 "flex-row flex-wrap items-center justify-between mt-8 text-lg md:justify-start flex flex-col gap-4",
-              action: "/logins",
-              acceptCharset: "UTF-8",
-              method: "get",
               submit: async (e) => {
                 e.preventDefault();
-                const formData = new FormData(searchForm);
+                const formData = new FormData(e.target);
                 const searchQuery = formData.get("q");
                 window.location.hash = `#index?q=${searchQuery}`;
               },
@@ -416,65 +383,14 @@
         const main = document.querySelector("main");
         const readonly = window.location.hash.includes("R");
         main.appendChild(
-          d("div", { class: "mx-auto" + formContainerStyle() }, [
-            d(
-              "h1",
-              { class: "text-center text-3xl font-bold" },
-              readonly ? ["View Login"] : ["Edit login"]
-            ),
-            d(
-              "form",
-              {
-                class: "flex flex-col gap-4",
-                id: "login-form",
-                enctype: "multipart/form-data",
-                action: `/logins/${login.id}`,
-                method: "post",
-                submit: async (e) => {
-                  e.preventDefault();
-                  const loginObject = LoginObject();
-                  loginObject.id = login.id;
-                  const response = await getResponse(
-                    `/logins/${login.id}`,
-                    "PATCH",
-                    loginObject
-                  );
-                  window.location.hash = "#index";
-                },
-              },
-              [
-                InputDiv("Name", "text", "login[name]", login.name, readonly),
-                InputDiv(
-                  "Login name",
-                  "text",
-                  "login[login_name]",
-                  login.login_name,
-                  readonly
-                ),
-                InputDiv(
-                  "Login password",
-                  "password",
-                  "login[login_password]",
-                  login.login_password,
-                  readonly
-                ),
-                InputUriDiv(
-                  "Uri",
-                  "text",
-                  "login[urls_attributes][0][uri]",
-                  login.urls[0].uri,
-                  login.urls[0].id,
-                  readonly
-                ),
-                TextAreaDiv("Notes", "login[notes]", login.notes, readonly),
-                CustomFieldsDiv(login.custom_fields, readonly),
-                FavCheckboxDiv(login.is_favorite, readonly),
-                FolderSelectDiv(readonly),
-                readonly ? "" : FileInputDiv(),
-                readonly ? "" : LoginActionsDiv(),
-              ]
-            ),
-          ])
+          Form(
+            false,
+            readonly ? "View Login" : "Edit login",
+            `/logins/${loginId}`,
+            "PATCH",
+            "#index",
+            LoginInputs(login, readonly)
+          )
         );
 
         await populateLoginSelectFolders(login.folder_name, readonly);
@@ -483,42 +399,45 @@
       const renderNewLoginPage = async () => {
         const main = document.querySelector("main");
         main.appendChild(
-          d("div", { class: "mx-auto" + formContainerStyle() }, [
-            d("h1", { class: "text-center text-3xl font-bold" }, ["New login"]),
-            d(
-              "form",
-              {
-                class: "flex flex-col gap-4",
-                id: "login-form",
-                method: "post",
-                submit: async (e) => {
-                  e.preventDefault();
-                  const response = await getResponse(
-                    "/logins",
-                    "POST",
-                    LoginObject()
-                  );
-                  window.location.hash = "#index";
-                },
-              },
-              [
-                InputDiv("Name", "text", "login[name]"),
-                InputDiv("Login name", "text", "login[login_name]"),
-                InputDiv("Login password", "password", "login[login_password]"),
-                InputDiv("Uri", "text", "login[urls_attributes][0][uri]"),
-                TextAreaDiv("Notes", "login[notes]"),
-                CustomFieldsDiv(),
-                FavCheckboxDiv(),
-                FolderSelectDiv(),
-                FileInputDiv(),
-                LoginActionsDiv(),
-              ]
-            ),
-          ])
+          Form(false, "New login", "/logins", "POST", "#index", LoginInputs())
         );
 
         await populateLoginSelectFolders();
       };
+
+      const LoginInputs = (login, readonly) => [
+        InputDiv("Name", "text", "login[name]", login && login.name, readonly),
+        InputDiv(
+          "Login name",
+          "text",
+          "login[login_name]",
+          login && login.login_name,
+          readonly
+        ),
+        InputDiv(
+          "Login password",
+          "password",
+          "login[login_password]",
+          login && login.login_password,
+          readonly
+        ),
+        login
+          ? InputUriDiv(
+              "Uri",
+              "text",
+              "login[urls_attributes][0][uri]",
+              login.urls[0].uri,
+              login.urls[0].id,
+              readonly
+            )
+          : InputDiv("Uri", "text", "login[urls_attributes][0][uri]"),
+        TextAreaDiv("Notes", "login[notes]", login && login.notes, readonly),
+        CustomFieldsDiv(login && login.custom_fields, readonly),
+        FavCheckboxDiv(login && login.is_favorite, readonly),
+        FolderSelectDiv(readonly),
+        readonly ? "" : FileInputDiv(),
+        readonly ? "" : LoginActionsDiv(),
+      ];
 
       const generateFolder = (folder) => {
         return d("div", { class: "my-2" }, [
@@ -574,66 +493,26 @@
         const folder = await response.json();
         const main = document.querySelector("main");
         main.appendChild(
-          d("div", { class: "mx-auto" + formContainerStyle() }, [
-            d("h1", { class: "text-3xl font-bold" }, ["Editing folder"]),
-            d(
-              "form",
-              {
-                class: "flex flex-col gap-4",
-                id: "folder-edit-form",
-                action: `/folders/${folderId}`,
-                acceptCharset: "UTF-8",
-                method: "post",
-                submit: async (e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.target);
-                  const folderName = formData.get("folder[name]");
-                  const response = await getResponse(
-                    `/folders/${folderId}`,
-                    "PATCH",
-                    {
-                      name: folderName,
-                    }
-                  );
-                  window.location.hash = "#folders";
-                },
-              },
-              [
-                InputDiv("Name", "text", "folder[name]", folder.name),
-                ButtonDiv("Save folder", "submit", "commit"),
-              ]
-            ),
-          ])
+          Form(
+            false,
+            "Edit folder",
+            `/folders/${folderId}`,
+            "PATCH",
+            "#folders",
+            [
+              InputDiv("Name", "text", "folder[name]", folder.name),
+              ButtonDiv("Save folder", "submit", "commit"),
+            ]
+          )
         );
       };
 
       const renderNewFolderPage = () => {
         const main = document.querySelector("main");
         main.appendChild(
-          d("div", { class: "mx-auto" + formContainerStyle() }, [
-            d("h1", { class: "text-3xl font-bold" }, ["New folder"]),
-            d(
-              "form",
-              {
-                class: "flex flex-col gap-4",
-                action: "/folders",
-                acceptCharset: "UTF-8",
-                method: "post",
-                submit: async (e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.target);
-                  const folderName = formData.get("folder[name]");
-                  const response = await getResponse("/folders", "POST", {
-                    name: folderName,
-                  });
-                  window.location.hash = "#folders";
-                },
-              },
-              [
-                InputDiv("Name", "text", "folder[name]"),
-                ButtonDiv("Save folder", "submit", "commit"),
-              ]
-            ),
+          Form(false, "New folder", "/folders", "POST", "#folders", [
+            InputDiv("Name", "text", "folder[name]"),
+            ButtonDiv("Save folder", "submit", "commit"),
           ])
         );
       };
@@ -669,39 +548,22 @@
         const main = document.querySelector("main");
         const loginId = parseInt(window.location.hash.split("_")[1]);
         main.append(
-          d("div", { class: "mx-auto" + formContainerStyle() }, [
-            d("h1", { class: "text-3xl font-bold" }, ["Share login"]),
-            d(
-              "form",
-              {
-                class: "flex flex-col gap-4",
-                id: "sharedLoginForm",
-                action: "/shared_login_data",
-                acceptCharset: "UTF-8",
-                method: "post",
-                submit: async (e) => {
-                  e.preventDefault();
-                  const sharedLoginForm =
-                    document.getElementById("sharedLoginForm");
-                  const formData = new FormData(sharedLoginForm);
-                  const email = formData.get("user_email");
-                  const response = await getResponse(
-                    "/shared_login_data",
-                    "POST",
-                    {
-                      login_id: loginId,
-                      user_email: email,
-                    }
-                  );
-                  window.location.hash = "#sharedIndex?by_me=true";
-                },
-              },
-              [
-                InputDiv("Email address", "email", "user_email"),
-                ButtonDiv("Share login", "submit", "commit"),
-              ]
-            ),
-          ])
+          Form(
+            false,
+            "Share login",
+            "/shared_login_data",
+            "POST",
+            "#sharedIndex?by_me=true",
+            [
+              InputDiv("Email address", "email", "user_email"),
+              d("input", {
+                type: "hidden",
+                name: "login_id",
+                value: loginId,
+              }),
+              ButtonDiv("Share login", "submit", "commit"),
+            ]
+          )
         );
       };
 
@@ -838,53 +700,43 @@
         ]);
 
       const InputDiv = (label, type, name, value = "", readonly = false) => {
+        const input = d("input", {
+          class: inputStyle(),
+          type,
+          name,
+          id: name,
+          value,
+        });
+        if (readonly) {
+          input.readOnly = true;
+        }
         return d("div", {}, [
           d("fieldset", { class: fieldsetStyle() }, [
             d("legend", { class: "px-2 text-gray-500" }, [
               d("label", { for: name }, [label]),
             ]),
-            readonly
-              ? d("input", {
-                  class: inputStyle(),
-                  type,
-                  name,
-                  id: name,
-                  value,
-                  readonly,
-                })
-              : d("input", {
-                  class: inputStyle(),
-                  type,
-                  name,
-                  id: name,
-                  value,
-                }),
+            input,
           ]),
         ]);
       };
 
       const InputUriDiv = (label, type, name, value, id, readonly) => {
+        const input = d("input", {
+          class: inputStyle(),
+          type,
+          name,
+          id: name,
+          value: value || "",
+        });
+        if (readonly) {
+          input.readOnly = true;
+        }
         return d("div", {}, [
           d("fieldset", { class: fieldsetStyle() }, [
             d("legend", { class: "px-2 text-gray-500" }, [
               d("label", { for: name }, [label]),
             ]),
-            readonly
-              ? d("input", {
-                  class: inputStyle(),
-                  type,
-                  name,
-                  id: name,
-                  value: value || "",
-                  readonly,
-                })
-              : d("input", {
-                  class: inputStyle(),
-                  type,
-                  name,
-                  id: name,
-                  value: value || "",
-                }),
+            input,
             d("input", {
               autocomplete: "off",
               type: "hidden",
@@ -897,18 +749,20 @@
       };
 
       const TextAreaDiv = (label, name, value = "", readonly = false) => {
+        const textarea = d(
+          "textarea",
+          { class: inputStyle(), name, id: name },
+          [value]
+        );
+        if (readonly) {
+          textarea.readOnly = true;
+        }
         return d("div", {}, [
           d("fieldset", { class: fieldsetStyle() }, [
             d("legend", { class: "px-2 text-gray-500" }, [
               d("label", { for: name }, [label]),
             ]),
-            readonly
-              ? d(
-                  "textarea",
-                  { class: inputStyle(), name, id: name, readonly },
-                  [value]
-                )
-              : d("textarea", { class: inputStyle(), name, id: name }, [value]),
+            textarea,
           ]),
         ]);
       };
@@ -939,70 +793,49 @@
       };
 
       const FavCheckboxDiv = (isChecked, readonly) => {
+        const checkbox = d("input", {
+          class: "size-4",
+          type: "checkbox",
+          value: "1",
+          name: "login[is_favorite]",
+          id: "login_is_favorite",
+        });
+        if (isChecked) {
+          checkbox.checked = true;
+        }
+        if (readonly) {
+          checkbox.disabled = true;
+        }
         return d("div", {}, [
           d("label", { for: "login_is_favorite" }, ["Is favorite "]),
-          d("input", {
-            name: "login[is_favorite]",
-            type: "hidden",
-            value: "0",
-            autocomplete: "off",
-          }),
-          readonly
-            ? d("input", {
-                class: "size-4",
-                type: "checkbox",
-                value: "1",
-                name: "login[is_favorite]",
-                id: "login_is_favorite",
-                checked: isChecked,
-                disabled: true,
-              })
-            : d("input", {
-                class: "size-4",
-                type: "checkbox",
-                value: "1",
-                name: "login[is_favorite]",
-                id: "login_is_favorite",
-                checked: isChecked,
-              }),
+          checkbox,
         ]);
       };
 
       const FolderSelectDiv = (readonly) => {
+        const select = d("select", {
+          class: "bg-gray-200 h-10" + inputStyle(),
+          name: "login[folder_id]",
+          id: "login_folder_id",
+        });
+        if (readonly) {
+          select.disabled = true;
+        }
         return d("div", {}, [
           d("label", { for: "login_folder_id" }, ["Folder"]),
-          readonly
-            ? d("select", {
-                class: "bg-gray-200 h-10" + inputStyle(),
-                name: "login[folder_id]",
-                id: "login_folder_id",
-                disabled: true,
-              })
-            : d("select", {
-                class: "bg-gray-200 h-10" + inputStyle(),
-                name: "login[folder_id]",
-                id: "login_folder_id",
-              }),
+          select,
         ]);
       };
 
-      const FileInputDiv = (readonly) => {
+      const FileInputDiv = () => {
         return d("div", {}, [
           d("label", { for: "login_file" }, ["File"]),
-          readonly
-            ? d("input", {
-                class: "pl-0 rounded-none" + inputStyle(),
-                type: "file",
-                name: "login[file]",
-                id: "login_file",
-                disabled: "",
-              })
-            : d("input", {
-                class: "pl-0 rounded-none" + inputStyle(),
-                type: "file",
-                name: "login[file]",
-                id: "login_file",
-              }),
+          d("input", {
+            class: "pl-0 rounded-none" + inputStyle(),
+            type: "file",
+            name: "login[file]",
+            id: "login_file",
+          }),
         ]);
       };
 
@@ -1028,15 +861,14 @@
 
       const populateLoginSelectFolders = async (name, readonly) => {
         const loginSelect = document.getElementById("login_folder_id");
+        const folders = [];
         if (readonly) {
-          const option = document.createElement("option");
-          option.value = "";
-          option.text = name;
-          loginSelect.appendChild(option);
-          return;
+          folders.push({ id: "", name });
+        } else {
+          const response = await getResponse("/folders");
+          folders.push(...(await response.json()));
         }
-        const response = await getResponse("/folders");
-        const folders = await response.json();
+
         for (const folder of folders) {
           const option = document.createElement("option");
           option.value = folder.id;
@@ -1076,117 +908,72 @@
         );
       };
 
-      const LoginObject = () => {
-        const loginForm = document.getElementById("login-form");
-        const loginData = {};
-        const loginObject = {
-          login: loginData,
-        };
-        loginData.name = loginForm["login[name]"].value;
-        loginData.login_name = loginForm["login[login_name]"].value;
-        loginData.login_password = loginForm["login[login_password]"].value;
-        loginData["urls_attributes"] = [
-          { uri: loginForm["login[urls_attributes][0][uri]"].value },
-        ];
-        loginData["urls_attributes"][0].id =
-          loginForm["login[urls_attributes][0][id]"].value;
-        loginData.notes = loginForm["login[notes]"].value;
-        loginData.custom_fields = [
+      const OnClickDiv = (label, onclick, isDestructive) => {
+        return d(
+          "div",
           {
-            name: loginForm["login[custom_fields_attributes][0][name]"].value,
-            value: loginForm["login[custom_fields_attributes][0][value]"].value,
+            class:
+              `text-${isDestructive ? "red" : "blue"}-600` + menuItemStyle(),
+            onclick,
           },
-        ];
-        loginData.is_favorite = loginForm["login[is_favorite]"].checked;
-        loginData.folder_id = loginForm["login[folder_id]"].value;
-        loginData.file = loginForm["login[file]"].files[0];
-        return loginObject;
+          [label]
+        );
       };
 
-      TrashRestoreLoginOption = (login) =>
-        d(
-          "div",
-          {
-            class: "text-blue-600" + menuItemStyle(),
-            onclick: `restoreLogin(${login.id})`,
-          },
-          ["Restore Login"]
-        );
-
-      TrashDeleteLoginOption = (login) =>
-        d(
-          "div",
-          {
-            class: "text-red-600" + menuItemStyle(),
-            onclick: `deleteLogin(${login.id})`,
-          },
-          ["Delete Login"]
-        );
-
-      CopyUsernameLoginOption = (login) =>
-        d(
-          "div",
-          {
-            class: "text-blue-600" + menuItemStyle(),
-            onclick: `copyToClipboard('${login.login_name}')`,
-          },
-          ["Copy Username"]
-        );
-
-      CopyPasswordLoginOption = (login) =>
-        d(
-          "div",
-          {
-            class: "text-blue-600" + menuItemStyle(),
-            onclick: `copyToClipboard('${login.login_password}')`,
-          },
-          ["Copy Password"]
-        );
-
-      DownloadAttachmentLoginOption = (login) =>
-        d("div", { class: "text-blue-600" + menuItemStyle() }, [
-          d("a", { href: login.file, download: "" }, ["Download Attachment"]),
+      const AnchorDiv = (label, href, isDownload) => {
+        return d("a", { href }, [
+          isDownload
+            ? d(
+                "div",
+                { class: "text-blue-600" + menuItemStyle(), download: "" },
+                [label]
+              )
+            : d("div", { class: "text-blue-600" + menuItemStyle() }, [label]),
         ]);
+      };
 
-      EditLoginOption = (login) =>
-        d("a", { href: `#loginView_${login.id}` }, [
-          d("div", { class: "text-blue-600" + menuItemStyle() }, [
-            "Edit Login",
-          ]),
-        ]);
+      const TrashRestoreLoginOption = (login) =>
+        OnClickDiv("Restore Login", `restoreLogin(${login.id})`);
 
-      ShareLoginOption = (login) =>
-        d("a", { href: `#shareLogin_${login.id}` }, [
-          d("div", { class: "text-blue-600" + menuItemStyle() }, [
-            "Share Login",
-          ]),
-        ]);
+      const TrashDeleteLoginOption = (login) =>
+        OnClickDiv("Delete Login", `deleteLogin(${login.id})`, true);
 
-      SendLoginToTrashOption = (login) =>
-        d(
-          "div",
-          {
-            class: "text-red-600" + menuItemStyle(),
-            onclick: `sendLoginToTrash(${login.id})`,
-          },
-          ["Send login to trash"]
+      const CopyUsernameLoginOption = (login) =>
+        OnClickDiv("Copy Username", `copyToClipboard('${login.login_name}')`);
+
+      const CopyPasswordLoginOption = (login) =>
+        OnClickDiv(
+          "Copy Password",
+          `copyToClipboard('${login.login_password}')`
         );
 
-      ViewLoginOption = (login, sharedByMe) =>
-        d("a", { href: `#loginView${sharedByMe ? "" : "R"}_${login.id}` }, [
-          d("div", { class: "text-blue-600" + menuItemStyle() }, [
-            "View Login",
-          ]),
-        ]);
+      const DownloadAttachmentLoginOption = (login) =>
+        AnchorDiv("Download Attachment", login.file, true);
 
-      DeleteSharedLoginOption = (login) =>
-        d(
-          "div",
-          {
-            class: "text-red-600" + menuItemStyle(),
-            onclick: `deleteSharedLogin(${login.shared_id})`,
-          },
-          ["Delete shared login"]
+      const EditLoginOption = (login) =>
+        AnchorDiv("Edit Login", `#loginView_${login.id}`);
+
+      const ShareLoginOption = (login) =>
+        AnchorDiv("Share Login", `#shareLogin_${login.id}`);
+
+      const SendLoginToTrashOption = (login) =>
+        OnClickDiv(
+          "Send login to trash",
+          `sendLoginToTrash(${login.id})`,
+          true
+        );
+
+      const ViewLoginOption = (login, sharedByMe) =>
+        AnchorDiv(
+          "View Login",
+          `#loginView${sharedByMe ? "R" : ""}_${login.id}`
+        );
+
+      const DeleteSharedLoginOption = (login) =>
+        OnClickDiv(
+          "Delete shared login",
+          `deleteSharedLogin(${login.shared_id})`,
+          true
         );
 
       const fieldsetStyle = () =>
@@ -1203,10 +990,11 @@
         " px-4 py-2 font-bold text-center text-blue-600 bg-white rounded-full cursor-pointer ring-2 ring-blue-600 hover:bg-blue-600 hover:text-white";
 
       const formContainerStyle = () =>
-        " bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 dark:bg-zinc-800 p-4 md:p-8 flex flex-col gap-2";
+        "mx-auto bg-white m-2 md:w-[500px] rounded-xl border border-gray-500 dark:bg-zinc-800 p-4 md:p-8 flex flex-col gap-2";
 
       const menuItemStyle = () =>
         " text-left p-2 hover:bg-gray-200 cursor-pointer text-nowrap";
+
       const d = (tag, attributes, children) => {
         const result = document.createElement(tag);
         for (const key in attributes) {
@@ -1221,6 +1009,7 @@
         });
         return result;
       };
+
       const mainApp = async () => {
         const view = window.location.hash;
         document.body.innerHTML = "";
