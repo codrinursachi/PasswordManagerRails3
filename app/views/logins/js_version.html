@@ -53,14 +53,6 @@
         menu.classList.toggle("hidden");
       };
 
-      const linksToImages = (links) => {
-        return links
-          .map((link) => {
-            return `<img src=${link}></img>`;
-          })
-          .join("<br>");
-      };
-
       const deleteSharedLogin = async (id) => {
         const response = await getResponse(
           `/shared_login_data/${id}`,
@@ -69,70 +61,116 @@
         mainApp();
       };
 
+      const Img = (attributes, source) => {
+        attributes.src = source;
+        return d("img", attributes);
+      };
+
+      const Link = (attributes, content, target) => {
+        attributes.href = target;
+        return d("a", attributes, [content]);
+      };
+
+      const Button = (attributes, text, type, action) => {
+        switch (type) {
+          case "submit-user":
+            return d("input", {
+              type: "submit",
+              name: "commit",
+              value: text,
+              class: buttonPrimaryStyle(),
+            });
+          case "submit-sm":
+            return d("input", {
+              type: "submit",
+              name: "commit",
+              value: text,
+              class: "text-sm " + buttonPrimaryStyle(),
+            });
+          case "link":
+            return d(Link, { class: buttonPrimaryStyle() }, [text, action]);
+          case "link-secondary":
+            return d(Link, { class: buttonSecondaryStyle() }, [text, action]);
+          case "primary":
+            return d(
+              "button",
+              { class: buttonPrimaryStyle(), onclick: action },
+              [text]
+            );
+          case "secondary":
+            return d(
+              "button",
+              { class: buttonSecondaryStyle(), onclick: action },
+              [text]
+            );
+          case "plain":
+            return d("button", { class: "cursor-pointer", click: action }, [
+              text,
+            ]);
+        }
+      };
+
       const renderLoginPage = () => {
         document.body.appendChild(
-          FullPageForm(
+          d(FullPageForm, {}, [
             "Sign in",
             "/session",
             "POST",
             [
-              InputDiv("Email address", "email", "email_address"),
-              InputDiv("Password", "password", "password"),
-              d("input", {
-                type: "submit",
-                name: "commit",
-                value: "Sign in",
-                class: buttonPrimaryUserActionStyle(),
-              }),
+              d(Fieldset, {}, ["Email address", "email", "email_address"]),
+              d(Fieldset, {}, ["Password", "password", "password"]),
+              d(Button, {}, ["Sign in", "submit-user"]),
             ],
             [
-              d("a", { class: "text-blue-600", href: "/passwords/new" }, [
+              d(Link, { class: "text-blue-600" }, [
                 "Forgot password?",
+                "/passwords/new",
               ]),
               d("hr", { class: "border-gray-500" }),
-              d("a", { class: "text-blue-600", href: "#register" }, [
+              d(Link, { class: "text-blue-600" }, [
                 "Create account",
+                "#register",
               ]),
-            ]
-          )
+            ],
+          ])
         );
       };
 
       const renderRegisterPage = () => {
         document.body.appendChild(
-          FullPageForm(
+          d(FullPageForm, {}, [
             "Register",
             "/users",
             "POST",
             [
-              InputDiv("Email address", "email", "user[email_address]"),
-              InputDiv("Password", "password", "user[password]"),
-              InputDiv(
+              d(Fieldset, {}, [
+                "Email address",
+                "email",
+                "user[email_address]",
+              ]),
+              d(Fieldset, {}, ["Password", "password", "user[password]"]),
+              d(Fieldset, {}, [
                 "Password confirmation",
                 "password",
-                "user[password_confirmation]"
-              ),
-              InputDiv("First name", "text", "user[first_name]"),
-              InputDiv("Last name", "text", "user[last_name]"),
-              d("input", {
-                type: "submit",
-                name: "commit",
-                value: "Sign up",
-                class: buttonPrimaryUserActionStyle(),
-              }),
+                "user[password_confirmation]",
+              ]),
+              d(Fieldset, {}, ["First name", "text", "user[first_name]"]),
+              d(Fieldset, {}, ["Last name", "text", "user[last_name]"]),
+              d(Button, {}, ["Sign up", "submit-user"]),
             ],
             [
               d("hr", { class: "border-gray-500" }),
               d("div", {}, [
                 "Already have an account?",
-                d("a", { class: "text-blue-600", href: "" }, ["Sign in"]),
+                d(Link, { class: "text-blue-600" }, ["Sign in", ""]),
               ]),
-            ]
-          )
+            ],
+          ])
         );
       };
 
       const FullPageForm = (
+        attributes,
         title,
         path,
         method,
@@ -153,15 +191,14 @@
                     class: "mb-4 text-blue-700 fas fa-7x fa-shield-halved",
                   }),
                   d("h1", { class: "mb-10 text-3xl font-bold" }, [title]),
-                  Form(
-                    false,
+                  d(Form, {}, [
                     false,
                     path,
                     method,
                     "#index",
                     formInputs,
-                    additionalContent
-                  ),
+                    additionalContent,
+                  ]),
                 ]
               ),
             ]),
@@ -169,7 +206,7 @@
         ]);
 
       const Form = (
-        objectToSend,
+        attributes,
         title,
         path,
         method,
@@ -206,7 +243,7 @@
           ...additionalContent,
         ]);
 
-      const NavMenu = async () => {
+      getNavMenuElements = async () => {
         const response = await getResponse(
           "http://127.0.0.1:3000/folders",
           "GET"
@@ -218,8 +255,12 @@
           ["Shared by me", "#sharedIndex?by_me=true"],
           ["Shared with me", "#sharedIndex"],
         ];
-        let specialFoldersNodes = specialFolders.map((folder) =>
-          HighlightableSpecialFolder(folder, window.location.hash)
+        const specialFoldersNodes = specialFolders.map((folder) =>
+          d(NavMenuElement, {}, [
+            folder[0],
+            folder[1],
+            window.location.hash == folder[1],
+          ])
         );
         let current_folder_id = null;
         if (window.location.hash.includes("folder_id")) {
@@ -231,52 +272,70 @@
         }
 
         const userFoldersNodes = userFolders.map((folder) =>
-          HighlightableUserFolder(folder, current_folder_id)
+          d(NavMenuElement, {}, [
+            [
+              d("i", {
+                class: `fas fa-folder${
+                  folder.id === current_folder_id ? "-open" : ""
+                }`,
+              }),
+              " " + folder.name,
+            ],
+            `#index?folder_id=${folder.id}`,
+            folder.id === current_folder_id,
+          ])
         );
 
-        let result = d(
+        return [
+          d(NavMenuLogo, {}, [
+            [d("i", { class: "fas fa-shield-halved" }), " Password Manager"],
+          ]),
+          d(NavMenuHeader, {}, [
+            [
+              "Folders ",
+              d(Link, {}, [d("i", { class: "fas fa-gear" }), "#folders"]),
+            ],
+          ]),
+          ...specialFoldersNodes,
+          d("div", {}, userFoldersNodes),
+          d(NavMenuElement, {}, [
+            [d("i", { class: "fas fa-trash-alt" }), " Trash"],
+            "#trash",
+            window.location.hash === "#trash",
+          ]),
+        ];
+      };
+
+      const NavMenu = (attributes, content) => {
+        return d(
           "aside",
           {
             class:
               "h-screen text-white bg-blue-800 min-w-full md:min-w-[270px] text-lg flex-col gap-2 sticky top-0 overflow-auto flex",
           },
-          [
-            Logo(),
-            FoldersHeader(),
-            ...specialFoldersNodes,
-            d("div", {}, userFoldersNodes),
-            TrashFolder(),
-          ]
+          content
         );
-        return result;
       };
 
-      const StandardMenu = (login) => {
-        if (login.trash_date) {
-          return [
-            TrashRestoreLoginOption(login),
-            TrashDeleteLoginOption(login),
-          ];
-        }
-        return [
-          CopyUsernameLoginOption(login),
-          CopyPasswordLoginOption(login),
-          login.file ? DownloadAttachmentLoginOption(login) : "",
-          EditLoginOption(login),
-          ShareLoginOption(login),
-          SendLoginToTrashOption(login),
-        ];
-      };
-
-      const SharedMenu = (login, sharedByMe) => [
-        ViewLoginOption(login, sharedByMe),
-        CopyUsernameLoginOption(login),
-        CopyPasswordLoginOption(login),
-        login.file ? DownloadAttachmentLoginOption(login) : "",
-        DeleteSharedLoginOption(login),
-      ];
-
-      const Login = (login, isShared) => {
+      const Login = (attributes, login, isShared) => {
+        const menuItems = isShared
+          ? [
+              ViewLoginOption(login, isShared == 2),
+              CopyUsernameLoginOption(login),
+              CopyPasswordLoginOption(login),
+              login.file ? DownloadAttachmentLoginOption(login) : "",
+              DeleteSharedLoginOption(login),
+            ]
+          : login.trash_date
+          ? [TrashRestoreLoginOption(login), TrashDeleteLoginOption(login)]
+          : [
+              CopyUsernameLoginOption(login),
+              CopyPasswordLoginOption(login),
+              login.file ? DownloadAttachmentLoginOption(login) : "",
+              EditLoginOption(login),
+              ShareLoginOption(login),
+              SendLoginToTrashOption(login),
+            ];
         return d(
           "tr",
           {
@@ -284,32 +343,32 @@
               "text-gray-500 border-b-[0.5px] border-gray-500 hover:bg-gray-200/60",
           },
           [
-            d(
-              "td",
-              { class: "text-center py-3" },
-              getFavIconsIfAvailable(login)
-            ),
+            d("td", { class: "text-center py-3" }, getFavIcons(login)),
             d("td", { class: "py-3" }, [
               d(
-                "a",
+                Link,
                 {
-                  href: `#loginView${isShared === 1 ? "R" : ""}_${login.id}`,
                   class: "font-bold text-blue-600",
                 },
-                [login.name]
+                [
+                  login.name,
+                  `#loginView${isShared === 1 ? "R" : ""}_${login.id}`,
+                ]
               ),
               d("br"),
               login.login_name,
             ]),
             d("td", { class: "py-3" }, [
               d(
-                "a",
+                Link,
                 {
                   class: "text-blue-600",
-                  href: login.urls[0] && login.url[0].uri,
                   target: "_blank",
                 },
-                [(login.urls[0] && login.urls[0].uri) || ""]
+                [
+                  (login.urls[0] && login.urls[0].uri) || "",
+                  login.urls[0] && login.urls[0].uri,
+                ]
               ),
             ]),
             login.trash_date && !isShared
@@ -319,7 +378,7 @@
             isShared === 2
               ? d("td", { class: "py-3" }, [login.shared_with])
               : "",
-            ExpandableMenu(login, isShared),
+            d(ExpandableMenu, {}, [login, menuItems]),
           ]
         );
       };
@@ -329,12 +388,11 @@
         const response = await getResponse("/logins" + "?" + (params || ""));
         const logins = await response.json();
         const main = document.querySelector("main");
+        const headers = ["Name", "URLs"];
         main.append(
           d("div", { class: "flex justify-between" }, [
             d("h1", { class: "text-3xl font-bold" }, ["Logins"]),
-            d("a", { class: buttonPrimaryStyle(), href: "#loginNew" }, [
-              "New login",
-            ]),
+            d(Button, {}, ["New login", "link", "#loginNew"]),
           ]),
           d(
             "form",
@@ -359,18 +417,21 @@
                   id: "q",
                 }),
               ]),
-              d("input", {
-                type: "submit",
-                name: "commit",
-                value: "Search",
-                class: "text-sm " + buttonPrimaryStyle(),
-              }),
+              d(Button, {}, ["Search", "submit-sm"]),
             ]
           ),
           d("div", { class: "mt-2" }, [
             d("table", { class: "w-full mt-8 table-fixed" }, [
-              TableHeader(["Name", "URLs"]),
-              TableBody(logins),
+              d(TableHeader, {}, [
+                [
+                  d("th", { class: "w-12 text-left" }),
+                  ...headers.map((header) =>
+                    d("th", { class: "text-left" }, [header])
+                  ),
+                  d("th", { class: "w-12 text-left" }),
+                ],
+              ]),
+              d(TableBody, {}, [logins.map((login) => d(Login, {}, [login]))]),
             ]),
           ])
         );
@@ -383,14 +444,13 @@
         const main = document.querySelector("main");
         const readonly = window.location.hash.includes("R");
         main.appendChild(
-          Form(
-            false,
+          d(Form, {}, [
             readonly ? "View Login" : "Edit login",
             `/logins/${loginId}`,
             "PATCH",
             "#index",
-            LoginInputs(login, readonly)
-          )
+            LoginInputs(login, readonly),
+          ])
         );
 
         await populateLoginSelectFolders(login.folder_name, readonly);
@@ -399,66 +459,72 @@
       const renderNewLoginPage = async () => {
         const main = document.querySelector("main");
         main.appendChild(
-          Form(false, "New login", "/logins", "POST", "#index", LoginInputs())
+          d(Form, {}, ["New login", "/logins", "POST", "#index", LoginInputs()])
         );
 
         await populateLoginSelectFolders();
       };
 
       const LoginInputs = (login, readonly) => [
-        InputDiv("Name", "text", "login[name]", login && login.name, readonly),
-        InputDiv(
+        d(Fieldset, {}, [
+          "Name",
+          "text",
+          "login[name]",
+          login && login.name,
+          readonly,
+        ]),
+        d(Fieldset, {}, [
           "Login name",
           "text",
           "login[login_name]",
           login && login.login_name,
-          readonly
-        ),
-        InputDiv(
+          readonly,
+        ]),
+        d(Fieldset, {}, [
           "Login password",
           "password",
           "login[login_password]",
           login && login.login_password,
-          readonly
-        ),
+          readonly,
+        ]),
         login
-          ? InputUriDiv(
+          ? d(UriFieldset, {}, [
               "Uri",
               "text",
               "login[urls_attributes][0][uri]",
               login.urls[0].uri,
               login.urls[0].id,
-              readonly
-            )
-          : InputDiv("Uri", "text", "login[urls_attributes][0][uri]"),
-        TextAreaDiv("Notes", "login[notes]", login && login.notes, readonly),
-        CustomFieldsDiv(login && login.custom_fields, readonly),
-        FavCheckboxDiv(login && login.is_favorite, readonly),
-        FolderSelectDiv(readonly),
-        readonly ? "" : FileInputDiv(),
-        readonly ? "" : LoginActionsDiv(),
+              readonly,
+            ])
+          : d(Fieldset, {}, ["Uri", "text", "login[urls_attributes][0][uri]"]),
+        d(TextFieldset, {}, [
+          "Notes",
+          "login[notes]",
+          login && login.notes,
+          readonly,
+        ]),
+        d(CustomFieldset, {}, [login && login.custom_fields, readonly]),
+        d(FavCheckboxDiv, {}, [login && login.is_favorite, readonly]),
+        d(FolderSelectDiv, {}, [readonly]),
+        readonly ? "" : d(FileInputDiv, {}, []),
+        readonly ? "" : d(LoginActions, {}, []),
       ];
 
-      const generateFolder = (folder) => {
+      const Folder = (attributes, folder) => {
         return d("div", { class: "my-2" }, [
-          d("div", { id: `folder_${folder.id}` }, [
-            d("p", {}, [d("strong", {}, ["Name:"]), folder.name]),
-          ]),
+          d("div", { id: `folder_${folder.id}` }, [folder.name]),
           d("div", { class: "flex mt-2" }, [
-            d(
-              "a",
-              { class: buttonPrimaryStyle(), href: `#viewFolder_${folder.id}` },
-              ["Edit this folder"]
-            ),
+            d(Button, {}, [
+              "Edit this folder",
+              "link",
+              `#viewFolder_${folder.id}`,
+            ]),
             d("div", { class: "mx-2" }),
-            d(
-              "button",
-              {
-                class: buttonSecondaryStyle(),
-                onclick: `deleteFolder(${folder.id})`,
-              },
-              ["Destroy this folder"]
-            ),
+            d(Button, {}, [
+              "Destroy this folder",
+              "secondary",
+              `deleteFolder(${folder.id})`,
+            ]),
           ]),
         ]);
       };
@@ -472,16 +538,14 @@
             d("p", { style: "color: green" }),
             d("div", { class: "flex justify-between" }, [
               d("h1", { class: "text-3xl font-bold" }, ["Folders"]),
-              d("a", { class: buttonPrimaryStyle(), href: "#newFolder" }, [
-                "New folder",
-              ]),
+              d(Button, {}, ["New folder", "link", "#newFolder"]),
             ]),
             d(
               "div",
               {},
               folders
                 .filter((folder) => folder.name !== "No folder")
-                .map((folder) => d("div", {}, [generateFolder(folder)]))
+                .map((folder) => d("div", {}, [d(Folder, {}, [folder])]))
             ),
           ])
         );
@@ -493,26 +557,31 @@
         const folder = await response.json();
         const main = document.querySelector("main");
         main.appendChild(
-          Form(
-            false,
+          d(Form, {}, [
             "Edit folder",
             `/folders/${folderId}`,
             "PATCH",
             "#folders",
             [
-              InputDiv("Name", "text", "folder[name]", folder.name),
-              ButtonDiv("Save folder", "submit", "commit"),
-            ]
-          )
+              d(Fieldset, {}, ["Name", "text", "folder[name]", folder.name]),
+              d("div", {}, [d(Button, {}, ["Save folder", "primary"])]),
+            ],
+          ])
         );
       };
 
       const renderNewFolderPage = () => {
         const main = document.querySelector("main");
         main.appendChild(
-          Form(false, "New folder", "/folders", "POST", "#folders", [
-            InputDiv("Name", "text", "folder[name]"),
-            ButtonDiv("Save folder", "submit", "commit"),
+          d(Form, {}, [
+            "New folder",
+            "/folders",
+            "POST",
+            "#folders",
+            [
+              d(Fieldset, {}, ["Name", "text", "folder[name]"]),
+              d("div", {}, [d(Button, {}, ["Save folder", "primary"])]),
+            ],
           ])
         );
       };
@@ -522,6 +591,11 @@
         const response = await getResponse("/shared_login_data" + "?" + params);
         const sharedLogins = await response.json();
         const main = document.querySelector("main");
+        const headers = [
+          "Name",
+          "URLs",
+          params.includes("by_me") ? "Shared with" : "Shared by",
+        ];
         let result = d("div", { class: "w-full" }, [
           d("div", { class: "flex items-center justify-between" }, [
             d("h1", { class: "text-3xl font-bold" }, [
@@ -532,12 +606,20 @@
           ]),
           d("div", { class: "min-w-full" }, [
             d("table", { class: "w-full mt-8 table-fixed" }, [
-              TableHeader([
-                "Name",
-                "URLs",
-                params.includes("by_me") ? "Shared with" : "Shared by",
+              d(TableHeader, {}, [
+                [
+                  d("th", { class: "w-12 text-left" }),
+                  ...headers.map((header) =>
+                    d("th", { class: "text-left" }, [header])
+                  ),
+                  d("th", { class: "w-12 text-left" }),
+                ],
               ]),
-              TableBody(sharedLogins, params.includes("by_me") ? 2 : 1),
+              d(TableBody, {}, [
+                sharedLogins.map((login) =>
+                  d(Login, {}, [login.login, params.includes("by_me") ? 2 : 1])
+                ),
+              ]),
             ]),
           ]),
         ]);
@@ -548,22 +630,21 @@
         const main = document.querySelector("main");
         const loginId = parseInt(window.location.hash.split("_")[1]);
         main.append(
-          Form(
-            false,
+          d(Form, {}, [
             "Share login",
             "/shared_login_data",
             "POST",
             "#sharedIndex?by_me=true",
             [
-              InputDiv("Email address", "email", "user_email"),
+              d(Fieldset, {}, ["Email address", "email", "user_email"]),
               d("input", {
                 type: "hidden",
                 name: "login_id",
                 value: loginId,
               }),
-              ButtonDiv("Share login", "submit", "commit"),
-            ]
-          )
+              d("div", {}, [d(Button, {}, ["Share login", "primary"])]),
+            ],
+          ])
         );
       };
 
@@ -571,33 +652,40 @@
         const response = await getResponse("/trash");
         const logins = await response.json();
         const main = document.querySelector("main");
+        const headers = ["Name", "URLs", "Date added in trash"];
         let result = [
           d("h1", { class: "text-3xl font-bold" }, ["Trash"]),
           d("table", { class: "w-full mt-8 table-fixed" }, [
-            TableHeader(["Name", "URLs", "Date added in trash"]),
-            TableBody(logins),
+            d(TableHeader, {}, [
+              [
+                d("th", { class: "w-12 text-left" }),
+                ...headers.map((header) =>
+                  d("th", { class: "text-left" }, [header])
+                ),
+                d("th", { class: "w-12 text-left" }),
+              ],
+            ]),
+            d(TableBody, {}, [logins.map((login) => d(Login, {}, [login]))]),
           ]),
         ];
         main.append(...result);
       };
 
       const renderLayout = async () => {
+        const navMenuElements = await getNavMenuElements();
         document.body.appendChild(
           d("div", { class: "flex min-h-full" }, [
-            await NavMenu(),
+            d(NavMenu, {}, [navMenuElements]),
             d("div", { class: "flex flex-col flex-1" }, [
               d("div", { class: "flex gap-2 ml-auto mr-2 text-blue-600" }, [
-                d(
-                  "button",
-                  {
-                    class: "cursor-pointer",
-                    click: async () => {
-                      const response = await getResponse("/session", "DELETE");
-                      window.location.hash = "#login";
-                    },
+                d(Button, {}, [
+                  d("i", { class: "fas fa-arrow-right-from-bracket" }),
+                  "plain",
+                  async () => {
+                    const response = await getResponse("/session", "DELETE");
+                    window.location.hash = "#login";
                   },
-                  [d("i", { class: "fas fa-arrow-right-from-bracket" })]
-                ),
+                ]),
               ]),
               d("main", { class: "flex-1 mx-2 md:mx-16" }),
             ]),
@@ -605,78 +693,41 @@
         );
       };
 
-      const HighlightableSpecialFolder = (folder, location) =>
-        d("a", { href: folder[1] }, [
-          d(
-            "div",
-            {
-              class: `py-1 pl-8 hover:bg-blue-600 ${
-                location === folder[1] ? "bg-blue-950" : ""
-              }`,
-            },
-            [folder[0]]
-          ),
+      const NavMenuLogo = (attributes, content) =>
+        d(Link, {}, [
+          d("div", { class: "pt-8 pl-8 text-lg" }, [...content]),
+          "#index",
         ]);
 
-      const HighlightableUserFolder = (folder, current_folder_id) =>
-        d("a", { href: `#index?folder_id=${folder.id}` }, [
-          d(
-            "div",
-            {
-              class: `py-1 pl-8 hover:bg-blue-600 ${
-                folder.id === current_folder_id ? "bg-blue-950" : ""
-              }`,
-            },
-            [
-              d("i", {
-                class: `fas fa-folder${
-                  folder.id === current_folder_id ? "-open" : ""
-                }`,
-              }),
-              " " + folder.name,
-            ]
-          ),
-        ]);
-
-      const Logo = () =>
-        d("a", { href: "#index" }, [
-          d("div", { class: "pt-8 pl-8 text-lg" }, [
-            d("i", { class: "fas fa-shield-halved" }),
-            " Password Manager",
-          ]),
-        ]);
-
-      const FoldersHeader = () =>
+      const NavMenuHeader = (attributes, content) =>
         d("div", { class: "pl-8" }, [
-          d("h2", { class: "text-2xl font-bold" }, [
-            "Folders ",
-            d("a", { href: "#folders" }, [d("i", { class: "fas fa-gear" })]),
-          ]),
+          d("h1", { class: "text-2xl font-bold" }, [...content]),
         ]);
 
-      const TrashFolder = () =>
-        d("a", { href: "#trash" }, [
+      const NavMenuElement = (attributes, content, target, isHighlighted) =>
+        d(Link, {}, [
           d(
             "div",
             {
               class: `py-1 pl-8 hover:bg-blue-600 ${
-                window.location.hash === "#trash" ? "bg-blue-950" : ""
+                isHighlighted ? "bg-blue-950" : ""
               }`,
             },
-            [d("i", { class: "fas fa-trash-alt" }), " Trash"]
+            [...content]
           ),
+          target,
         ]);
 
-      const getFavIconsIfAvailable = (login) =>
+      const getFavIcons = (login) =>
         login.urls.length > 0
           ? login.fav_icons.map((fav_icon) =>
               fav_icon
-                ? d("img", { src: fav_icon, class: "mx-auto" })
+                ? d(Img, { class: "mx-auto" }, [fav_icon])
                 : d("i", { class: "fas fa-xl fa-globe" })
             )
           : [d("i", { class: "fas fa-xl fa-globe" })];
 
-      const ExpandableMenu = (login, isShared) =>
+      const ExpandableMenu = (attributes, login, content) =>
         d("td", { class: "relative py-3" }, [
           d(
             "div",
@@ -695,11 +746,18 @@
               class:
                 "absolute right-0 z-10 hidden py-2 bg-white border border-gray-500 top-12 rounded-xl",
             },
-            !isShared ? StandardMenu(login) : SharedMenu(login, isShared === 2)
+            [...content]
           ),
         ]);
 
-      const InputDiv = (label, type, name, value = "", readonly = false) => {
+      const Fieldset = (
+        attributes,
+        label,
+        type,
+        name,
+        value = "",
+        readonly = false
+      ) => {
         const input = d("input", {
           class: inputStyle(),
           type,
@@ -720,7 +778,15 @@
         ]);
       };
 
-      const InputUriDiv = (label, type, name, value, id, readonly) => {
+      const UriFieldset = (
+        attributes,
+        label,
+        type,
+        name,
+        value,
+        id,
+        readonly
+      ) => {
         const input = d("input", {
           class: inputStyle(),
           type,
@@ -748,7 +814,13 @@
         ]);
       };
 
-      const TextAreaDiv = (label, name, value = "", readonly = false) => {
+      const TextFieldset = (
+        attributes,
+        label,
+        name,
+        value = "",
+        readonly = false
+      ) => {
         const textarea = d(
           "textarea",
           { class: inputStyle(), name, id: name },
@@ -767,32 +839,33 @@
         ]);
       };
 
-      const CustomFieldsDiv = (
+      const CustomFieldset = (
+        attributes,
         custom_fields = [{ name: "", value: "" }],
         readonly = false
       ) => {
         return d("div", {}, [
           "Custom fields:",
           d("div", { class: "flex flex-col gap-1" }, [
-            InputDiv(
+            d(Fieldset, {}, [
               "Name",
               "text",
               "login[custom_fields_attributes][0][name]",
               custom_fields[0].name,
-              readonly
-            ),
-            InputDiv(
+              readonly,
+            ]),
+            d(Fieldset, {}, [
               "Value",
               "text",
               "login[custom_fields_attributes][0][value]",
               custom_fields[0].value,
-              readonly
-            ),
+              readonly,
+            ]),
           ]),
         ]);
       };
 
-      const FavCheckboxDiv = (isChecked, readonly) => {
+      const FavCheckboxDiv = (attributes, isChecked, readonly) => {
         const checkbox = d("input", {
           class: "size-4",
           type: "checkbox",
@@ -812,7 +885,7 @@
         ]);
       };
 
-      const FolderSelectDiv = (readonly) => {
+      const FolderSelectDiv = (attributes, readonly) => {
         const select = d("select", {
           class: "bg-gray-200 h-10" + inputStyle(),
           name: "login[folder_id]",
@@ -827,7 +900,7 @@
         ]);
       };
 
-      const FileInputDiv = () => {
+      const FileInputDiv = (attributes) => {
         return d("div", {}, [
           d("label", { for: "login_file" }, ["File"]),
           d("input", {
@@ -839,23 +912,13 @@
         ]);
       };
 
-      const ButtonDiv = (label, type, name) => {
-        return d("div", {}, [
-          d("input", {
-            class: inputStyle(),
-            type,
-            name,
-            value: label,
-            class: buttonPrimaryStyle(),
-          }),
-        ]);
-      };
-
-      const LoginActionsDiv = () => {
+      const LoginActions = () => {
         return d("div", { class: "flex" }, [
-          ButtonDiv("Save login", "submit", "commit"),
+          d("div", {}, [d(Button, {}, ["Save login", "primary"])]),
           d("div", { class: "mx-2" }),
-          d("a", { class: buttonSecondaryStyle(), href: "#index" }, ["Cancel"]),
+          d("div", { class: "pt-2" }, [
+            d(Button, {}, ["Cancel", "link-secondary", "#index"]),
+          ]),
         ]);
       };
 
@@ -880,32 +943,20 @@
         }
       };
 
-      const TableHeader = (headers) => {
+      const TableHeader = (attributes, content) => {
         return d("thead", {}, [
           d(
             "tr",
             {
               class: "border-b-2 text-gray-500 border-gray-500",
             },
-            [
-              d("th", { class: "w-12 text-left" }),
-              ...headers.map((header) =>
-                d("th", { class: "text-left" }, [header])
-              ),
-              d("th", { class: "w-12 text-left" }),
-            ]
+            content
           ),
         ]);
       };
 
-      const TableBody = (logins, shareType) => {
-        return d(
-          "tbody",
-          {},
-          logins.map((login) =>
-            Login(shareType ? login.login : login, shareType)
-          )
-        );
+      const TableBody = (attributes, content) => {
+        return d("tbody", {}, content);
       };
 
       const OnClickDiv = (label, onclick, isDestructive) => {
@@ -921,7 +972,7 @@
       };
 
       const AnchorDiv = (label, href, isDownload) => {
-        return d("a", { href }, [
+        return d(Link, {}, [
           isDownload
             ? d(
                 "div",
@@ -929,6 +980,7 @@
                 [label]
               )
             : d("div", { class: "text-blue-600" + menuItemStyle() }, [label]),
+          href,
         ]);
       };
 
@@ -996,18 +1048,24 @@
         " text-left p-2 hover:bg-gray-200 cursor-pointer text-nowrap";
 
       const d = (tag, attributes, children) => {
-        const result = document.createElement(tag);
-        for (const key in attributes) {
-          typeof attributes[key] === "function"
-            ? result.addEventListener(key, attributes[key])
-            : result.setAttribute(key, attributes[key]);
+        if (typeof tag === "string") {
+          const result = document.createElement(tag);
+          for (const key in attributes) {
+            typeof attributes[key] === "function"
+              ? result.addEventListener(key, attributes[key])
+              : result.setAttribute(key, attributes[key]);
+          }
+          (children || []).forEach((child) => {
+            const node =
+              typeof child === "string"
+                ? document.createTextNode(child)
+                : child;
+            result.appendChild(node);
+          });
+          return result;
+        } else {
+          return tag(attributes, ...children);
         }
-        (children || []).forEach((child) => {
-          const node =
-            typeof child === "string" ? document.createTextNode(child) : child;
-          result.appendChild(node);
-        });
-        return result;
       };
 
       const mainApp = async () => {
