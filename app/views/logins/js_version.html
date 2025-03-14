@@ -959,7 +959,7 @@
         return d("tbody", {}, content);
       };
 
-      const OnClickDiv = (label, onclick, isDestructive) => {
+      const MenuItemFunction = (label, onclick, isDestructive) => {
         return d(
           "div",
           {
@@ -971,7 +971,7 @@
         );
       };
 
-      const AnchorDiv = (label, href, isDownload) => {
+      const MenuItemLink = (label, href, isDownload) => {
         return d(Link, {}, [
           isDownload
             ? d(
@@ -985,44 +985,44 @@
       };
 
       const TrashRestoreLoginOption = (login) =>
-        OnClickDiv("Restore Login", `restoreLogin(${login.id})`);
+        MenuItemFunction("Restore Login", `restoreLogin(${login.id})`);
 
       const TrashDeleteLoginOption = (login) =>
-        OnClickDiv("Delete Login", `deleteLogin(${login.id})`, true);
+        MenuItemFunction("Delete Login", `deleteLogin(${login.id})`, true);
 
       const CopyUsernameLoginOption = (login) =>
-        OnClickDiv("Copy Username", `copyToClipboard('${login.login_name}')`);
+        MenuItemFunction("Copy Username", `copyToClipboard('${login.login_name}')`);
 
       const CopyPasswordLoginOption = (login) =>
-        OnClickDiv(
+        MenuItemFunction(
           "Copy Password",
           `copyToClipboard('${login.login_password}')`
         );
 
       const DownloadAttachmentLoginOption = (login) =>
-        AnchorDiv("Download Attachment", login.file, true);
+        MenuItemLink("Download Attachment", login.file, true);
 
       const EditLoginOption = (login) =>
-        AnchorDiv("Edit Login", `#loginView_${login.id}`);
+        MenuItemLink("Edit Login", `#loginView_${login.id}`);
 
       const ShareLoginOption = (login) =>
-        AnchorDiv("Share Login", `#shareLogin_${login.id}`);
+        MenuItemLink("Share Login", `#shareLogin_${login.id}`);
 
       const SendLoginToTrashOption = (login) =>
-        OnClickDiv(
+        MenuItemFunction(
           "Send login to trash",
           `sendLoginToTrash(${login.id})`,
           true
         );
 
       const ViewLoginOption = (login, sharedByMe) =>
-        AnchorDiv(
+        MenuItemLink(
           "View Login",
           `#loginView${sharedByMe ? "R" : ""}_${login.id}`
         );
 
       const DeleteSharedLoginOption = (login) =>
-        OnClickDiv(
+        MenuItemFunction(
           "Delete shared login",
           `deleteSharedLogin(${login.shared_id})`,
           true
